@@ -13,8 +13,10 @@ const {
     checkNicknameDuplication,
     checkIdDuplication
 } = require('../controllers/userController');
+const validator = require('../middlewares/validateHandler');
+const { joinValidator } = require('../validators/authValidator');
 
-router.post('/join', createAccount);
+router.post('/join', joinValidator, validator, createAccount);
 router.delete('/resign', cancelAccount);
 router.post('/login', login);
 router.post('/logout', logout);

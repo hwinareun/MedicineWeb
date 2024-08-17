@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
+const errorHandler = require('./middlewares/errorHandler');
 
 const corsOptions = {
     origin: process.env.CORS_OPTIONS_ORIGIN,
@@ -23,6 +24,8 @@ app.use('/users', userRouter);
 app.use('/favorites', favoriteRouter);
 app.use('/drugs', drugRouter);
 app.use('/posts', postRouter);
+
+app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
