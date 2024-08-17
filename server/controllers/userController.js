@@ -32,7 +32,7 @@ const createAccount = async (req, res, next) => {
       pwAnswer,
     ];
 
-    const results = await query(sql, values);
+    await query(sql, values);
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {
@@ -48,7 +48,7 @@ const createAccount = async (req, res, next) => {
   }
 };
 
-const cancelAccount = async (req, res, next) => {
+const deleteAccount = async (req, res, next) => {
   const { userId } = req.user;
 
   try {
@@ -84,10 +84,13 @@ const login = async (req, res, next) => {
       throw new Error("invalid id or password.");
     }
 
-    const token = jwt.sign({
+    const payload = {
       userId: loginUser.userId,
       nickname: loginUser.nickname,
-    }, process.env.JWT_SECRET_KEY, {
+      role: loginUser.role
+    };
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
 
@@ -105,9 +108,9 @@ const login = async (req, res, next) => {
   }
 };
 
-const logout = async (req, res) => {
+const logout = async (req, res, next) => {
   await req.session.destroy(error => {
-    if(error) {
+    if (error) {
       return next(new CustomError('Failed to logout.', StatusCodes.INTERNAL_SERVER_ERROR));
     }
   });
@@ -115,9 +118,33 @@ const logout = async (req, res) => {
   return res.status(StatusCodes.OK).end();
 };
 
-const showProfile = async (req, res) => { };
+const showProfile = async (req, res) => {
+  // const { userId, nickname } = req.user;
 
-const modifyProfile = async (req, res) => { };
+  // let sql = 'select * from '
+
+  // return res.status(StatusCodes.OK).json({
+  //   nickname: nickname,
+
+  // })
+};
+
+const updateUserInfo = async (req, res, next) => {
+  const { userId } = req.user;
+  const { nickname, password } = req.body;
+
+  try {
+    const sql = 'update Users set nickname = ?, password = ? where userId = ?;';
+    const values = [nickname, password, userId];
+    await query(sql, values);
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
 
 const checkPassword = async (req, res) => { };
 
@@ -131,11 +158,11 @@ const checkIdDuplication = async (req, res) => { };
 
 module.exports = {
   createAccount,
-  cancelAccount,
+  deleteAccount,
   login,
   logout,
   showProfile,
-  modifyProfile,
+  updateUserInfo,
   checkPassword,
   findId,
   findPassword,
