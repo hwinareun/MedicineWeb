@@ -7,9 +7,9 @@ const validator = (req, res, next) => {
     if(errors.isEmpty()) {
         return next();
     }
-
-    const errorMessages = errors.array().map(err => err.msg).join(',');
-    return next(new CustomError(`validate failed: ${errorMessages}`, StatusCodes.BAD_REQUEST));
+    console.log(errors);
+    // const errorMessages = errors.array().map(err => err.msg).join(',');
+    return next(new CustomError(`validate failed: ${errors.errors}`, StatusCodes.BAD_REQUEST));
 };
 
 module.exports = validator;

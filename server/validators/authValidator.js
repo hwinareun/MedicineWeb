@@ -1,7 +1,8 @@
 const { check } = require("express-validator");
 
 const joinValidator = [
-    ...loginValidator,
+    check('id').notEmpty(),
+    check('password').notEmpty(),
     check('nickname').notEmpty(),
     check('idQuestion').notEmpty(),
     check('idAnswer').notEmpty(),
