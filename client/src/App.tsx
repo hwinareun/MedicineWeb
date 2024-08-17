@@ -41,7 +41,8 @@ const App: React.FC = () => {
   const [data, setData] = useState<{ message: string } | null>(null);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/')
+    axios
+      .get('http://localhost:5000/')
       .then((response) => {
         setData(response.data);
       })
@@ -56,6 +57,6 @@ const App: React.FC = () => {
       {data ? <p>{data.message}</p> : <p>Loading...</p>}
     </div>
   );
-}
+};
 
 export default App;
