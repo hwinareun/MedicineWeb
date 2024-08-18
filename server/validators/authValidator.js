@@ -24,9 +24,19 @@ const checkPwdIValidator = [
   check("password").notEmpty()
 ];
 
+const dupCheckNickname = [
+  check("nickname").notEmpty()
+];
+
+const dupCheckId = [
+  check("id").notEmpty()
+];
+
 module.exports = {
   joinValidator,
   loginValidator,
   userInfoValidator,
-  checkPwdIValidator
+  checkPwdIValidator,
+  dupCheckNickname,
+  dupCheckId
 };
