@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const {
   createAccount,
-  cancelAccount,
+  deleteAccount,
   login,
   logout,
   showProfile,
-  modifyProfile,
+  updateUserInfo,
   checkPassword,
   findId,
   findPassword,
@@ -14,15 +14,15 @@ const {
   checkIdDuplication,
 } = require("../controllers/userController");
 const validateHandler = require("../middlewares/validateHandler");
-const { joinValidator, loginValidator, } = require("../validators/authValidator");
+const { joinValidator, loginValidator, userInfoValidator, } = require("../validators/authValidator");
 const authenticateJWT = require("../middlewares/auth");
 
 router.post("/join", joinValidator, validateHandler, createAccount);
-router.delete("/resign", authenticateJWT, cancelAccount);
+router.delete("/resign", authenticateJWT, deleteAccount);
 router.post("/login", loginValidator, validateHandler, login);
 router.post("/logout", authenticateJWT, logout);
-router.get("/profile", showProfile);
-router.put("/profile", modifyProfile);
+router.get("/profile", authenticateJWT, showProfile);
+router.put("/userInfo", authenticateJWT, userInfoValidator, validateHandler, updateUserInfo);
 router.post("/checkPwd", checkPassword);
 router.post("/findId", findId);
 router.post("/findPwd", findPassword);

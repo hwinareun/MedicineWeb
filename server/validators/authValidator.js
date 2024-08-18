@@ -1,6 +1,9 @@
 const { check } = require("express-validator");
 
-const loginValidator = [check("id").notEmpty(), check("password").notEmpty()];
+const loginValidator = [
+  check("id").notEmpty(),
+  check("password").notEmpty()
+];
 
 const joinValidator = [
   check("id").notEmpty(),
@@ -9,10 +12,16 @@ const joinValidator = [
   check("idQuestion").notEmpty(),
   check("idAnswer").notEmpty(),
   check("pwQuestion").notEmpty(),
-  check("pwAnswer").notEmpty(),
+  check("pwAnswer").notEmpty()
 ];
+
+const userInfoValidator = [
+  check("nickname").notEmpty(),
+  check("password").notEmpty()
+]
 
 module.exports = {
   joinValidator,
   loginValidator,
+  userInfoValidator
 };
