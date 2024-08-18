@@ -34,7 +34,7 @@ const createAccount = async (req, res, next) => {
 
     const results = await query(sql, values);
 
-    return res.status(StatusCodes.OK).json(results);
+    return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
 
@@ -58,7 +58,7 @@ const cancelAccount = async (req, res, next) => {
       throw new Error("User does not exist.");
     }
 
-    return res.status(StatusCodes.OK).json(results);
+    return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
 
@@ -81,7 +81,7 @@ const login = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, loginUser.password);
 
     if (!isMatch) {
-      throw new Error("Invalid id or password.");
+      throw new Error("invalid id or password.");
     }
 
     const token = jwt.sign({
@@ -105,7 +105,15 @@ const login = async (req, res, next) => {
   }
 };
 
-const logout = async (req, res) => { };
+const logout = async (req, res) => {
+  await req.session.destroy(error => {
+    if(error) {
+      return next(new CustomError('Failed to logout.', StatusCodes.INTERNAL_SERVER_ERROR));
+    }
+  });
+
+  return res.status(StatusCodes.OK).end();
+};
 
 const showProfile = async (req, res) => { };
 

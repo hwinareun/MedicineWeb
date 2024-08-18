@@ -20,7 +20,7 @@ const authenticateJWT = require("../middlewares/auth");
 router.post("/join", joinValidator, validateHandler, createAccount);
 router.delete("/resign", authenticateJWT, cancelAccount);
 router.post("/login", loginValidator, validateHandler, login);
-router.post("/logout", logout);
+router.post("/logout", authenticateJWT, logout);
 router.get("/profile", showProfile);
 router.put("/profile", modifyProfile);
 router.post("/checkPwd", checkPassword);
