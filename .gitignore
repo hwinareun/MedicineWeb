@@ -3,3 +3,6 @@ node_modules
 # 모든 env 파일 제외
 *.env
 **/*.env
+
+## .vscode 파일 제외
+.vscode

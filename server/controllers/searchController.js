@@ -1,5 +1,3 @@
-const search = async (req, res) => {
+const search = async (req, res) => {};
 
-};
-
-module.exports = {search};
+module.exports = { search };
