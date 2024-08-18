@@ -19,7 +19,8 @@ const {
   loginValidator,
   userInfoValidator,
   checkPwdIValidator,
-  dupCheckNickname
+  dupCheckNickname,
+  dupCheckId
 } = require("../validators/authValidator");
 const authenticateJWT = require("../middlewares/auth");
 
@@ -33,6 +34,6 @@ router.post("/checkPwd", authenticateJWT, checkPwdIValidator, validateHandler, c
 router.post("/findId", findId); // 아이디 로직문제로 나중에 의논 후 재설정
 router.post("/findPwd", findPassword); // 이이디와 같은 브랜치 작업예정이므로 추후 구현 예정
 router.post("/dupCheckNickname", dupCheckNickname, validateHandler, checkNicknameDuplication);
-router.post("/dupCheckId", checkIdDuplication);
+router.post("/dupCheckId", dupCheckId, validateHandler, checkIdDuplication);
 
 module.exports = router;

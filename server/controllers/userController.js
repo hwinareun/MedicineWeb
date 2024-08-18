@@ -202,7 +202,27 @@ const checkNicknameDuplication = async (req, res, next) => {
   }
 };
 
-const checkIdDuplication = async (req, res, next) => { };
+const checkIdDuplication = async (req, res, next) => {
+  const { id } = req.body;
+
+  try {
+    const sql = 'select * from Users where id = ?;';
+    const results = await query(sql, id);
+    if (results.length) {
+      throw new Error('Id is already in use.');
+    }
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'Id is already in use.') {
+      statusCode = StatusCodes.CONFLICT;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
 
 module.exports = {
   createAccount,

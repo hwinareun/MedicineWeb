@@ -28,10 +28,15 @@ const dupCheckNickname = [
   check("nickname").notEmpty()
 ];
 
+const dupCheckId = [
+  check("id").notEmpty()
+];
+
 module.exports = {
   joinValidator,
   loginValidator,
   userInfoValidator,
   checkPwdIValidator,
-  dupCheckNickname
+  dupCheckNickname,
+  dupCheckId
 };
