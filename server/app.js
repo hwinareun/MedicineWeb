@@ -4,6 +4,7 @@ const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
 const errorHandler = require('./middlewares/errorHandler');
+const session = require('express-session');
 
 const corsOptions = {
     origin: process.env.CORS_OPTIONS_ORIGIN,
@@ -12,6 +13,17 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(session({
+    secret: process.env.SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000
+    }
+}));
 
 const searchRouter = require('./routes/search');
 const userRouter = require('./routes/users');

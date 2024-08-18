@@ -14,11 +14,11 @@ const {
     checkIdDuplication
 } = require('../controllers/userController');
 const validator = require('../middlewares/validateHandler');
-const { joinValidator } = require('../validators/authValidator');
+const { joinValidator, loginValidator } = require('../validators/authValidator');
 
 router.post('/join', joinValidator, validator, createAccount);
 router.delete('/resign', cancelAccount);
-router.post('/login', login);
+router.post('/login', loginValidator, validator, login);
 router.post('/logout', logout);
 router.get('/profile', showProfile);
 router.put('/profile', modifyProfile);

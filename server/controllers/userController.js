@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs');
 const query = require('../config/db');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../utils/CustomError');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const createAccount = async (req, res, next) => {
     const {
@@ -25,15 +28,14 @@ const createAccount = async (req, res, next) => {
 
         return res.status(StatusCodes.OK).json(results);
     } catch (error) {
-        let statusCode;
+        let customError;
 
         if(error.code === 'ER_DUP_ENTRY') {
-            statusCode = StatusCodes.CONFLICT;
-        } else if(error.message === 'All fields are required'){
-            statusCode = StatusCodes.BAD_REQUEST;
+            customError = new CustomError(error.message, StatusCodes.CONFLICT);
+        } else if(error.message === 'All fields are required.'){
+            customError = new CustomError(error.message, StatusCodes.BAD_REQUEST);
         }
 
-        const customError = new CustomError(error.message, statusCode);
         next(customError);
     }
 };
@@ -42,18 +44,39 @@ const cancelAccount = async (req, res) => {
     // 회원 탈퇴
 };
 
-const login = async (req, res) => {
-    // const { id, password } = req.body;
+const login = async (req, res, next) => {
+    const { id, password } = req.body;
 
-    // const sql = 'select * from Users where id = ?;';
-    // const results = await query(sql, id);
+    try{
+        const sql = 'select * from Users where id = ?;';
+        const results = await query(sql, id);
+        
+        const loginUser = results[0];
+        const isMatch = await bcrypt.compare(password, loginUser.password);
     
-    // const loginUser = results[0];
-    // const isMatch = bcrypt.compare(password, loginUser.password);
+        if(!isMatch) {
+            throw new Error('Invalid id or password.')
+        }
+    
+        const token = jwt.sign({
+            id: loginUser.userId,
+            nickname: loginUser.nickname
+        }, process.env.JWT_SECRET_KEY, {
+            expiresIn: '1h'
+        });
+    
+        req.session.jwtToken = token;
+        
+        return res.status(StatusCodes.OK).json({jwtToken: req.session.jwtToken});
+    } catch (error) {
+        let customError;
 
-    // if(!isMatch) {
-    //     return res.status(StatusCodes.UNAUTHORIZED)
-    // }
+        if(error.message === 'Invalid id or password.'){
+            customError = new CustomError(error.message, StatusCodes.UNAUTHORIZED);
+        }
+
+        next(customError);
+    }
 };  
 
 const logout = async (req, res) => {
