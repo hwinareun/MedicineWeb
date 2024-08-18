@@ -81,7 +81,7 @@ const login = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, loginUser.password);
 
     if (!isMatch) {
-      throw new Error("invalid id or password.");
+      throw new Error("Invalid id or password.");
     }
 
     const payload = {
@@ -134,8 +134,11 @@ const updateUserInfo = async (req, res, next) => {
   const { nickname, password } = req.body;
 
   try {
+    const saltRound = 10;
+    const hashPassword = await bcrypt.hash(password, saltRound);
+
     const sql = 'update Users set nickname = ?, password = ? where userId = ?;';
-    const values = [nickname, password, userId];
+    const values = [nickname, hashPassword, userId];
     await query(sql, values);
 
     return res.status(StatusCodes.OK).end();
@@ -146,9 +149,34 @@ const updateUserInfo = async (req, res, next) => {
   }
 };
 
-const checkPassword = async (req, res) => { };
+const checkPassword = async (req, res, next) => {
+  const { userId } = req.user;
+  const { password } = req.body;
 
-const findId = async (req, res) => { };
+  try {
+    const sql = "select * from Users where userId = ?;";
+    const results = await query(sql, userId);
+
+    const loginUser = results[0];
+    const isMatch = await bcrypt.compare(password, loginUser.password);
+
+    if (!isMatch) {
+      throw new Error("Invalid id or password.");
+    }
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === "Invalid id or password.") {
+      statusCode = StatusCodes.UNAUTHORIZED;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
+
+const findId = async (req, res, next) => { };
 
 const findPassword = async (req, res) => { };
 
