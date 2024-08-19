@@ -3,7 +3,7 @@ import SearchFilter from '../components/search/SearchFilter';
 
 const Search = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center p-2 m-2 border-2">
       <SearchBox />
       <SearchFilter />
     </div>

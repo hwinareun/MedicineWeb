@@ -40,7 +40,7 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-2 p-2">
       {/* 드롭다운 */}
       <ul
         onClick={() => setView(!view)}
