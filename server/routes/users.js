@@ -23,7 +23,8 @@ const {
   dupCheckNicknameValidator,
   dupCheckIdValidator,
   findIdValidator,
-  requestResetPasswordValidator
+  requestResetPasswordValidator,
+  resetPasswordValidator
 } = require("../validators/authValidator");
 const authenticateJWT = require("../middlewares/auth");
 
@@ -36,7 +37,7 @@ router.put("/userInfo", authenticateJWT, userInfoValidator, validateHandler, upd
 router.post("/checkPwd", authenticateJWT, checkPwdIValidator, validateHandler, checkPassword);
 router.post("/findId", findIdValidator, validateHandler, findId);
 router.post("/resetPassword", requestResetPasswordValidator, validateHandler, requestResetPassword);
-router.put("/resetPassword", resetPassword);
+router.put("/resetPassword", resetPasswordValidator, validateHandler, resetPassword);
 router.post("/dupCheckNickname", dupCheckNicknameValidator, validateHandler, checkNicknameDuplication);
 router.post("/dupCheckId", dupCheckIdValidator, validateHandler, checkIdDuplication);
 

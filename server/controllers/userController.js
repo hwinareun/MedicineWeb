@@ -228,7 +228,24 @@ const requestResetPassword = async (req, res, next) => {
   }
 };
 
-const resetPassword = async (req, res, next) => {}
+const resetPassword = async (req, res, next) => {
+  const { id, password } = req.body;
+
+  try {
+    const saltRound = 10;
+    const hashPassword = await bcrypt.hash(password, saltRound);
+
+    const sql = 'update Users set password = ? where id = ?;';
+    const values = [hashPassword, id];
+    await query(sql, values);
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    return next(new CustomError(error.message, statusCode));
+  }
+}
 
 const checkNicknameDuplication = async (req, res, next) => {
   const { nickname } = req.body;

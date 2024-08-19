@@ -42,7 +42,11 @@ const requestResetPasswordValidator = [
   check("id").notEmpty(),
   check("pwQuestion").notEmpty(),
   check("pwAnswer").notEmpty()
-]
+];
+
+const resetPasswordValidator = [
+  check("password").notEmpty()
+];
 
 module.exports = {
   joinValidator,
@@ -52,5 +56,6 @@ module.exports = {
   dupCheckNicknameValidator,
   dupCheckIdValidator,
   findIdValidator,
-  requestResetPasswordValidator
+  requestResetPasswordValidator,
+  resetPasswordValidator
 };
