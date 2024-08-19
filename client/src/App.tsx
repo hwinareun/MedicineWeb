@@ -4,8 +4,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Search from './pages/Search';
 import Layout from './layout/Layout';
 import Error from './components/common/Error';
+import Main from './pages/Main';
 
 const routeList = [
+  {
+    path: '/',
+    element: <Main />,
+  },
   {
     path: '/search',
     element: <Search />,
