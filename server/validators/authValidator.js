@@ -38,6 +38,12 @@ const findIdValidator = [
   check("idAnswer").notEmpty()
 ];
 
+const requestResetPasswordValidator = [
+  check("id").notEmpty(),
+  check("pwQuestion").notEmpty(),
+  check("pwAnswer").notEmpty()
+]
+
 module.exports = {
   joinValidator,
   loginValidator,
@@ -45,5 +51,6 @@ module.exports = {
   checkPwdIValidator,
   dupCheckNicknameValidator,
   dupCheckIdValidator,
-  findIdValidator
+  findIdValidator,
+  requestResetPasswordValidator
 };

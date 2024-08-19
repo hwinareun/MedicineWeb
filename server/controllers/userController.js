@@ -185,24 +185,50 @@ const findId = async (req, res, next) => {
     const results = await query(sql, values);
 
     if (results.length === 0) {
-      throw new Error('ID does not exist.');
+      throw new Error('User does not exist.');
     }
 
     const user = results[0];
 
-    res.status(StatusCodes.OK).json({ id: user.id });
+    return res.status(StatusCodes.OK).json({ id: user.id });
   } catch (error) {
     let statusCode;
 
-    if (error.message === 'ID does not exist.') {
-      statusCode = StatusCodes.UNAUTHORIZED;
+    if (error.message === 'User does not exist.') {
+      statusCode = StatusCodes.NOT_FOUND;
     }
 
     return next(new CustomError(error.message, statusCode));
   }
 };
 
-const findPassword = async (req, res, next) => {};
+const requestResetPassword = async (req, res, next) => {
+  const { id, pwQuestion, pwAnswer } = req.body;
+
+  try {
+    const sql = 'select * from Users where id = ? and pwQuestion = ? and pwAnswer = ?;';
+    const values = [id, pwQuestion, pwAnswer];
+    const results = await query(sql, values);
+
+    if (results.length === 0) {
+      throw new Error('User does not exist.');
+    }
+
+    const user = results[0];
+
+    return res.status(StatusCodes.OK).json({id: user.id});
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'User does not exist.') {
+      statusCode = StatusCodes.BAD_REQUEST;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
+
+const resetPassword = async (req, res, next) => {}
 
 const checkNicknameDuplication = async (req, res, next) => {
   const { nickname } = req.body;
@@ -257,7 +283,8 @@ module.exports = {
   updateUserInfo,
   checkPassword,
   findId,
-  findPassword,
+  requestResetPassword,
+  resetPassword,
   checkNicknameDuplication,
   checkIdDuplication,
 };

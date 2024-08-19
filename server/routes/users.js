@@ -9,7 +9,8 @@ const {
   updateUserInfo,
   checkPassword,
   findId,
-  findPassword,
+  requestResetPassword,
+  resetPassword,
   checkNicknameDuplication,
   checkIdDuplication,
 } = require("../controllers/userController");
@@ -21,7 +22,8 @@ const {
   checkPwdIValidator,
   dupCheckNicknameValidator,
   dupCheckIdValidator,
-  findIdValidator
+  findIdValidator,
+  requestResetPasswordValidator
 } = require("../validators/authValidator");
 const authenticateJWT = require("../middlewares/auth");
 
@@ -33,7 +35,8 @@ router.get("/profile", authenticateJWT, showProfile); // 추후 작업예정 dru
 router.put("/userInfo", authenticateJWT, userInfoValidator, validateHandler, updateUserInfo);
 router.post("/checkPwd", authenticateJWT, checkPwdIValidator, validateHandler, checkPassword);
 router.post("/findId", findIdValidator, validateHandler, findId);
-router.post("/findPwd", findPassword); // 이이디와 같은 브랜치 작업예정이므로 추후 구현 예정
+router.post("/resetPassword", requestResetPasswordValidator, validateHandler, requestResetPassword);
+router.put("/resetPassword", resetPassword);
 router.post("/dupCheckNickname", dupCheckNicknameValidator, validateHandler, checkNicknameDuplication);
 router.post("/dupCheckId", dupCheckIdValidator, validateHandler, checkIdDuplication);
 
