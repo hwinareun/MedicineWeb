@@ -10,9 +10,9 @@ const Input = ({ value, placeholder, onChange }: Props) => {
       id="keyword"
       type="text"
       value={value}
-      placeholder={`${placeholder}(으)로 검색합니다.`}
+      placeholder={` ${placeholder}(으)로 검색합니다.`}
       onChange={onChange}
-      className="bg-blue-200 border-2 border-blue-400 placeholder:text-blue-400 h-9"
+      className="w-full bg-blue-200 border-2 border-blue-400 placeholder:text-blue-400 h-9 placeholder:text-xs"
     />
   );
 };

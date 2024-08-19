@@ -14,8 +14,8 @@ const SearchBox = () => {
     effects: '효능효과',
   };
 
-  const handleClick = (Med: string) => {
-    setSelectedMed(Med);
+  const handleClick = (med: string) => {
+    setSelectedMed(med);
     setView(false);
   };
 
@@ -40,13 +40,13 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="flex flex-row gap-2 p-2">
+    <div className="flex flex-row gap-2 px-6 whitespace-nowrap">
       {/* 드롭다운 */}
       <ul
         onClick={() => setView(!view)}
-        className="flex flex-col gap-1 p-2 font-bold bg-blue-200 Meds-center h-fit"
+        className="flex flex-col gap-1 p-2 font-bold bg-blue-200 h-fit"
       >
-        <div className="flex flex-row gap-1 Meds-center">
+        <div className="flex flex-row gap-1">
           {selectedMed}
           {view ? <FaAngleUp /> : <FaAngleDown />}
         </div>

@@ -5,6 +5,9 @@ interface Props {
 
 const Button = ({ children, searchItem }: Props) => {
   const handleSearch = () => {
+    if (searchItem === '') {
+      console.log(null);
+    }
     console.log(searchItem);
   };
 
