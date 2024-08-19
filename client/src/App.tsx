@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Search from './pages/Search';
+import Layout from './layout/Layout';
+import Error from './components/common/Error';
 
 const routeList = [
   {
@@ -14,7 +16,8 @@ const router = createBrowserRouter(
   routeList.map((item) => {
     return {
       ...item,
-      element: item.element,
+      element: <Layout>{item.element}</Layout>,
+      errorElement: <Error />,
     };
   })
 );

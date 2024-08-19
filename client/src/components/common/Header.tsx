@@ -2,7 +2,6 @@ import { FaList, FaSearch, FaUserAlt } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import Title1 from '../../assets/images/Title1.png';
 import { useNavigate } from 'react-router-dom';
-// import {useNavigate}
 
 const Header = () => {
   const navigate = useNavigate();
@@ -11,13 +10,13 @@ const Header = () => {
     navigate('/search');
   };
   const handlePostsClick = () => {
-    navigate('/search');
+    navigate('/posts');
   };
   const handleMyProfileClick = () => {
-    navigate('/search');
+    navigate('/myprofile');
   };
   const handleLoginClick = () => {
-    navigate('/search');
+    navigate('/login');
   };
 
   return (
