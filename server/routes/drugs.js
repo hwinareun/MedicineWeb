@@ -8,10 +8,12 @@ const {
   updateDrugData,
 } = require("../controllers/drugController");
 
+router.get("/update", updateDrugData);
+// router.get("/test", getAllDrugImageInfo);
 router.get("/:drugId", getDrugDetail);
 router.post("/", addDrug);
 router.put("/:drugId", modifyDrug);
 router.delete("/:drugId", removeDrug);
-router.get("/update", updateDrugData);
+
 
 module.exports = router;

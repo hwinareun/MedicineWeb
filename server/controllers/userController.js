@@ -3,8 +3,8 @@ const query = require("../config/db");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../utils/CustomError");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config();
+// const dotenv = require("dotenv");
+// dotenv.config();
 
 const createAccount = async (req, res, next) => {
   const {
