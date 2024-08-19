@@ -1,7 +1,23 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import SearchBox from './components/search/SearchBox';
-import SearchFilter from './components/search/SearchFilter';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Search from './pages/Search';
+
+const routeList = [
+  {
+    path: '/search',
+    element: <Search />,
+  },
+];
+
+const router = createBrowserRouter(
+  routeList.map((item) => {
+    return {
+      ...item,
+      element: item.element,
+    };
+  })
+);
 
 const App: React.FC = () => {
   const [data, setData] = useState<{ message: string } | null>(null);
@@ -20,10 +36,7 @@ const App: React.FC = () => {
   return (
     <div>
       {/*data ? <p>{data.message}</p> : <p>Loading...</p>*/}
-      <div className="search">
-        <SearchBox />
-        <SearchFilter />
-      </div>
+      <RouterProvider router={router} />
     </div>
   );
 };
