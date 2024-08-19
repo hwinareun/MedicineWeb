@@ -19,8 +19,9 @@ const {
   loginValidator,
   userInfoValidator,
   checkPwdIValidator,
-  dupCheckNickname,
-  dupCheckId
+  dupCheckNicknameValidator,
+  dupCheckIdValidator,
+  findIdValidator
 } = require("../validators/authValidator");
 const authenticateJWT = require("../middlewares/auth");
 
@@ -31,9 +32,9 @@ router.post("/logout", authenticateJWT, logout);
 router.get("/profile", authenticateJWT, showProfile); // 추후 작업예정 drug, favorite 이후
 router.put("/userInfo", authenticateJWT, userInfoValidator, validateHandler, updateUserInfo);
 router.post("/checkPwd", authenticateJWT, checkPwdIValidator, validateHandler, checkPassword);
-router.post("/findId", findId); // 아이디 로직문제로 나중에 의논 후 재설정
+router.post("/findId", findIdValidator, validateHandler, findId);
 router.post("/findPwd", findPassword); // 이이디와 같은 브랜치 작업예정이므로 추후 구현 예정
-router.post("/dupCheckNickname", dupCheckNickname, validateHandler, checkNicknameDuplication);
-router.post("/dupCheckId", dupCheckId, validateHandler, checkIdDuplication);
+router.post("/dupCheckNickname", dupCheckNicknameValidator, validateHandler, checkNicknameDuplication);
+router.post("/dupCheckId", dupCheckIdValidator, validateHandler, checkIdDuplication);
 
 module.exports = router;

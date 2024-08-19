@@ -176,9 +176,33 @@ const checkPassword = async (req, res, next) => {
   }
 };
 
-const findId = async (req, res, next) => { };
+const findId = async (req, res, next) => {
+  const { nickname, idQuestion, idAnswer } = req.body;
 
-const findPassword = async (req, res, next) => { };
+  try {
+    const sql = 'select * from Users where nickname = ? and idQuestion = ? and idAnswer = ?;';
+    const values = [nickname, idQuestion, idAnswer];
+    const results = await query(sql, values);
+
+    if (results.length === 0) {
+      throw new Error('ID does not exist.');
+    }
+
+    const user = results[0];
+
+    res.status(StatusCodes.OK).json({ id: user.id });
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'ID does not exist.') {
+      statusCode = StatusCodes.UNAUTHORIZED;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
+
+const findPassword = async (req, res, next) => {};
 
 const checkNicknameDuplication = async (req, res, next) => {
   const { nickname } = req.body;

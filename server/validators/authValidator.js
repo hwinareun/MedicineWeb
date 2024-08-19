@@ -24,12 +24,18 @@ const checkPwdIValidator = [
   check("password").notEmpty()
 ];
 
-const dupCheckNickname = [
+const dupCheckNicknameValidator = [
   check("nickname").notEmpty()
 ];
 
-const dupCheckId = [
+const dupCheckIdValidator = [
   check("id").notEmpty()
+];
+
+const findIdValidator = [
+  check("nickname").notEmpty(),
+  check("idQuestion").notEmpty(),
+  check("idAnswer").notEmpty()
 ];
 
 module.exports = {
@@ -37,6 +43,7 @@ module.exports = {
   loginValidator,
   userInfoValidator,
   checkPwdIValidator,
-  dupCheckNickname,
-  dupCheckId
+  dupCheckNicknameValidator,
+  dupCheckIdValidator,
+  findIdValidator
 };
