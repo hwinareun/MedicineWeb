@@ -117,12 +117,14 @@ const SearchFilter = () => {
     colorOptions.map((color) => (
       <p
         key={color.name}
-        onClick={() => dispatch(setSelectedColor(color.name))}
+        onClick={() =>
+          toggleSelection(selectedColor, color.name, setSelectedColor)
+        }
         className={`p-2 border-2 border-blue-400 cursor-pointer ${
           selectedColor === color.name ? 'bg-blue-200' : ''
         }`}
       >
-        <TbSquareRoundedFilled className={`text-3xl text-${color.color}`} />{' '}
+        <TbSquareRoundedFilled className={`text-3xl text-${color.color}`} />
         {color.name}
       </p>
     ));
