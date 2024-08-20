@@ -7,7 +7,7 @@ const session = require("express-session");
 
 const corsOptions = {
   origin: process.env.CORS_OPTIONS_ORIGIN,
-  credential: true,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -38,13 +38,10 @@ app.use("/users", userRouter);
 app.use("/favorites", favoriteRouter);
 app.use("/drugs", drugRouter);
 app.use("/posts", postRouter);
-app.get('/', (req, res) => {
-  return res.json({message: "hello world"});
-});
 
 app.use(errorHandler);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

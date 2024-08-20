@@ -1,6 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
 const axios = require('axios');
-const xml2js = require('xml2js');
 const query = require('../config/db');
 const {
   drugInfoFilter,
@@ -8,8 +7,6 @@ const {
   drugEtcFilter
 } = require('../utils/drugDataFilter');
 const getDifferenceByKeyAndToArray = require('../utils/getDifferenceByKey');
-
-const parser = new xml2js.Parser({ explicitArray: false });
 
 const getDrugDetail = async (req, res) => { };
 
