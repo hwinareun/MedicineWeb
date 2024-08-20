@@ -1,20 +1,13 @@
 interface Props {
   children: React.ReactNode;
-  searchItem: string;
+  onClick: () => void;
 }
 
-const Button = ({ children, searchItem }: Props) => {
-  const handleSearch = () => {
-    if (searchItem === '') {
-      console.log(null);
-    }
-    console.log(searchItem);
-  };
-
+const Button = ({ children, onClick }: Props) => {
   return (
     <div>
       <button
-        onClick={handleSearch}
+        onClick={onClick}
         className="p-1 text-black bg-blue-200 border-2 border-blue-400"
       >
         {children}

@@ -1,42 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { setSearchItem, setSelectedDrug } from '../../store/slices/searchSlice';
 
 const SearchBox = () => {
-  const [view, setView] = useState(false);
-  const [selectedMed, setSelectedMed] = useState('의약품명');
-  const [searchItem, setSearchItem] = useState('');
+  const dispatch = useDispatch();
+  const { searchItem, selectedDrug } = useSelector(
+    (state: RootState) => state.search
+  );
 
-  const searchMed = {
+  const [view, setView] = useState(false);
+
+  const searchCategoryDrug = {
     productName: '의약품명',
     ingredients: '성분명',
     effects: '효능효과',
   };
 
-  const handleClick = (med: string) => {
-    setSelectedMed(med);
-    setView(false);
+  const handleDropDownClick = (drug: string) => {
+    dispatch(setSelectedDrug(drug));
   };
 
-  useEffect(() => {
-    setSearchItem('');
-  }, [selectedMed]);
-
-  const dropDown = () => {
-    return (
-      <div className="font-normal">
-        <li onClick={() => handleClick(searchMed.productName)}>
-          {searchMed.productName}
-        </li>
-        <li onClick={() => handleClick(searchMed.ingredients)}>
-          {searchMed.ingredients}
-        </li>
-        <li onClick={() => handleClick(searchMed.effects)}>
-          {searchMed.effects}
-        </li>
-      </div>
-    );
+  const handleButtonClick = () => {
+    console.log(searchItem);
   };
 
   return (
@@ -47,18 +36,38 @@ const SearchBox = () => {
         className="flex flex-col gap-1 p-2 font-bold bg-blue-200 h-fit"
       >
         <div className="flex flex-row gap-1">
-          {selectedMed}
+          {selectedDrug}
           {view ? <FaAngleUp /> : <FaAngleDown />}
         </div>
-        {view && dropDown()}
+        {view && (
+          <div>
+            <li
+              onClick={() =>
+                handleDropDownClick(searchCategoryDrug.productName)
+              }
+            >
+              {searchCategoryDrug.productName}
+            </li>
+            <li
+              onClick={() =>
+                handleDropDownClick(searchCategoryDrug.ingredients)
+              }
+            >
+              {searchCategoryDrug.ingredients}
+            </li>
+            <li onClick={() => handleDropDownClick(searchCategoryDrug.effects)}>
+              {searchCategoryDrug.effects}
+            </li>
+          </div>
+        )}
       </ul>
       {/* 검색어 박스, 확인 버튼 */}
       <Input
         value={searchItem}
-        placeholder={selectedMed}
-        onChange={(e) => setSearchItem(e.target.value)}
+        placeholder={selectedDrug}
+        onChange={(e) => dispatch(setSearchItem(e.target.value))}
       />
-      <Button searchItem={searchItem}>확인</Button>
+      <Button onClick={handleButtonClick}>확인</Button>
     </div>
   );
 };
