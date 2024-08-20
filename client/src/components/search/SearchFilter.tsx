@@ -36,6 +36,24 @@ interface FilterOptionProps {
   isSelected: boolean;
 }
 
+const FilterOption: React.FC<FilterOptionProps> = ({
+  label,
+  icon: Icon,
+  onClick,
+  isSelected,
+}) => (
+  <div
+    onClick={onClick}
+    className={`p-2 px-5 border-2 border-blue-400 cursor-pointer ${
+      isSelected ? 'bg-blue-200' : ''
+    }`}
+    role="button"
+    aria-label={label}
+  >
+    <Icon className="text-3xl" /> {label}
+  </div>
+);
+
 const SearchFilter = () => {
   const dispatch = useDispatch();
   const {
@@ -50,30 +68,41 @@ const SearchFilter = () => {
     (state: RootState) => state.search
   );
 
-  const FilterOption: React.FC<FilterOptionProps> = ({
-    label,
-    icon: Icon,
-    onClick,
-    isSelected,
-  }) => (
-    <p
-      onClick={onClick}
-      className={`p-2 px-5 border-2 border-blue-400 cursor-pointer ${
-        isSelected ? 'bg-blue-200' : ''
-      }`}
-      role="button"
-      aria-label={label}
-    >
-      <Icon className="text-3xl" /> {label}
-    </p>
-  );
-
   const toggleSelection = (currentValue, action, setAction) => {
     if (currentValue === action) {
       dispatch(setAction(''));
     } else {
       dispatch(setAction(action));
     }
+  };
+
+  const selectedShapeOptions = () => {
+    const shapeOptions = [
+      { label: '원형', icon: TbCircle, value: '원형' },
+      { label: '타원형', icon: TbOvalVertical, value: '타원형' },
+      { label: '장방형', icon: TbRectangle, value: '장방형' },
+      { label: '반원형', icon: TbRectangleRoundedTop, value: '반원형' },
+      { label: '삼각형', icon: TbTriangle, value: '삼각형' },
+      { label: '사각형', icon: TbSquare, value: '사각형' },
+      { label: '마름모형', icon: TbDiamonds, value: '마름모형' },
+      { label: '오각형', icon: TbPentagon, value: '오각형' },
+      { label: '육각형', icon: TbHexagon, value: '육각형' },
+      { label: '팔각형', icon: TbOctagon, value: '팔각형' },
+      { label: '기타', icon: TbCircle, value: '기타' },
+      { label: '전체', icon: TbCircle, value: '전체' },
+    ];
+
+    return shapeOptions.map((item) => (
+      <FilterOption
+        key={item.value}
+        label={item.label}
+        icon={item.icon}
+        onClick={() =>
+          toggleSelection(selectedShape, item.value, setSelectedShape)
+        }
+        isSelected={selectedShape === item.value}
+      />
+    ));
   };
 
   const filters = {
@@ -113,20 +142,20 @@ const SearchFilter = () => {
     { color: 'white', name: '전체' },
   ];
 
-  const searchColorOptions = (selectedColor: string, setSelectedColor) =>
-    colorOptions.map((color) => (
-      <p
-        key={color.name}
+  const selectedColorOptions = () =>
+    colorOptions.map((item) => (
+      <div
+        key={item.name}
         onClick={() =>
-          toggleSelection(selectedColor, color.name, setSelectedColor)
+          toggleSelection(selectedColor, item.name, setSelectedColor)
         }
         className={`p-2 border-2 border-blue-400 cursor-pointer ${
-          selectedColor === color.name ? 'bg-blue-200' : ''
+          selectedColor === item.name ? 'bg-blue-200' : ''
         }`}
       >
-        <TbSquareRoundedFilled className={`text-3xl text-${color.color}`} />
-        {color.name}
-      </p>
+        <TbSquareRoundedFilled className={`text-3xl text-${item.color}`} />
+        {item.name}
+      </div>
     ));
 
   return (
@@ -249,108 +278,19 @@ const SearchFilter = () => {
       <div className="flex flex-col gap-1 p-2">
         <p>모양</p>
         <div className="flex flex-row gap-1">
-          <FilterOption
-            label="원형"
-            icon={TbCircle}
-            onClick={() =>
-              toggleSelection(selectedShape, '원형', setSelectedShape)
-            }
-            isSelected={selectedShape === '원형'}
-          />
-          <FilterOption
-            label="타원형"
-            icon={TbOvalVertical}
-            onClick={() =>
-              toggleSelection(selectedShape, '타원형', setSelectedShape)
-            }
-            isSelected={selectedShape === '타원형'}
-          />
-          <FilterOption
-            label="장방형"
-            icon={TbRectangle}
-            onClick={() =>
-              toggleSelection(selectedShape, '장방형', setSelectedShape)
-            }
-            isSelected={selectedShape === '장방형'}
-          />
-          <FilterOption
-            label="반원형"
-            icon={TbRectangleRoundedTop}
-            onClick={() =>
-              toggleSelection(selectedShape, '반원형', setSelectedShape)
-            }
-            isSelected={selectedShape === '반원형'}
-          />
-          <FilterOption
-            label="삼각형"
-            icon={TbTriangle}
-            onClick={() =>
-              toggleSelection(selectedShape, '삼각형', setSelectedShape)
-            }
-            isSelected={selectedShape === '삼각형'}
-          />
-          <FilterOption
-            label="사각형"
-            icon={TbSquare}
-            onClick={() =>
-              toggleSelection(selectedShape, '사각형', setSelectedShape)
-            }
-            isSelected={selectedShape === '사각형'}
-          />
-          <FilterOption
-            label="마름모형"
-            icon={TbDiamonds}
-            onClick={() =>
-              toggleSelection(selectedShape, '마름모형', setSelectedShape)
-            }
-            isSelected={selectedShape === '마름모형'}
-          />
-          <FilterOption
-            label="오각형"
-            icon={TbPentagon}
-            onClick={() =>
-              toggleSelection(selectedShape, '오각형', setSelectedShape)
-            }
-            isSelected={selectedShape === '오각형'}
-          />
-          <FilterOption
-            label="육각형"
-            icon={TbHexagon}
-            onClick={() =>
-              toggleSelection(selectedShape, '육각형', setSelectedShape)
-            }
-            isSelected={selectedShape === '육각형'}
-          />
-          <FilterOption
-            label="팔각형"
-            icon={TbOctagon}
-            onClick={() =>
-              toggleSelection(selectedShape, '팔각형', setSelectedShape)
-            }
-            isSelected={selectedShape === '팔각형'}
-          />
-          <FilterOption
-            label="기타"
-            icon={TbSquare}
-            onClick={() =>
-              toggleSelection(selectedShape, '기타', setSelectedShape)
-            }
-            isSelected={selectedShape === '기타'}
-          />
-          <FilterOption
-            label="전체"
-            icon={TbSquare}
-            onClick={() =>
-              toggleSelection(selectedShape, '전체', setSelectedShape)
-            }
-            isSelected={selectedShape === '전체'}
-          />
+          {selectedShapeOptions().slice(0, 6)}
+        </div>
+        <div className="flex flex-row gap-1">
+          {selectedShapeOptions().slice(6)}
         </div>
       </div>
       <div className="flex flex-col gap-1 p-2">
         색상
         <div className="flex flex-row gap-1">
-          {searchColorOptions(selectedColor, setSelectedColor)}
+          {selectedColorOptions().slice(0, 8)}
+        </div>
+        <div className="flex flex-row gap-1">
+          {selectedColorOptions().slice(8)}
         </div>
       </div>
       <div className="flex justify-end gap-2">
