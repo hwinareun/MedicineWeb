@@ -1,5 +1,5 @@
 import Input from '../common/Input';
-import { GiPill, GiPillDrop } from 'react-icons/gi';
+import { GiMedicinePills, GiPill, GiPillDrop } from 'react-icons/gi';
 import {
   TbCircle,
   TbDiamonds,
@@ -76,6 +76,50 @@ const SearchFilter = () => {
     }
   };
 
+  const selectedFormOptions = () => {
+    const formOptions = [
+      { label: '정제', icon: CiTablets1, value: '정제' },
+      { label: '경질캡슐', icon: GiPill, value: '경질캡슐' },
+      { label: '연질캡슐', icon: GiPillDrop, value: '연질캡슐' },
+      { label: '기타', icon: GiMedicinePills, value: '기타' },
+      { label: '전체', icon: GiMedicinePills, value: '전체' },
+    ];
+
+    return formOptions.map((item) => (
+      <FilterOption
+        key={item.value}
+        label={item.label}
+        icon={item.icon}
+        onClick={() =>
+          toggleSelection(selectedForm, item.value, setSelectedForm)
+        }
+        isSelected={selectedForm === item.value}
+      />
+    ));
+  };
+
+  const selectedLineOptions = () => {
+    const lineOptions = [
+      { label: '없음', icon: FiCircle, value: '없음' },
+      { label: '(+)형', icon: FiPlusCircle, value: '(+)형' },
+      { label: '(-)형', icon: FiMinusCircle, value: '(-)형' },
+      { label: '기타', icon: TbCircle, value: '기타' },
+      { label: '전체', icon: TbCircle, value: '전체' },
+    ];
+
+    return lineOptions.map((item) => (
+      <FilterOption
+        key={item.value}
+        label={item.label}
+        icon={item.icon}
+        onClick={() =>
+          toggleSelection(selectedLine, item.value, setSelectedLine)
+        }
+        isSelected={selectedLine === item.value}
+      />
+    ));
+  };
+
   const selectedShapeOptions = () => {
     const shapeOptions = [
       { label: '원형', icon: TbCircle, value: '원형' },
@@ -141,6 +185,28 @@ const SearchFilter = () => {
     { color: 'white', name: '투명' },
     { color: 'white', name: '전체' },
   ];
+  
+  const getColorClass = (colorName) => {
+    const colorMap = {
+      분홍: 'text-pink-500',
+      빨강: 'text-red-500',
+      주황: 'text-orange-500',
+      노랑: 'text-yellow-500',
+      연두: 'text-lime-500',
+      초록: 'text-green-500',
+      청록: 'text-teal-500',
+      파랑: 'text-blue-500',
+      남색: 'text-blue-900',
+      자주: 'text-fuchsia-500',
+      보라: 'text-violet-500',
+      회색: 'text-gray-500',
+      검정: 'text-black',
+      하양: 'text-white',
+      투명: 'text-gray-300',
+      전체: 'text-gray-300',
+    };
+    return colorMap[colorName];
+  };
 
   const selectedColorOptions = () =>
     colorOptions.map((item) => (
@@ -153,7 +219,9 @@ const SearchFilter = () => {
           selectedColor === item.name ? 'bg-blue-200' : ''
         }`}
       >
-        <TbSquareRoundedFilled className={`text-3xl text-${item.color}`} />
+        <TbSquareRoundedFilled
+          className={`text-3xl ${getColorClass(item.name)}`}
+        />
         {item.name}
       </div>
     ));
@@ -175,7 +243,6 @@ const SearchFilter = () => {
           />
         </div>
         <div>
-          {/* 추후 식별 이미지로 바꾸기 */}
           <img
             src={Logo4}
             alt="drugIdentification"
@@ -183,97 +250,13 @@ const SearchFilter = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-1 p-2">
-          제형
-          <div className="flex flex-row gap-1">
-            <FilterOption
-              label="정제"
-              icon={CiTablets1}
-              onClick={() =>
-                toggleSelection(selectedForm, '정제', setSelectedForm)
-              }
-              isSelected={selectedForm === '정제'}
-            />
-            <FilterOption
-              label="경질캡슐"
-              icon={GiPill}
-              onClick={() =>
-                toggleSelection(selectedForm, '경질캡슐', setSelectedForm)
-              }
-              isSelected={selectedForm === '경질캡슐'}
-            />
-            <FilterOption
-              label="연질캡슐"
-              icon={GiPillDrop}
-              onClick={() =>
-                toggleSelection(selectedForm, '연질캡슐', setSelectedForm)
-              }
-              isSelected={selectedForm === '연질캡슐'}
-            />
-            <FilterOption
-              label="기타"
-              icon={GiPill}
-              onClick={() =>
-                toggleSelection(selectedForm, '기타', setSelectedForm)
-              }
-              isSelected={selectedForm === '기타'}
-            />
-            <FilterOption
-              label="전체"
-              icon={CiTablets1}
-              onClick={() =>
-                toggleSelection(selectedForm, '전체', setSelectedForm)
-              }
-              isSelected={selectedForm === '전체'}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col gap-1 p-2">
-          분할선
-          <div className="flex flex-row gap-1">
-            <FilterOption
-              label="없음"
-              icon={FiCircle}
-              onClick={() =>
-                toggleSelection(selectedLine, '없음', setSelectedLine)
-              }
-              isSelected={selectedLine === '없음'}
-            />
-            <FilterOption
-              label="플러스형"
-              icon={FiPlusCircle}
-              onClick={() =>
-                toggleSelection(selectedLine, '플러스', setSelectedLine)
-              }
-              isSelected={selectedLine === '플러스'}
-            />
-            <FilterOption
-              label="마이너스형"
-              icon={FiMinusCircle}
-              onClick={() =>
-                toggleSelection(selectedLine, '마이너스', setSelectedLine)
-              }
-              isSelected={selectedLine === '마이너스'}
-            />
-            <FilterOption
-              label="기타"
-              icon={FiCircle}
-              onClick={() =>
-                toggleSelection(selectedLine, '기타', setSelectedLine)
-              }
-              isSelected={selectedLine === '기타'}
-            />
-            <FilterOption
-              label="전체"
-              icon={FiCircle}
-              onClick={() =>
-                toggleSelection(selectedLine, '전체', setSelectedLine)
-              }
-              isSelected={selectedLine === '전체'}
-            />
-          </div>
-        </div>
+      <div className="flex flex-col gap-1 p-2">
+        <p>제형</p>
+        <div className="flex flex-row gap-1">{selectedFormOptions()}</div>
+      </div>
+      <div className="flex flex-col gap-1 p-2">
+        <p>분할선</p>
+        <div className="flex flex-row gap-1">{selectedLineOptions()}</div>
       </div>
       <div className="flex flex-col gap-1 p-2">
         <p>모양</p>
