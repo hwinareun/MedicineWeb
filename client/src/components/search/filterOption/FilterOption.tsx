@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { toggleSelection } from '../../../store/slices/filterSlice';
-import { TbSquareRoundedFilled } from 'react-icons/tb';
 
 interface FilterOptionProps {
   label: string;
@@ -23,6 +22,8 @@ const FilterOption: React.FC<FilterOptionProps> = ({
     (state: RootState) => state.filter[field] === value
   );
 
+  const iconStyle = color ? { color } : {};
+
   return (
     <div
       onClick={() => dispatch(toggleSelection({ field, value }))}
@@ -30,9 +31,7 @@ const FilterOption: React.FC<FilterOptionProps> = ({
       role="button"
       aria-label={label}
     >
-      <Icon
-        className={`text-3xl ${Icon === TbSquareRoundedFilled ? `text-${color}` : ''}`}
-      />
+      <Icon className="text-3xl" style={iconStyle} />
       {label}
     </div>
   );

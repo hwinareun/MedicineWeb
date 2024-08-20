@@ -1,4 +1,8 @@
-import { TbSquareRoundedFilled } from 'react-icons/tb';
+import {
+  TbHelpSquareRoundedFilled,
+  TbSquareRounded,
+  TbSquareRoundedFilled,
+} from 'react-icons/tb';
 import FilterOption from './FilterOption';
 
 const SelectedColor = () => {
@@ -11,56 +15,56 @@ const SelectedColor = () => {
           icon={TbSquareRoundedFilled}
           field="selectedColor"
           value="분홍"
-          color="pink-500"
+          color="pink"
         />
         <FilterOption
           label="빨강"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="빨강"
-          color="red-500"
+          color="red"
         />
         <FilterOption
           label="주황"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="주황"
-          color="orange-500"
+          color="orange"
         />
         <FilterOption
           label="노랑"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="노랑"
-          color="yellow-500"
+          color="yellow"
         />
         <FilterOption
           label="연두"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="연두"
-          color="lime-500"
+          color="lime"
         />
         <FilterOption
           label="초록"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="초록"
-          color="green-500"
+          color="green"
         />
         <FilterOption
           label="청록"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="청록"
-          color="teal-500"
+          color="teal"
         />
         <FilterOption
           label="파랑"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="파랑"
-          color="blue-500"
+          color="blue"
         />
       </div>
       <div className="flex flex-row gap-1">
@@ -69,28 +73,28 @@ const SelectedColor = () => {
           icon={TbSquareRoundedFilled}
           field="selectedColor"
           value="남색"
-          color="blue-900"
+          color="darkblue"
         />
         <FilterOption
           label="자주"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="자주"
-          color="fuchsia-500"
+          color="fuchsia"
         />
         <FilterOption
           label="보라"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="보라"
-          color="violet-500"
+          color="indigo"
         />
         <FilterOption
           label="회색"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="회색"
-          color="gray-500"
+          color="gray"
         />
         <FilterOption
           label="검정"
@@ -108,17 +112,17 @@ const SelectedColor = () => {
         />
         <FilterOption
           label="투명"
-          icon={TbSquareRoundedFilled}
+          icon={TbSquareRounded}
           field={'selectedColor'}
           value="투명"
-          color="gray-300"
+          color="white"
         />
         <FilterOption
           label="전체"
-          icon={TbSquareRoundedFilled}
+          icon={TbHelpSquareRoundedFilled}
           field={'selectedColor'}
           value="전체"
-          color="gray-300"
+          color="white"
         />
       </div>
     </div>
