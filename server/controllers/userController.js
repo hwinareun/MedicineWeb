@@ -3,8 +3,8 @@ const query = require("../config/db");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../utils/CustomError");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-dotenv.config();
+// const dotenv = require("dotenv");
+// dotenv.config();
 
 const createAccount = async (req, res, next) => {
   const {
@@ -176,9 +176,76 @@ const checkPassword = async (req, res, next) => {
   }
 };
 
-const findId = async (req, res, next) => { };
+const findId = async (req, res, next) => {
+  const { nickname, idQuestion, idAnswer } = req.body;
 
-const findPassword = async (req, res, next) => { };
+  try {
+    const sql = 'select * from Users where nickname = ? and idQuestion = ? and idAnswer = ?;';
+    const values = [nickname, idQuestion, idAnswer];
+    const results = await query(sql, values);
+
+    if (results.length === 0) {
+      throw new Error('User does not exist.');
+    }
+
+    const user = results[0];
+
+    return res.status(StatusCodes.OK).json({ id: user.id });
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'User does not exist.') {
+      statusCode = StatusCodes.NOT_FOUND;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
+
+const requestResetPassword = async (req, res, next) => {
+  const { id, pwQuestion, pwAnswer } = req.body;
+
+  try {
+    const sql = 'select * from Users where id = ? and pwQuestion = ? and pwAnswer = ?;';
+    const values = [id, pwQuestion, pwAnswer];
+    const results = await query(sql, values);
+
+    if (results.length === 0) {
+      throw new Error('User does not exist.');
+    }
+
+    const user = results[0];
+
+    return res.status(StatusCodes.OK).json({id: user.id});
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'User does not exist.') {
+      statusCode = StatusCodes.BAD_REQUEST;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  const { id, password } = req.body;
+
+  try {
+    const saltRound = 10;
+    const hashPassword = await bcrypt.hash(password, saltRound);
+
+    const sql = 'update Users set password = ? where id = ?;';
+    const values = [hashPassword, id];
+    await query(sql, values);
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    return next(new CustomError(error.message, statusCode));
+  }
+}
 
 const checkNicknameDuplication = async (req, res, next) => {
   const { nickname } = req.body;
@@ -233,7 +300,8 @@ module.exports = {
   updateUserInfo,
   checkPassword,
   findId,
-  findPassword,
+  requestResetPassword,
+  resetPassword,
   checkNicknameDuplication,
   checkIdDuplication,
 };
