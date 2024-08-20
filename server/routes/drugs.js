@@ -6,10 +6,11 @@ const {
   modifyDrug,
   removeDrug,
   updateDrugData,
+  checkUpdateDrugData
 } = require("../controllers/drugController");
 
 router.get("/update", updateDrugData);
-// router.get("/test", getAllDrugImageInfo);
+router.get("/checkUpdate", checkUpdateDrugData);
 router.get("/:drugId", getDrugDetail);
 router.post("/", addDrug);
 router.put("/:drugId", modifyDrug);
