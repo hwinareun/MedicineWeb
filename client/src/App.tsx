@@ -6,6 +6,7 @@ import Layout from './layout/Layout';
 import Error from './components/common/Error';
 import Main from './pages/Main';
 import Login from './pages/Login';
+import Join from './pages/Join';
 
 const routeList = [
   {
@@ -15,6 +16,10 @@ const routeList = [
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/join',
+    element: <Join />,
   },
   {
     path: '/search',
