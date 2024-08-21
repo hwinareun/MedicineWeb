@@ -8,6 +8,7 @@ import { DrugData } from '../../types/drug.type';
 import {
   setSearchResults,
   setSelectedDrugCategory,
+  setSearchDrugItem,
 } from '../../store/slices/drugSlice';
 
 const searchCategoryDrug = {
@@ -18,41 +19,33 @@ const searchCategoryDrug = {
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const { selectedDrugCategory } = useSelector(
+  const { selectedDrugCategory, searchDrug } = useSelector(
     (state: RootState) => state.drug
   );
   const drugItems = useSelector((state: RootState) => state.drug.data);
   const [view, setView] = useState(false);
-  const [drug, setDrug] = useState<string>('');
 
   const handleDropDownClick = (drug: string) => {
     dispatch(setSelectedDrugCategory(drug));
   };
 
   const handleSearch = () => {
-    const drugWithOutSpaces = drug.replace(/\s/g, '').toLowerCase();
+    const drugWithOutSpaces = searchDrug.replace(/\s/g, '').toLowerCase();
+    const keywords = searchDrug.toLowerCase().split(' ').filter(Boolean);
 
-    const keywords = drug
-      .toLowerCase()
-      .split(' ')
-      .filter((keyword) => keyword.trim() !== '');
+    const searchDrugs = drugItems.filter((item: DrugData) =>
+      keywords.every(
+        (keyword) =>
+          item.productName.toLowerCase().includes(keyword) ||
+          item.productName
+            .toLowerCase()
+            .replace(/\s/g, '')
+            .includes(drugWithOutSpaces)
+      )
+    );
 
-    const searchDrugs =
-      keywords.length > 0
-        ? drugItems.filter(
-            (item: DrugData) =>
-              keywords.every((keyword) =>
-                item.productName.toLowerCase().includes(keyword)
-              ) ||
-              item.productName
-                .toLowerCase()
-                .replace(/\s/g, '')
-                .includes(drugWithOutSpaces)
-          )
-        : [];
-
-    console.log(searchDrugs);
     dispatch(setSearchResults(searchDrugs));
+    console.log(searchDrug);
   };
 
   const handleSearchEnter = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -62,7 +55,7 @@ const SearchBox = () => {
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDrug(event.target.value);
+    dispatch(setSearchDrugItem(event.target.value));
   };
 
   return (
@@ -90,10 +83,10 @@ const SearchBox = () => {
         )}
       </ul>
       <Input
-        value={drug}
+        value={searchDrug}
         placeholder={selectedDrugCategory as string}
         onChange={handleSearchChange}
-        onKeyDown={(e) => handleSearchEnter(e)}
+        onKeyDown={handleSearchEnter}
       />
       <PositiveButton onClick={handleSearch}>확인</PositiveButton>
     </div>

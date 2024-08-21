@@ -15,4 +15,5 @@ export interface DrugState {
   data: DrugData[];
   selectedDrugCategory?: string;
   searchResults: DrugData[];
+  searchDrug: string;
 }

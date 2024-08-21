@@ -24,7 +24,7 @@ const SearchFilter = () => {
     selectedColor,
   } = useSelector((state: RootState) => state.filter);
 
-  const { searchResults, selectedDrugCategory } = useSelector(
+  const { selectedDrugCategory, searchDrug } = useSelector(
     (state: RootState) => state.drug
   );
 
@@ -38,7 +38,7 @@ const SearchFilter = () => {
   };
 
   const applyFilters = () => {
-    console.log(`${selectedDrugCategory}: ${searchResults}`);
+    console.log(`${selectedDrugCategory}: ${searchDrug}`);
     console.log(filters);
   };
 
