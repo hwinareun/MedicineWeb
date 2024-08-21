@@ -3,6 +3,7 @@ import Reference from '../components/reference/Reference';
 import SearchBox from '../components/search/SearchBox';
 import SearchFilter from '../components/search/SearchFilter';
 import { DrugData } from '../types/drug.type';
+import ReferenceEmpty from '../components/reference/ReferenceEmpty';
 
 const Search = () => {
   const [results, setResults] = useState<DrugData[]>([]);
@@ -13,11 +14,7 @@ const Search = () => {
         <SearchBox setResults={setResults} />
         <SearchFilter setResults={setResults} />
       </div>
-      {results.length > 0 ? (
-        <Reference data={results} />
-      ) : (
-        <p>검색 결과가 없습니다.</p>
-      )}
+      {results.length > 0 ? <Reference data={results} /> : <ReferenceEmpty />}
     </div>
   );
 };
