@@ -15,30 +15,24 @@ const searchCategoryDrug = {
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const { searchItem, selectedDrug } = useSelector(
-    (state: RootState) => state.search
-  );
-  const [state, setState] = useState({
-    view: false,
-    searchResults: [],
-    searchParams: {
-      productName: '',
-      form: '',
-      color: '',
-    },
+  const { selectedDrug } = useSelector((state: RootState) => state.search);
+  const [view, setView] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    productName: '',
+    ingredients: '',
+    effects: '',
   });
+  const [query, setQuery] = useState<string>('');
 
   const fetchSearchResults = async () => {
     try {
-      setState((prev) => ({ ...prev }));
       const data = await fetchDrugs({
-        ...state.searchParams,
-        productName: searchItem,
+        ...searchParams,
+        productName: query,
       });
-      setState((prev) => ({
-        ...prev,
-        searchResults: data,
-      }));
+
+      setSearchResults(data);
     } catch (error) {
       console.error(error);
     }
@@ -46,23 +40,20 @@ const SearchBox = () => {
 
   const handleDropDownClick = (drug: string) => {
     dispatch(setSelectedDrug(drug));
-    setState((prev) => ({
+    setSearchParams((prev) => ({
       ...prev,
-      searchParams: {
-        ...prev.searchParams,
-        productName: drug,
-      },
+      productName: drug,
     }));
   };
 
   const handleButtonClick = () => {
-    console.log(searchItem);
+    console.log(query);
     fetchSearchResults();
   };
 
   const handleSearchEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      console.log(searchItem);
+      console.log(query);
       fetchSearchResults();
     }
   };
@@ -70,14 +61,14 @@ const SearchBox = () => {
   return (
     <div className="flex flex-row justify-between gap-4 px-6 py-5 my-5">
       <ul
-        onClick={() => setState((prev) => ({ ...prev, view: !prev.view }))}
+        onClick={() => setView(!view)}
         className="flex flex-col items-center text-sm"
       >
         <div className="flex flex-row items-center justify-center w-20 h-10 gap-1 font-semibold border-b-2 rounded-lg border-b-medicineNeutral bg-medicineSecondary">
           {selectedDrug}
-          {state.view ? <FaAngleUp /> : <FaAngleDown />}
+          {view ? <FaAngleUp /> : <FaAngleDown />}
         </div>
-        {state.view && (
+        {view && (
           <div>
             {Object.entries(searchCategoryDrug).map(([key, value]) => (
               <li
@@ -92,13 +83,13 @@ const SearchBox = () => {
         )}
       </ul>
       <Input
-        value={searchItem}
+        value={query}
         placeholder={selectedDrug}
         onChange={(e) => dispatch(setSearchItem(e.target.value))}
         onKeyDown={(e) => handleSearchEnter(e)}
       />
       <PositiveButton onClick={handleButtonClick}>확인</PositiveButton>
-      {state.searchResults}
+      {searchResults}
     </div>
   );
 };

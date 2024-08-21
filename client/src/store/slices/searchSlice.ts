@@ -1,8 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { DrugData, DrugState } from '../../types/drug.type';
 
-const initialState = {
+const initialState: DrugState = {
   selectedDrug: '의약품명',
-  searchItem: '',
+  searchResults: [],
+  data: [],
 };
 
 const searchSlice = createSlice({
@@ -15,6 +17,9 @@ const searchSlice = createSlice({
     },
     setSearchItem(state, action: PayloadAction<string>) {
       state.searchItem = action.payload;
+    },
+    setSearchResults(state, action: PayloadAction<DrugData[]>) {
+      state.searchResults = action.payload;
     },
   },
 });
