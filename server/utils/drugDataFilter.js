@@ -1,6 +1,6 @@
 const drugInfoFilter = async (items) => (
     await items.map(item => ({
-        itemSeq: item.itemSeq,
+        itemSeq: Number(item.itemSeq),
         itemName: item.itemName,
         efcyQesitm: item.efcyQesitm,
         useMethodQesitm: item.useMethodQesitm,
@@ -12,9 +12,10 @@ const drugInfoFilter = async (items) => (
 
 const drugImageInfoFilter = async (items) => (
     await items.map(item => ({
-        itemSeq: item.ITEM_SEQ,
+        itemSeq: Number(item.ITEM_SEQ),
         printFront: item.PRINT_FRONT,
         printBack: item.PRINT_BACK,
+        drugShape: item.DRUG_SHAPE,
         colorClass1: item.COLOR_CLASS1,
         colorClass2: item.COLOR_CLASS2,
         lineFront: item.LINE_FRONT,
@@ -24,7 +25,7 @@ const drugImageInfoFilter = async (items) => (
 
 const drugEtcFilter = async (items) => (
     await items.map(item => ({
-        itemSeq: item.ITEM_SEQ,
+        itemSeq: Number(item.ITEM_SEQ),
         ingrEngName: item.INGR_ENG_NAME,
         ingrKorName: item.INGR_KOR_NAME,
         dosageForm: item.DOSAGE_FORM,
