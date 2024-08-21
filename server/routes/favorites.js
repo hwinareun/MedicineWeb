@@ -9,6 +9,6 @@ const { authenticateJWT } = require('../middlewares/auth');
 
 router.get("/", getFavorites);
 router.post("/:drugId", authenticateJWT, addFavorite);
-router.delete("/:drugId", removeFavorite);
+router.delete("/:drugId", authenticateJWT, removeFavorite);
 
 module.exports = router;
