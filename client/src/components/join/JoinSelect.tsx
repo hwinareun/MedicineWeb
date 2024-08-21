@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+
 interface Props {
   label: string;
   options: string[];
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  //   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (value: string) => void;
 }
 
 export const JoinSelect: React.FC<Props> = ({
@@ -11,6 +14,15 @@ export const JoinSelect: React.FC<Props> = ({
   value,
   onChange,
 }) => {
+  useEffect(() => {
+    // 초기 질문 값 저장
+    onChange(options[0]);
+  }, []);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(e.target.value);
+  };
+
   return (
     <>
       <label className="mr-1 flex-1 text-right pb-1" htmlFor="">
@@ -19,7 +31,7 @@ export const JoinSelect: React.FC<Props> = ({
       <select
         name=""
         id={value}
-        onChange={onChange}
+        onChange={handleOnChange}
         value={value}
         className="border border-blue-400 focus:outline-blue-800 placeholder:text-black-400 w-60 h-9 placeholder:text-ts rounded p-1"
       >

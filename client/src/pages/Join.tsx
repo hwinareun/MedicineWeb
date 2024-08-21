@@ -21,8 +21,8 @@ const Join = () => {
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
-  const handleIdQuestionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setIdQuestion(e.target.value);
+  const handleIdQuestionChange = (value: string) => {
+    setIdQuestion(value);
   };
   const handleIdAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIdAnswer(e.target.value);
@@ -33,10 +33,8 @@ const Join = () => {
   const handlePasswordReChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordRe(e.target.value);
   };
-  const handlePasswordQuestionChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setPasswordQuestion(e.target.value);
+  const handlePwQuestionChange = (value: string) => {
+    setPwQuestion(value);
   };
   const handlePasswordAnswerChange = (
     e: React.ChangeEvent<HTMLInputElement>
