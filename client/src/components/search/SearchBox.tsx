@@ -28,6 +28,12 @@ const SearchBox = () => {
     console.log(searchItem);
   };
 
+  const handleSearchEnter = (e) => {
+    if (e.key === 'Enter') {
+      console.log(searchItem);
+    }
+  };
+
   return (
     <div className="flex flex-row gap-2 px-6 whitespace-nowrap">
       {/* 드롭다운 */}
@@ -66,6 +72,7 @@ const SearchBox = () => {
         value={searchItem}
         placeholder={selectedDrug}
         onChange={(e) => dispatch(setSearchItem(e.target.value))}
+        onKeyDown={(e) => handleSearchEnter(e)}
       />
       <Button onClick={handleButtonClick}>확인</Button>
     </div>
