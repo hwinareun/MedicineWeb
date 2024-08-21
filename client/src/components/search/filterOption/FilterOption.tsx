@@ -27,11 +27,11 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   return (
     <div
       onClick={() => dispatch(toggleSelection({ field, value }))}
-      className={`p-2 px-5 border-2 border-blue-400 cursor-pointer ${isSelected ? 'bg-blue-200' : ''}`}
+      className={`py-2 px-4 items-center text-xs text-center justify-center rounded-lg bg-medicineSecondary cursor-pointer ${isSelected ? 'bg-medicinePositive' : ''}`}
       role="button"
       aria-label={label}
     >
-      <Icon className="text-3xl" style={iconStyle} />
+      <Icon className="m-1 text-3xl" style={iconStyle} />
       {label}
     </div>
   );

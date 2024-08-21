@@ -10,6 +10,8 @@ export default {
         medicinePositive: '#94C2FF',
         medicinePoint: '#0000E3',
         medicineNegative: '#ECECEC',
+        medicineFontBlue: '#60A5FA',
+        medicineFontBlack: '#000000',
       },
     },
   },

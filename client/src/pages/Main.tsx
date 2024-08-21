@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Logo1 from '../assets/images/Logo1.png';
-import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { RootState } from '../store';
 import { setSearchItem } from '../store/slices/searchSlice';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { PositiveButton } from '../components/common/Button';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const Main = () => {
             onChange={(e) => dispatch(setSearchItem(e.target.value))}
             onKeyDown={(e) => handleSearchEnter(e)}
           />
-          <Button onClick={handleButtonClick}>확인</Button>
+          <PositiveButton onClick={handleButtonClick}>확인</PositiveButton>
         </div>
       </div>
       {/* 로그인 기능 구현 후 적용 */}
