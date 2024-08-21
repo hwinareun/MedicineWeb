@@ -5,6 +5,8 @@ import { JoinSelect } from '../components/join/JoinSelect';
 import { JoinButton } from '../components/join/JoinButton';
 import { join } from '../apis/auth.api.';
 import { useNavigate } from 'react-router-dom';
+import { JoinDupCheckButton } from '../components/join/JoinDupCheckButton';
+import { dupCheckId, dupCheckNickname } from '../apis/dupCheck.api';
 
 const Join = () => {
   const [nickname, setNickname] = useState('');
@@ -16,6 +18,8 @@ const Join = () => {
   const [pwQuestion, setPwQuestion] = useState('');
   const [pwAnswer, setPwAnswer] = useState('');
   const [wanrPasswordCheck, setWarnPasswordCheck] = useState('');
+  const [warnNicknameCheck, setWarnNicknameCheck] = useState('');
+  const [warnIdCheck, setWarnIdCheck] = useState('');
   const navigate = useNavigate();
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,30 +66,72 @@ const Join = () => {
         .catch((err) => console.log(err));
     }
   };
+  const handleNicknameCheck = () => {
+    if (nickname) {
+      dupCheckNickname(nickname)
+        .then((res) => {
+          setWarnNicknameCheck('사용 가능한 닉네임입니다');
+        })
+        .catch((err) => {
+          if (err.response.status === 409) {
+            setWarnNicknameCheck('중복된 닉네임입니다');
+          }
+          console.log(err);
+        });
+    } else {
+      setWarnNicknameCheck('닉네임을 입력해주세요');
+    }
+  };
+  const handleIdCheck = () => {
+    if (id) {
+      dupCheckId(id)
+        .then((res) => {
+          setWarnIdCheck('사용 가능한 아이디입니다');
+        })
+        .catch((err) => {
+          if (err.response.status === 409) {
+            setWarnIdCheck('중복된 아이디입니다');
+          }
+          console.log(err);
+        });
+    } else {
+      setWarnIdCheck('아이디를 입력해주세요');
+    }
+  };
 
   return (
     <div className="flex-grow flex items-center justify-center">
-      <div className="bg-blue-50 p-5 w-fit h-fit flex flex-col items-center rounded shadow-md">
-        <h3 className="text-2xl font-bold mb-5">회원가입</h3>
+      <div className="bg-blue-50 py-5 pl-10 pr-24 w-fit h-fit flex flex-col items-center rounded shadow-md">
+        <h3 className="text-2xl font-bold mb-5 pl-16">회원가입</h3>
         <form
           onSubmit={handleJoin}
           className="flex flex-col gap-1 w-fit items-center"
         >
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex w-full justify-between h-fit items-center relative">
               <JoinInput
                 label="닉네임"
                 value={nickname}
                 onChange={handleNicknameChange}
               />
+              <JoinDupCheckButton onClick={handleNicknameCheck} />
             </div>
-            <WarnText warnText={''} />
+            <WarnText
+              warnText={warnNicknameCheck}
+              success={
+                warnNicknameCheck !== '' && warnNicknameCheck.includes('가능')
+              }
+            />
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex w-full justify-between h-fit items-center relative">
               <JoinInput label="아이디" value={id} onChange={handleIdChange} />
+              <JoinDupCheckButton onClick={handleIdCheck} />
             </div>
-            <WarnText warnText={''} />
+            <WarnText
+              warnText={warnIdCheck}
+              success={warnIdCheck !== '' && warnIdCheck.includes('가능')}
+            />
           </div>
           <div className="flex flex-col w-full">
             <div className="flex w-full justify-between h-fit items-center">
@@ -149,9 +195,11 @@ const Join = () => {
             </div>
             <WarnText warnText={''} />
           </div>
-          <JoinButton />
+          <div className="pl-14">
+            <JoinButton />
+          </div>
         </form>
-        <p className="text-xs mt-2">
+        <p className="text-xs mt-2 pl-14">
           이미 회원이라면?
           <a href="/login" className="underline ml-1">
             로그인하러 가기
