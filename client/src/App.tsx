@@ -1,16 +1,36 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Login } from './pages/Login';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Search from './pages/Search';
+import Layout from './layout/Layout';
+import Error from './components/common/Error';
+import Main from './pages/Main';
+import { Login } from './pages/Login';
 
 const routeList = [
+  {
+    path: '/',
+    element: <Main />,
+  },
   {
     path: '/login',
     element: <Login />,
   },
+  {
+    path: '/search',
+    element: <Search />,
+  },
 ];
 
-const router = createBrowserRouter(routeList);
+const router = createBrowserRouter(
+  routeList.map((item) => {
+    return {
+      ...item,
+      element: <Layout>{item.element}</Layout>,
+      errorElement: <Error />,
+    };
+  })
+);
 
 const App: React.FC = () => {
   const [data, setData] = useState<{ message: string } | null>(null);
@@ -28,7 +48,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {data ? <p>{data.message}</p> : <p>Loading...</p>}
+      {/*data ? <p>{data.message}</p> : <p>Loading...</p>*/}
       <RouterProvider router={router} />
     </div>
   );

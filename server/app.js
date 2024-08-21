@@ -1,17 +1,17 @@
+require('dotenv').config({ path: __dirname + '/.env' });
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const dotenv = require("dotenv");
-dotenv.config();
 const errorHandler = require("./middlewares/errorHandler");
 const session = require("express-session");
 
 const corsOptions = {
   origin: process.env.CORS_OPTIONS_ORIGIN,
-  credential: true,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(
   session({
@@ -41,6 +41,8 @@ app.use("/posts", postRouter);
 
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT}`);
+const port = process.env.PORT;
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
