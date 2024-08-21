@@ -12,6 +12,8 @@ import SelectedForm from './filterOption/SelectedForm';
 import SelectedLine from './filterOption/SelectedLine';
 import SelectedShape from './filterOption/SelectedShape';
 import SelectedColor from './filterOption/SelectedColor';
+import { setSearchResults } from '../../store/slices/drugSlice';
+import { fetchDrugs } from '../../apis/drugs.api';
 
 const SearchFilter = () => {
   const dispatch = useDispatch();
@@ -29,17 +31,26 @@ const SearchFilter = () => {
   );
 
   const filters = {
-    searchIdentification1,
-    searchIdentification2,
-    selectedForm,
-    selectedLine,
-    selectedShape,
-    selectedColor,
+    itemName: selectedDrugCategory === '의약품명' ? searchDrug : undefined,
+    ingrEngName: selectedDrugCategory === '성분명' ? searchDrug : undefined,
+    ingrKorName: selectedDrugCategory === '성분명' ? searchDrug : undefined,
+    efcyQesitm: selectedDrugCategory === '효능효과' ? searchDrug : undefined,
+    identification1: searchIdentification1,
+    identification2: searchIdentification2,
+    form: selectedForm,
+    line: selectedLine,
+    shape: selectedShape,
+    color: selectedColor,
   };
 
-  const applyFilters = () => {
-    console.log(`${selectedDrugCategory}: ${searchDrug}`);
-    console.log(filters);
+  const applyFilters = async () => {
+    try {
+      const data = await fetchDrugs(filters);
+      dispatch(setSearchResults(data));
+      console.log(filters);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleResetClick = () => {

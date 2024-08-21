@@ -1,17 +1,17 @@
 import { httpClient } from './http';
 
 interface SearchParams {
-  itemName?: string;
-  ingrEngName?: string;
+  itemName?: string; // 의약품명
+  ingrEngName?: string; // 성분
   ingrKorName?: string;
-  efcyQesitm?: string;
-  printFront?: string;
+  efcyQesitm?: string; //효능효과
+  printFront?: string; // 식별문자
   printBack?: string;
-  dosageForm?: string;
-  drugShape?: string;
-  colorClass1?: string;
+  dosageForm?: string; // 제형
+  drugShape?: string; // 모양
+  colorClass1?: string; // 색상
   colorClass2?: string;
-  linFront?: string;
+  linFront?: string; // 분할선
   lineBack?: string;
 }
 

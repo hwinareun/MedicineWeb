@@ -18,8 +18,8 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   color,
 }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector(
-    (state: RootState) => state.filter[field] === value
+  const isSelected = useSelector((state: RootState) =>
+    state.filter[field].includes(value)
   );
 
   const iconStyle = color ? { color } : {};
@@ -27,7 +27,7 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   return (
     <div
       onClick={() => dispatch(toggleSelection({ field, value }))}
-      className={`py-2 px-4 items-center text-xs text-center justify-center rounded-lg bg-medicineSecondary cursor-pointer ${isSelected ? 'bg-medicinePositive' : ''}`}
+      className={`py-2 px-4 items-center text-xs text-center justify-center rounded-lg bg-medicineSecondary hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicineFontBlue' : ''}`}
       role="button"
       aria-label={label}
     >
