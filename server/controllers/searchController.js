@@ -19,7 +19,7 @@ const search = async (req, res, next) => {
             lineBack
         } = req.query;
 
-        let sql = `select DrugInfo.itemSeq, itemName, itemImage, ingrEngName, efcyQesitm, strength
+        let sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
                     from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
                     left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
                     where 1=1`;
