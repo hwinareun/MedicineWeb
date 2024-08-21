@@ -4,6 +4,7 @@ import { WarnText } from '../components/common/WarnText';
 import { JoinSelect } from '../components/join/JoinSelect';
 import { JoinButton } from '../components/join/JoinButton';
 import { join } from '../apis/auth.api.';
+import { useNavigate } from 'react-router-dom';
 
 const Join = () => {
   const [nickname, setNickname] = useState('');
@@ -15,6 +16,7 @@ const Join = () => {
   const [pwQuestion, setPwQuestion] = useState('');
   const [pwAnswer, setPwAnswer] = useState('');
   const [wanrPasswordCheck, setWarnPasswordCheck] = useState('');
+  const navigate = useNavigate();
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -56,7 +58,7 @@ const Join = () => {
         pwQuestion,
         pwAnswer,
       })
-        .then((res) => console.log(res))
+        .then((res) => navigate('/login'))
         .catch((err) => console.log(err));
     }
   };
