@@ -19,7 +19,8 @@ const modifyDrug = async (req, res) => { };
 const removeDrug = async (req, res) => { };
 
 const updateDrugData = async (req, res, next) => {
-  const drugInfo = await getAllDrugInfo(process.env.DRUG_INFO, process.env.DRUG_INFO_URL, drugInfoFilter);
+  try {
+    const drugInfo = await getAllDrugInfo(process.env.DRUG_INFO, process.env.DRUG_INFO_URL, drugInfoFilter);
   const drugImageInfo = await getAllDrugInfo(process.env.DRUG_IMAGE_INFO, process.env.DRUG_IMAGE_INFO_URL, drugImageInfoFilter);
   // const drugEtc = await getAllDrugInfo(process.env.DRUG_ETC, process.env.DRUG_ETC_URL, drugEtcFilter);
 
@@ -73,6 +74,11 @@ const updateDrugData = async (req, res, next) => {
 
   return res.status(StatusCodes.OK).json({ results: [drugInfoResults, drugImageInfoResults] });
   // return res.status(200).end();
+  } catch (error) {
+    let statusCode;
+
+    return next(new CustomError(error.message, statusCode));
+  }
 };
 
 const getAllDrugInfo = async (serviceKey, baseUrl, filterFunc) => {
