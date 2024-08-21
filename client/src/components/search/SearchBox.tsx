@@ -10,6 +10,11 @@ import {
   setSearchDrugItem,
 } from '../../store/slices/drugSlice';
 import { fetchDrugs } from '../../apis/drugs.api';
+import { DrugData } from '../../types/drug.type';
+
+interface SearchBoxProps {
+  setResults: (results: DrugData[]) => void;
+}
 
 const searchCategoryDrug = {
   productName: '의약품명',
@@ -17,7 +22,7 @@ const searchCategoryDrug = {
   effects: '효능효과',
 };
 
-const SearchBox = () => {
+const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
   const dispatch = useDispatch();
   const { selectedDrugCategory, searchDrug } = useSelector(
     (state: RootState) => state.drug
@@ -32,13 +37,14 @@ const SearchBox = () => {
     if (!searchDrug) {
       return;
     }
-
+    setResults([]);
     try {
       const results = {
         [selectedDrugCategory]: searchDrug,
       };
       const data = await fetchDrugs(results);
       dispatch(setSearchResults(data));
+      setResults(data);
     } catch (error) {
       console.error(error);
     }

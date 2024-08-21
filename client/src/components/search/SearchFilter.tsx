@@ -14,8 +14,13 @@ import SelectedShape from './filterOption/SelectedShape';
 import SelectedColor from './filterOption/SelectedColor';
 import { setSearchResults } from '../../store/slices/drugSlice';
 import { fetchDrugs } from '../../apis/drugs.api';
+import { DrugData } from '../../types/drug.type';
 
-const SearchFilter = () => {
+interface SearchFilterProps {
+  setResults: (results: DrugData[]) => void;
+}
+
+const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
   const dispatch = useDispatch();
   const {
     searchIdentification1,
@@ -44,9 +49,11 @@ const SearchFilter = () => {
   };
 
   const applyFilters = async () => {
+    setResults([]);
     try {
       const data = await fetchDrugs(filters);
       dispatch(setSearchResults(data));
+      setResults(data);
       console.log(filters);
     } catch (error) {
       console.error(error);
