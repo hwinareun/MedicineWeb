@@ -26,7 +26,7 @@ const {
   requestResetPasswordValidator,
   resetPasswordValidator
 } = require("../validators/authValidator");
-const authenticateJWT = require("../middlewares/auth");
+const {authenticateJWT} = require("../middlewares/auth");
 
 router.post("/join", joinValidator, validateHandler, createAccount);
 router.delete("/resign", authenticateJWT, deleteAccount);
