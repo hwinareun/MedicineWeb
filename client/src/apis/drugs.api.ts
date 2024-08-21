@@ -1,15 +1,18 @@
 import { httpClient } from './http';
 
 interface SearchParams {
-  productName?: string;
-  ingredients?: string;
-  effects?: string;
-  identification1?: string;
-  identification2?: string;
-  form?: string;
-  shape?: string;
-  color?: string;
-  line?: string;
+  itemName?: string;
+  ingrEngName?: string;
+  ingrKorName?: string;
+  efcyQesitm?: string;
+  printFront?: string;
+  printBack?: string;
+  dosageForm?: string;
+  drugShape?: string;
+  colorClass1?: string;
+  colorClass2?: string;
+  linFront?: string;
+  lineBack?: string;
 }
 
 export const fetchDrugs = async (params: SearchParams) => {
@@ -25,8 +28,11 @@ export const fetchDrugs = async (params: SearchParams) => {
     const response = await httpClient.get(`/search?${query.toString()}`);
     return response.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    console.error(
+      `Failed to fetch drugs with query: ${query.toString()}`,
+      error
+    );
+    throw new Error('Failed to fetch drugs');
   }
 };
 

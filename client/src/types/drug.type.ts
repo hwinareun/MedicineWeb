@@ -13,7 +13,7 @@ export interface DrugData {
 
 export interface DrugState {
   data: DrugData[];
-  selectedDrugCategory?: string;
+  selectedDrugCategory: string;
   searchResults: DrugData[];
   searchDrug: string;
 }

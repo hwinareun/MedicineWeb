@@ -4,12 +4,12 @@ import Input from '../common/Input';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { DrugData } from '../../types/drug.type';
 import {
   setSearchResults,
   setSelectedDrugCategory,
   setSearchDrugItem,
 } from '../../store/slices/drugSlice';
+import { fetchDrugs } from '../../apis/drugs.api';
 
 const searchCategoryDrug = {
   productName: '의약품명',
@@ -22,30 +22,26 @@ const SearchBox = () => {
   const { selectedDrugCategory, searchDrug } = useSelector(
     (state: RootState) => state.drug
   );
-  const drugItems = useSelector((state: RootState) => state.drug.data);
   const [view, setView] = useState(false);
 
   const handleDropDownClick = (drug: string) => {
     dispatch(setSelectedDrugCategory(drug));
   };
 
-  const handleSearch = () => {
-    const drugWithOutSpaces = searchDrug.replace(/\s/g, '').toLowerCase();
-    const keywords = searchDrug.toLowerCase().split(' ').filter(Boolean);
+  const handleSearch = async () => {
+    if (!searchDrug) {
+      return;
+    }
 
-    const searchDrugs = drugItems.filter((item: DrugData) =>
-      keywords.every(
-        (keyword) =>
-          item.productName.toLowerCase().includes(keyword) ||
-          item.productName
-            .toLowerCase()
-            .replace(/\s/g, '')
-            .includes(drugWithOutSpaces)
-      )
-    );
-
-    dispatch(setSearchResults(searchDrugs));
-    console.log(searchDrug);
+    try {
+      const results = {
+        [selectedDrugCategory]: searchDrug,
+      };
+      const data = await fetchDrugs(results);
+      dispatch(setSearchResults(data));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSearchEnter = (e: KeyboardEvent<HTMLInputElement>) => {

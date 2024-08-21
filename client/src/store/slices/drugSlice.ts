@@ -20,6 +20,7 @@ const drugSlice = createSlice({
     },
     setSelectedDrugCategory(state, action: PayloadAction<string>) {
       state.selectedDrugCategory = action.payload;
+      state.searchDrug = '';
     },
     setSearchDrugItem(state, action: PayloadAction<string>) {
       state.searchDrug = action.payload;
