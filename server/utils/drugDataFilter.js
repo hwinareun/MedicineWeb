@@ -15,6 +15,7 @@ const drugImageInfoFilter = async (items) => (
         itemSeq: Number(item.ITEM_SEQ),
         printFront: item.PRINT_FRONT,
         printBack: item.PRINT_BACK,
+        drugShape: item.DRUG_SHAPE,
         colorClass1: item.COLOR_CLASS1,
         colorClass2: item.COLOR_CLASS2,
         lineFront: item.LINE_FRONT,

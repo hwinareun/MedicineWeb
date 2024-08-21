@@ -9,6 +9,7 @@ const {
 const getDifferenceByKeyAndToArray = require('../utils/getDifferenceByKey');
 const fs = require('fs');
 const getCommonByKey = require('../utils/getCommonByKey');
+const CustomError = require("../utils/CustomError");
 
 const getDrugDetail = async (req, res) => { };
 
@@ -63,15 +64,20 @@ const updateDrugData = async (req, res, next) => {
     return res.status(StatusCodes.OK).json({ message: 'Nothing to update data.' });
   }
 
+  console.log('DrugInfo 데이터 추가 시작');
   sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values ?;';
   const drugInfoResults = await query(sql, [arrayDrugInfo]);
+  console.log('DrugInfo 데이터 추가 완료');
 
-  sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, colorClass1, colorClass2, lineFront, lineBack) values ?;';
+  console.log('DrugImageInfo 데이터 추가 시작');
+  sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values ?;';
   const drugImageInfoResults = await query(sql, [arrayDrugImageInfo]);
+  console.log('DrugImageInfo 데이터 추가 완료');
 
   // sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm) values ?;';
   // const drugEtcResults = await query(sql, [arrayDrugEtc]);
 
+  console.log('데이터 업데이트 완료');
   return res.status(StatusCodes.OK).json({ results: [drugInfoResults, drugImageInfoResults] });
   // return res.status(200).end();
   } catch (error) {
