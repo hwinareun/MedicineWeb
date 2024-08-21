@@ -3,22 +3,28 @@ const query = require("../config/db");
 const CustomError = require("../utils/CustomError");
 
 const getFavorites = async (req, res) => {
-  const { userId } = req.user;
+  try {
+    const { userId } = req.user;
 
-  let sql = 'select drugId from Favorites where userId = ?';
-  let results = await query(sql, userId);
+    let sql = 'select drugId from Favorites where userId = ?';
+    let results = await query(sql, userId);
 
-  const values = [];
+    const values = [];
 
-  results.forEach(v => values.push(v.drugId));
+    results.forEach(v => values.push(v.drugId));
 
-  sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
+    sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
         from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
         left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
         where DrugInfo.itemSeq in (?)`;
-  results =  await query(sql, [values]);
+    results = await query(sql, [values]);
 
-  return res.status(StatusCodes.OK).json(results);
+    return res.status(StatusCodes.OK).json(results);
+  } catch (error) {
+    let statusCode;
+
+    return next(new CustomError(error.message, statusCode));
+  }
 };
 
 const addFavorite = async (req, res, next) => {
