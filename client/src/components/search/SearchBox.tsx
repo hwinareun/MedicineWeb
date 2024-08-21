@@ -4,8 +4,11 @@ import Input from '../common/Input';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { setSearchItem, setSelectedDrug } from '../../store/slices/searchSlice';
-import { fetchDrugs } from '../../apis/drugs.api';
+import { DrugData } from '../../types/drug.type';
+import {
+  setSearchResults,
+  setSelectedDrugCategory,
+} from '../../store/slices/drugSlice';
 
 const searchCategoryDrug = {
   productName: '의약품명',
@@ -15,47 +18,51 @@ const searchCategoryDrug = {
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const { selectedDrug } = useSelector((state: RootState) => state.search);
+  const { selectedDrugCategory } = useSelector(
+    (state: RootState) => state.drug
+  );
+  const drugItems = useSelector((state: RootState) => state.drug.data);
   const [view, setView] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchParams, setSearchParams] = useState({
-    productName: '',
-    ingredients: '',
-    effects: '',
-  });
-  const [query, setQuery] = useState<string>('');
-
-  const fetchSearchResults = async () => {
-    try {
-      const data = await fetchDrugs({
-        ...searchParams,
-        productName: query,
-      });
-
-      setSearchResults(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [drug, setDrug] = useState<string>('');
 
   const handleDropDownClick = (drug: string) => {
-    dispatch(setSelectedDrug(drug));
-    setSearchParams((prev) => ({
-      ...prev,
-      productName: drug,
-    }));
+    dispatch(setSelectedDrugCategory(drug));
   };
 
-  const handleButtonClick = () => {
-    console.log(query);
-    fetchSearchResults();
+  const handleSearch = () => {
+    const drugWithOutSpaces = drug.replace(/\s/g, '').toLowerCase();
+
+    const keywords = drug
+      .toLowerCase()
+      .split(' ')
+      .filter((keyword) => keyword.trim() !== '');
+
+    const searchDrugs =
+      keywords.length > 0
+        ? drugItems.filter(
+            (item: DrugData) =>
+              keywords.every((keyword) =>
+                item.productName.toLowerCase().includes(keyword)
+              ) ||
+              item.productName
+                .toLowerCase()
+                .replace(/\s/g, '')
+                .includes(drugWithOutSpaces)
+          )
+        : [];
+
+    console.log(searchDrugs);
+    dispatch(setSearchResults(searchDrugs));
   };
 
   const handleSearchEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      console.log(query);
-      fetchSearchResults();
+      handleSearch();
     }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDrug(event.target.value);
   };
 
   return (
@@ -65,7 +72,7 @@ const SearchBox = () => {
         className="flex flex-col items-center text-sm"
       >
         <div className="flex flex-row items-center justify-center w-20 h-10 gap-1 font-semibold border-b-2 rounded-lg border-b-medicineNeutral bg-medicineSecondary">
-          {selectedDrug}
+          {selectedDrugCategory}
           {view ? <FaAngleUp /> : <FaAngleDown />}
         </div>
         {view && (
@@ -83,13 +90,12 @@ const SearchBox = () => {
         )}
       </ul>
       <Input
-        value={query}
-        placeholder={selectedDrug}
-        onChange={(e) => dispatch(setSearchItem(e.target.value))}
+        value={drug}
+        placeholder={selectedDrugCategory as string}
+        onChange={handleSearchChange}
         onKeyDown={(e) => handleSearchEnter(e)}
       />
-      <PositiveButton onClick={handleButtonClick}>확인</PositiveButton>
-      {searchResults}
+      <PositiveButton onClick={handleSearch}>확인</PositiveButton>
     </div>
   );
 };
