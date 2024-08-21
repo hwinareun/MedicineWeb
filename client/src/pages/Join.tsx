@@ -3,6 +3,7 @@ import { JoinInput } from '../components/join/JoinInput';
 import { WarnText } from '../components/common/WarnText';
 import { JoinSelect } from '../components/join/JoinSelect';
 import { JoinButton } from '../components/join/JoinButton';
+import { join } from '../apis/auth.api.';
 
 const Join = () => {
   const [nickname, setNickname] = useState('');
@@ -11,8 +12,8 @@ const Join = () => {
   const [idAnswer, setIdAnswer] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRe, setPasswordRe] = useState('');
-  const [passwordQuestion, setPasswordQuestion] = useState('');
-  const [passwordAnswer, setPasswordAnswer] = useState('');
+  const [pwQuestion, setPwQuestion] = useState('');
+  const [pwAnswer, setPwAnswer] = useState('');
   const [wanrPasswordCheck, setWarnPasswordCheck] = useState('');
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,10 +37,8 @@ const Join = () => {
   const handlePwQuestionChange = (value: string) => {
     setPwQuestion(value);
   };
-  const handlePasswordAnswerChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPasswordAnswer(e.target.value);
+  const handlePwAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPwAnswer(e.target.value);
   };
   const handleJoin = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -48,6 +47,17 @@ const Join = () => {
       setWarnPasswordCheck('비밀번호가 일치하지 않습니다.');
     } else {
       setWarnPasswordCheck('');
+      join({
+        nickname,
+        id,
+        idQuestion,
+        idAnswer,
+        password,
+        pwQuestion,
+        pwAnswer,
+      })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     }
   };
 
@@ -121,9 +131,9 @@ const Join = () => {
             <div className="flex w-full justify-between h-fit items-center">
               <JoinSelect
                 label="비밀번호 질문"
-                value={passwordQuestion}
+                value={pwQuestion}
                 options={['ptest', 'ptest1', 'ptest2']}
-                onChange={handlePasswordQuestionChange}
+                onChange={handlePwQuestionChange}
               />
             </div>
           </div>
@@ -131,8 +141,8 @@ const Join = () => {
             <div className="flex w-full justify-between h-fit items-center">
               <JoinInput
                 label="답"
-                value={passwordAnswer}
-                onChange={handlePasswordAnswerChange}
+                value={pwAnswer}
+                onChange={handlePwAnswerChange}
               />
             </div>
             <WarnText warnText={''} />
