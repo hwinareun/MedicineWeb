@@ -5,7 +5,7 @@ import { toggleSelection } from '../../../store/slices/filterSlice';
 interface FilterOptionProps {
   label: string;
   icon: React.ElementType;
-  field: keyof RootState['filter'];
+  field: 'selectedForm' | 'selectedLine' | 'selectedShape' | 'selectedColor';
   value: string;
   color?: string;
 }
