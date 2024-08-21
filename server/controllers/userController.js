@@ -94,9 +94,11 @@ const login = async (req, res, next) => {
       expiresIn: "1h",
     });
 
-    req.session.jwtToken = token;
+    res.cookie('token', token, {
+      httpOnly: true
+    });
 
-    return res.status(StatusCodes.OK).json({ jwtToken: req.session.jwtToken });
+    return res.status(StatusCodes.OK).json({ token: token });
   } catch (error) {
     let statusCode;
 
@@ -109,11 +111,11 @@ const login = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  await req.session.destroy(error => {
-    if (error) {
-      return next(new CustomError('Failed to logout.', StatusCodes.INTERNAL_SERVER_ERROR));
-    }
-  });
+  // await req.session.destroy(error => {
+  //   if (error) {
+  //     return next(new CustomError('Failed to logout.', StatusCodes.INTERNAL_SERVER_ERROR));
+  //   }
+  // });
 
   return res.status(StatusCodes.OK).end();
 };
@@ -216,7 +218,7 @@ const requestResetPassword = async (req, res, next) => {
 
     const user = results[0];
 
-    return res.status(StatusCodes.OK).json({id: user.id});
+    return res.status(StatusCodes.OK).json({ id: user.id });
   } catch (error) {
     let statusCode;
 
