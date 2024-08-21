@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
@@ -28,7 +28,7 @@ const SearchBox = () => {
     console.log(searchItem);
   };
 
-  const handleSearchEnter = (e) => {
+  const handleSearchEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       console.log(searchItem);
     }
