@@ -19,4 +19,15 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
-module.exports = authenticateJWT;
+const authenticateRole = (req, res, next) => {
+  const role = req.user.role;
+
+  if(role === 'user'){
+    return next(new CustomError('You do not have permission.', StatusCodes.UNAUTHORIZED));
+  }
+
+  return next();
+}
+
+
+module.exports = {authenticateJWT, authenticateRole};
