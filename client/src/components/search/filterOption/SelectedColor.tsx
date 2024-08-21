@@ -7,9 +7,9 @@ import FilterOption from './FilterOption';
 
 const SelectedColor = () => {
   return (
-    <div className="flex flex-col gap-1 p-2">
-      색상
-      <div className="flex flex-row gap-1">
+    <div className="flex flex-col p-2">
+      <p className="pb-1 font-semibold">색상</p>
+      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
         <FilterOption
           label="분홍"
           icon={TbSquareRoundedFilled}
@@ -67,7 +67,7 @@ const SelectedColor = () => {
           color="blue"
         />
       </div>
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
         <FilterOption
           label="남색"
           icon={TbSquareRoundedFilled}

@@ -4,8 +4,8 @@ import FilterOption from './FilterOption';
 const SelectedLine = () => {
   return (
     <div className="flex flex-col gap-1 p-2">
-      <p>분할선</p>
-      <div className="flex flex-row gap-1">
+      <p className="pb-1 font-semibold">분할선</p>
+      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
         <FilterOption
           label="없음"
           icon={FiCircle}
