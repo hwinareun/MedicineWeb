@@ -71,8 +71,17 @@ const addDrug = async (req, res, next) => {
     await query(sql, values);
     console.log('DrugImageInfo 추가 완료');
 
-    sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values (?, ?, ?, ?, ?)';
-    values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
+    sql = 'select * from DrugEtc where itemSeq = ?';
+    results = await query(sql, itemSeq);
+    if(results.length !== 0){
+      sql = `update DrugEtc 
+            set ingrEngName = ?, ingrKorName = ?, dosageForm = ?, strength = ? 
+            where itemSeq = ?`;
+      values = [ingrEngName, ingrKorName, dosageForm, strength, itemSeq];
+    } else {
+      sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values (?, ?, ?, ?, ?)';
+      values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
+    }
     await query(sql, values);
     console.log('DrugEtc 추가 완료');
 
@@ -138,14 +147,13 @@ const modifyDrug = async (req, res, next) => {
       sql = `insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) 
             values (?, ?, ?, ?, ?)`;
       values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
-      await query(sql, values);
     } else {
       sql = `update DrugEtc 
             set ingrEngName = ?, ingrKorName = ?, dosageForm = ?, strength = ? 
             where itemSeq = ?`;
       values = [ingrEngName, ingrKorName, dosageForm, strength, itemSeq];
-      await query(sql, values);
     }
+    await query(sql, values);
     console.log('DrugEtc 수정 완료');
 
     return res.status(StatusCodes.OK).end();
