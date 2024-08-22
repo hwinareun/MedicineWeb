@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const query = require("../config/db");
 const CustomError = require("../utils/CustomError");
 
-const getFavorites = async (req, res) => {
+const getFavorites = async (req, res, next) => {
   try {
     const { userId } = req.user;
 
