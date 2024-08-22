@@ -19,7 +19,7 @@ const createAccount = async (req, res, next) => {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?, ?, ?, ?, ?, ?, ?);";
+    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?);";
     const values = [
       id,
       hashPassword,
@@ -30,7 +30,7 @@ const createAccount = async (req, res, next) => {
       pwAnswer,
     ];
 
-    await query(sql, values);
+    await query(sql, [values]);
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {
@@ -118,15 +118,36 @@ const logout = async (req, res, next) => {
   return res.status(StatusCodes.OK).end();
 };
 
-const showProfile = async (req, res) => {
-  // const { userId, nickname } = req.user;
+const showProfile = async (req, res, next) => {
+  try {
+    const { nickname, userId } = req.user;
 
-  // let sql = 'select * from '
+    let sql = 'select drugId from Favorites where userId = ?';
+    let results = await query(sql, userId);
 
-  // return res.status(StatusCodes.OK).json({
-  //   nickname: nickname,
+    if(results.length === 0){
+      results = [];
+    } else{
+      const values = [];
 
-  // })
+      results.forEach(v => values.push(v.drugId));
+  
+      sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
+          from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
+          left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
+          where DrugInfo.itemSeq in (?)`;
+      results = await query(sql, [values]);
+    }
+
+    return res.status(StatusCodes.OK).json({
+      nickname: nickname,
+      favorites: results
+    });
+  } catch (error) {
+    let statusCode;
+
+    return next(new CustomError(error.message, statusCode));
+  }
 };
 
 const updateUserInfo = async (req, res, next) => {

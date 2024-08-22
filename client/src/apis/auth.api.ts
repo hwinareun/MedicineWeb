@@ -16,7 +16,7 @@ export const join = async (userData: JoinUserData) => {
 };
 
 interface LoginResponse {
-  jwtToken: string;
+  token: string;
 }
 
 export const login = async (userData: IAuth) => {

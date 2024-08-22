@@ -50,7 +50,7 @@ export const LoginBox = () => {
       login(userData)
         .then((res) => {
           // 성공 시 navigate to main
-          dispatch(storeLogin({ jwtToken: res.jwtToken }));
+          dispatch(storeLogin({ jwtToken: res.token }));
           // console.log(res);
           setShowWarning([0, 0]);
         })
