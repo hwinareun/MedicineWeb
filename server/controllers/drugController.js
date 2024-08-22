@@ -10,7 +10,7 @@ const getDifferenceByKeyAndToArray = require('../utils/getDifferenceByKey');
 const getCommonByKey = require('../utils/getCommonByKey');
 const CustomError = require("../utils/CustomError");
 
-const getDrugDetail = async (req, res) => {
+const getDrugDetail = async (req, res, next) => {
   try {
     const itemSeq = Number(req.params.drugId);
 
@@ -57,30 +57,30 @@ const addDrug = async (req, res, next) => {
   try {
     let sql = 'select * from DrugInfo where itemSeq = ?';
     let results = await query(sql, itemSeq);
-    if(results.length !== 0){
+    if (results.length !== 0) {
       throw new Error('The drugId already exists.');
     }
-  
+
     sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values (?, ?, ?, ?, ?, ?, ?)';
     let values = [itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage];
     results = await query(sql, values);
     console.log(`DrugInfo results : ${results}`);
-  
+
     sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values (?, ?, ?, ?, ?, ?, ?, ?)';
     values = [itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack];
     results = await query(sql, values);
     console.log(`DrugImageInfo results : ${results}`);
-  
+
     sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values (?, ?, ?, ?, ?)';
     values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
     results = await query(sql, values);
     console.log(`DrugEtc results : ${results}`);
-  
+
     return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
 
-    if(error.message === 'The drugId already exists.'){
+    if (error.message === 'The drugId already exists.') {
       statusCode = StatusCodes.CONFLICT;
     }
 
@@ -88,9 +88,41 @@ const addDrug = async (req, res, next) => {
   }
 };
 
-const modifyDrug = async (req, res) => { };
+const modifyDrug = async (req, res, next) => { };
 
-const removeDrug = async (req, res) => { };
+const removeDrug = async (req, res, next) => {
+  const itemSeq = Number(req.params.drugId);
+
+  try {
+    let sql = 'select * from DrugInfo where itemSeq = ?';
+    let results = await query(sql, itemSeq);
+    if (results.length === 0) {
+      throw new Error('No item to remove.');
+    }
+
+    sql = 'delete from DrugInfo where itemSeq = ?';
+    results = await query(sql, itemSeq);
+    console.log('DrugInfo 삭제 완료');
+
+    sql = 'delete from DrugImageInfo where itemSeq = ?';
+    results = await query(sql, itemSeq);
+    console.log('DrugImageInfo 삭제 완료');
+
+    sql = 'delete from DrugEtc where itemSeq = ?';
+    results = await query(sql, itemSeq);
+    console.log('DrugInfo 삭제 완료');
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'No item to remove.') {
+      statusCode = StatusCodes.BAD_REQUEST;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
 
 const updateDrugData = async (req, res, next) => {
   try {

@@ -15,6 +15,6 @@ router.post("/", authenticateJWT, authenticateRole, addDrugValidator, validateHa
 router.get("/update", authenticateJWT, authenticateRole, updateDrugData);
 router.get("/:drugId", getDrugDetail);
 router.put("/:drugId", modifyDrug);
-router.delete("/:drugId", removeDrug);
+router.delete("/:drugId", authenticateJWT, authenticateRole, removeDrug);
 
 module.exports = router;
