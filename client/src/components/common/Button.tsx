@@ -3,12 +3,12 @@ interface Props {
   onClick: () => void;
 }
 
-const Button = ({ children, onClick }: Props) => {
+export const PositiveButton = ({ children, onClick }: Props) => {
   return (
     <div>
       <button
         onClick={onClick}
-        className="p-1 text-black bg-blue-200 border-2 border-blue-400"
+        className="px-5 py-2 bg-medicineSecondary rounded-3xl text-medicineFontBlack hover:bg-medicinePositive"
       >
         {children}
       </button>
@@ -16,4 +16,15 @@ const Button = ({ children, onClick }: Props) => {
   );
 };
 
-export default Button;
+export const NegativeButton = ({ children, onClick }: Props) => {
+  return (
+    <div>
+      <button
+        onClick={onClick}
+        className="px-5 py-2 bg-medicineNegative rounded-3xl text-medicineFontBlack hover:bg-medicinePositive"
+      >
+        {children}
+      </button>
+    </div>
+  );
+};
