@@ -12,7 +12,7 @@ import {
 import { fetchDrugs } from '../../apis/drugs.api';
 import { DrugData } from '../../types/drug.type';
 
-interface SearchBoxProps {
+export interface SearchBoxProps {
   setResults: (results: DrugData[]) => void;
 }
 
