@@ -9,6 +9,8 @@ import ReferenceEmpty from '../components/reference/ReferenceEmpty';
 const Search = () => {
   const [results, setResults] = useState<DrugData[]>([]);
 
+  console.log('Rendering Results:', results);
+
   return (
     <div className="flex flex-col p-4 m-4">
       <div className="flex justify-center whitespace-nowrap">

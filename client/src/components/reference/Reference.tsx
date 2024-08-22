@@ -32,6 +32,8 @@ const cutPrefixSuffix = (description: string): string => {
 };
 
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
+  console.log('Reference Data:', data);
+
   const currentPage = useSelector((state: RootState) => state.drug.currentPage);
   const itemsPerPage = 10;
 
@@ -57,7 +59,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
         <tbody className="overflow-y-auto">
           {currentItems.map((drug, index) => (
             <tr
-              key={drug.drugid}
+              key={drug.drugId}
               className="border-b border-medicinePositive hover:bg-medicinePrimary"
             >
               <td className="p-2 border-r border-medicinePositive">

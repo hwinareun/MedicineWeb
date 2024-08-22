@@ -17,9 +17,9 @@ interface SearchBoxProps {
 }
 
 const searchCategoryDrug = {
-  productName: '의약품명',
-  ingredients: '성분명',
-  effects: '효능효과',
+  itemName: '의약품명',
+  ingrName: '성분명',
+  efcyQesitm: '효능효과',
 };
 
 const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
@@ -42,10 +42,16 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
       const results = {
         [selectedDrugCategory]: searchDrug,
       };
+      console.log(`Search Params: ${results}`);
+
       const data = await fetchDrugs(results);
-      dispatch(setSearchResults(data));
-      setResults(data);
-      console.log(data);
+      const filteredData = data.filter((drug: DrugData) =>
+        drug.itemName.includes(searchDrug)
+      );
+
+      dispatch(setSearchResults(filteredData));
+      setResults(filteredData);
+      console.log(`Search Results: ${JSON.stringify(filteredData, null, 2)}`);
     } catch (error) {
       console.error(error);
     }
