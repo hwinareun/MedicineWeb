@@ -45,6 +45,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
       const data = await fetchDrugs(results);
       dispatch(setSearchResults(data));
       setResults(data);
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
