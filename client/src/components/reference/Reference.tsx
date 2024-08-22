@@ -29,15 +29,15 @@ const cutPrefixSuffix = (description: string): string => {
 
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
   return (
-    <div className="max-w-screen-lg p-8 mx-auto bg-medicineNeutral ">
+    <div className="max-w-screen-lg p-8 mx-auto bg-medicineNeutral whitespace-nowrap">
       <table className="w-full border-2 table-fixed border-medicinePositive">
         <thead>
           <tr className="text-lg border-b-2 border-medicinePositive">
-            <th className="w-12">No.</th>
-            <th className="w-32 border-x border-medicinePositive">이미지</th>
-            <th className="w-40">의약품명</th>
-            <th className="w-40 border-x border-medicinePositive">성분</th>
-            <th className="w-80">효능•효과</th>
+            <th className="w-12 border-r border-medicinePositive">No.</th>
+            <th className="w-32 ">이미지</th>
+            <th className="w-40 border-x border-medicinePositive">의약품명</th>
+            <th className="w-40 ">성분</th>
+            <th className="border-l w-80 border-medicinePositive">효능•효과</th>
           </tr>
         </thead>
         <tbody className="overflow-y-auto">
@@ -46,22 +46,28 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
               key={drug.drugid}
               className="border-b border-medicinePositive hover:bg-medicinePrimary"
             >
-              <td className="p-2 border-medicinePositive">{index + 1}</td>
-              <td className="flex justify-center p-2 border-x border-medicinePositive">
+              <td className="p-2 border-r border-medicinePositive">
+                {index + 1}
+              </td>
+              <td className="flex justify-center m-2">
                 <img
                   src={drug.itemImage}
                   alt="drugIdentification"
                   className="object-contain w-32 border-2 rounded-lg border-medicinePositive"
                 />
               </td>
-              <td className="p-2 ">{drug.itemName}</td>
+              <td className="p-2 break-words whitespace-normal border-x border-medicinePositive">
+                {drug.itemName}
+              </td>
               <td className="p-2 border-x border-medicinePositive">
                 {
                   /* 성분 DB 연동 후 확인 */
                   drug.ingrEngName ? drug.ingrEngName : '-'
                 }
               </td>
-              <td className="p-2">{cutPrefixSuffix(drug.efcyQesitm)}</td>
+              <td className="p-3 break-words whitespace-normal border-l border-medicinePositive">
+                {cutPrefixSuffix(drug.efcyQesitm)}
+              </td>
             </tr>
           ))}
         </tbody>
