@@ -9,7 +9,7 @@ const SelectedColor = () => {
   return (
     <div className="flex flex-col p-2">
       <p className="pb-1 font-semibold">색상</p>
-      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pt-2 border-2 border-b-0 rounded-t-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="분홍"
           icon={TbSquareRoundedFilled}
@@ -52,6 +52,8 @@ const SelectedColor = () => {
           value="초록"
           color="green"
         />
+      </div>
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 border-2 border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="청록"
           icon={TbSquareRoundedFilled}
@@ -66,8 +68,6 @@ const SelectedColor = () => {
           value="파랑"
           color="blue"
         />
-      </div>
-      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
         <FilterOption
           label="남색"
           icon={TbSquareRoundedFilled}
@@ -96,6 +96,8 @@ const SelectedColor = () => {
           value="회색"
           color="gray"
         />
+      </div>
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pb-2 border-2 border-t-0 rounded-b-lg bg-medicinePrimary border-medicineSecondary">
         <FilterOption
           label="검정"
           icon={TbSquareRoundedFilled}
