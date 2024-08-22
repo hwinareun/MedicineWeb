@@ -4,7 +4,7 @@ export const LoginNavigation = () => {
       <a className="underline" href="/join">
         회원가입
       </a>
-      <a className="underline" href="/find">
+      <a className="underline" href="/findUser">
         아이디 / 비밀번호 찾기
       </a>
     </div>
