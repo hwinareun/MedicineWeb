@@ -52,9 +52,9 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   };
 
   return (
-    <div className="bg-blue-100 whitespace-nowrap">
-      <div className="w-1/2 p-2 m-2">
-        <img src={Logo1} alt="medicineWebLogo" className="" />
+    <div className="px-4 bg-blue-100 whitespace-nowrap">
+      <div className="w-5/12 p-2 m-2">
+        <img src={Logo1} alt="medicineWebLogo" />
         <div className="flex gap-1">
           <Input
             value={searchDrug}
