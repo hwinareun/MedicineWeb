@@ -1,4 +1,3 @@
-import Logo3 from '../../assets/images/Logo3.png';
 import { DrugReferenceData } from '../../types/drug.type';
 
 interface ReferenceProps {
@@ -8,31 +7,39 @@ interface ReferenceProps {
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
   console.log(data);
   return (
-    <div>
-      <table className="bg-medicineNeutral">
+    <div className="max-w-screen-lg p-8 mx-auto bg-medicineNeutral ">
+      <table className="w-full border-2 table-fixed border-medicinePositive">
         <thead>
-          <tr>
-            <th>No.</th>
-            <th>이미지</th>
-            <th>의약품명</th>
-            <th>성분</th>
-            <th>효능•효과</th>
+          <tr className="text-lg border-b-2 border-medicinePositive">
+            <th className="w-12">No.</th>
+            <th className="w-32 border-x border-medicinePositive">이미지</th>
+            <th className="w-40">의약품명</th>
+            <th className="w-40 border-x border-medicinePositive">성분</th>
+            <th className="w-80">효능•효과</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="overflow-y-auto">
           {data.map((drug, index) => (
-            <tr key={drug.drugid}>
-              <td>{index + 1}</td>
-              <td>
+            <tr
+              key={drug.drugid}
+              className="border-b border-medicinePositive hover:bg-medicinePrimary"
+            >
+              <td className="p-2 border-medicinePositive">{index + 1}</td>
+              <td className="flex justify-center p-2 border-x border-medicinePositive">
                 <img
-                  src={drug.itemImage || Logo3}
+                  src={drug.itemImage}
                   alt="drugIdentification"
-                  className="w-48 border-2 border-blue-400"
+                  className="object-contain w-32 border-2 rounded-lg border-medicinePositive"
                 />
               </td>
-              <td>{drug.itemName}</td>
-              <td>{drug.ingrEngName}</td>
-              <td>{drug.efcyQesitm}</td>
+              <td className="p-2 ">{drug.itemName}</td>
+              <td className="p-2 border-x border-medicinePositive">
+                {
+                  /* 성분 DB 연동 후 확인 */
+                  drug.ingrEngName ? drug.ingrEngName : '-'
+                }
+              </td>
+              <td className="p-2">{drug.efcyQesitm}</td>
             </tr>
           ))}
         </tbody>

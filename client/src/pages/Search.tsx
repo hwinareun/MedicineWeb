@@ -10,13 +10,19 @@ const Search = () => {
   const [results, setResults] = useState<DrugData[]>([]);
 
   return (
-    <div className="flex flex-col p-4 m-4">
-      <div className="flex">
-        <div className="flex flex-col p-4 m-4 bg-medicineNeutral w-fit h-fit whitespace-nowrap">
+    <div className="flex flex-col p-4 m-4 whitespace-nowrap">
+      <div className="flex justify-center">
+        <div className="flex flex-col max-w-screen-sm m-4 bg-medicineNeutral w-fit h-fit whitespace-nowrap">
           <SearchBox setResults={setResults} />
           <SearchFilter setResults={setResults} />
         </div>
-        {results.length > 0 ? <Reference data={results} /> : <ReferenceEmpty />}
+        <div className="m-4 text-center">
+          {results.length > 0 ? (
+            <Reference data={results} />
+          ) : (
+            <ReferenceEmpty />
+          )}
+        </div>
       </div>
       {/* <div className="absolute flex items-center justify-center w-svw h-svh">
         <ReferenceDetail />
