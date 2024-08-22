@@ -6,6 +6,7 @@ const initialState: DrugState = {
   selectedDrugCategory: '의약품명', // 드롭다운 카테고리
   searchResults: [], // 의약품 검색 결과
   searchDrug: '', // 검색하려는 의약품명||성분명||효능효과
+  currentPage: 1,
 };
 
 const drugSlice = createSlice({
@@ -26,6 +27,9 @@ const drugSlice = createSlice({
       state.searchDrug = action.payload;
       state.searchResults = [];
     },
+    setCurrentPage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload;
+    },
   },
 });
 
@@ -34,5 +38,6 @@ export const {
   setSearchResults,
   setSelectedDrugCategory,
   setSearchDrugItem,
+  setCurrentPage,
 } = drugSlice.actions;
 export const drugReducer = drugSlice.reducer;
