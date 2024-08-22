@@ -14,7 +14,7 @@ const validateHandler = require('../middlewares/validateHandler')
 router.post("/", authenticateJWT, authenticateRole, addDrugValidator, validateHandler, addDrug);
 router.get("/update", authenticateJWT, authenticateRole, updateDrugData);
 router.get("/:drugId", getDrugDetail);
-router.put("/:drugId", modifyDrug);
+router.put("/:drugId",  authenticateJWT, authenticateRole, modifyDrug);
 router.delete("/:drugId", authenticateJWT, authenticateRole, removeDrug);
 
 module.exports = router;

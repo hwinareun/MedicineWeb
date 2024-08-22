@@ -63,18 +63,18 @@ const addDrug = async (req, res, next) => {
 
     sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values (?, ?, ?, ?, ?, ?, ?)';
     let values = [itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage];
-    results = await query(sql, values);
-    console.log(`DrugInfo results : ${results}`);
+    await query(sql, values);
+    console.log('DrugInfo 추가 완료');
 
     sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values (?, ?, ?, ?, ?, ?, ?, ?)';
     values = [itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack];
-    results = await query(sql, values);
-    console.log(`DrugImageInfo results : ${results}`);
+    await query(sql, values);
+    console.log('DrugImageInfo 추가 완료');
 
     sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values (?, ?, ?, ?, ?)';
     values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
-    results = await query(sql, values);
-    console.log(`DrugEtc results : ${results}`);
+    await query(sql, values);
+    console.log('DrugEtc 추가 완료');
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {
@@ -88,7 +88,77 @@ const addDrug = async (req, res, next) => {
   }
 };
 
-const modifyDrug = async (req, res, next) => { };
+const modifyDrug = async (req, res, next) => {
+  const {
+    itemName,
+    efcyQesitm,
+    useMethodQesitm,
+    seQesitm,
+    depositMethodQesitm,
+    itemImage,
+    printFront,
+    printBack,
+    drugShape,
+    colorClass1,
+    colorClass2,
+    lineFront,
+    lineBack,
+    ingrEngName,
+    ingrKorName,
+    dosageForm,
+    strength
+  } = req.body;
+  const itemSeq = Number(req.params.drugId);
+
+  try {
+    let sql = 'select * from DrugInfo where itemSeq = ?';
+    let results = await query(sql, itemSeq);
+    if (results.length === 0) {
+      throw new Error('No item to update.');
+    }
+
+    sql = `update DrugInfo 
+          set itemName = ?, efcyQesitm = ?, useMethodQesitm = ?, seQesitm = ?, depositMethodQesitm = ?, itemImage = ? 
+          where itemSeq = ?`;
+    let values = [itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage, itemSeq];
+    await query(sql, values);
+    console.log('DrugInfo 수정 완료');
+
+    sql = `update DrugImageInfo 
+          set printFront = ?, printBack = ?, drugShape = ?, colorClass1 = ?, colorClass2 = ?, lineFront = ?, lineBack = ? 
+          where itemSeq = ?`;
+    values = [printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack, itemSeq];
+    await query(sql, values);
+    console.log('DrugImageInfo 수정 완료');
+
+    sql = 'select * from DrugEtc where itemSeq = ?';
+    results = await query(sql, itemSeq);
+
+    if(results.length === 0){
+      sql = `insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) 
+            values (?, ?, ?, ?, ?)`;
+      values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
+      await query(sql, values);
+    } else {
+      sql = `update DrugEtc 
+            set ingrEngName = ?, ingrKorName = ?, dosageForm = ?, strength = ? 
+            where itemSeq = ?`;
+      values = [ingrEngName, ingrKorName, dosageForm, strength, itemSeq];
+      await query(sql, values);
+    }
+    console.log('DrugEtc 수정 완료');
+
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    if (error.message === 'No item to update.') {
+      statusCode = StatusCodes.BAD_REQUEST;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
 
 const removeDrug = async (req, res, next) => {
   const itemSeq = Number(req.params.drugId);
