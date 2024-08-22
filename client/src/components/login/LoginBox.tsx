@@ -5,7 +5,7 @@ import { LoginButton } from './LoginButton';
 import { LoginNavigation } from './LoginNavigation';
 import { useDispatch } from 'react-redux';
 import { IAuth } from '../../types/user.type';
-import { login } from '../../apis/auth.api.';
+import { login } from '../../apis/auth.api';
 import { storeLogin } from '../../store/slices/authSlice';
 
 const WARN_TEXT_ID = {
@@ -64,14 +64,14 @@ export const LoginBox = () => {
   };
 
   return (
-    <div className="bg-blue-50 p-5 w-fit h-fit flex flex-col items-center rounded shadow-md">
-      <h3 className="text-2xl font-bold mb-5 pl-20">로그인</h3>
+    <div className="flex flex-col items-center p-5 rounded shadow-md bg-blue-50 w-fit h-fit">
+      <h3 className="pl-20 mb-5 text-2xl font-bold">로그인</h3>
       <form
         onSubmit={handleLogin}
-        className="flex flex-col gap-1 w-fit items-center"
+        className="flex flex-col items-center gap-1 w-fit"
       >
-        <div className="flex flex-col w-full items-center">
-          <div className="flex w-full justify-between h-fit">
+        <div className="flex flex-col items-center w-full">
+          <div className="flex justify-between w-full h-fit">
             <LoginInput
               label="아이디"
               value={id}

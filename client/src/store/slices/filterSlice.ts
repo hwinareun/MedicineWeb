@@ -4,20 +4,20 @@ type FilterState = {
   searchData: string;
   searchIdentification1: string;
   searchIdentification2: string;
-  selectedForm: string;
-  selectedLine: string;
-  selectedShape: string;
-  selectedColor: string;
+  selectedForm: string[];
+  selectedLine: string[];
+  selectedShape: string[];
+  selectedColor: string[];
 };
 
 const initialState: FilterState = {
   searchData: '',
   searchIdentification1: '',
   searchIdentification2: '',
-  selectedForm: '',
-  selectedLine: '',
-  selectedShape: '',
-  selectedColor: '',
+  selectedForm: [],
+  selectedLine: [],
+  selectedShape: [],
+  selectedColor: [],
 };
 
 const filterSlice = createSlice({
@@ -30,25 +30,36 @@ const filterSlice = createSlice({
     setSearchIdentification2: (state, action: PayloadAction<string>) => {
       state.searchIdentification2 = action.payload;
     },
-    setSelectedForm: (state, action: PayloadAction<string>) => {
+    setSelectedForm: (state, action: PayloadAction<string[]>) => {
       state.selectedForm = action.payload;
     },
-    setSelectedLine: (state, action: PayloadAction<string>) => {
+    setSelectedLine: (state, action: PayloadAction<string[]>) => {
       state.selectedLine = action.payload;
     },
-    setSelectedShape: (state, action: PayloadAction<string>) => {
+    setSelectedShape: (state, action: PayloadAction<string[]>) => {
       state.selectedShape = action.payload;
     },
-    setSelectedColor: (state, action: PayloadAction<string>) => {
+    setSelectedColor: (state, action: PayloadAction<string[]>) => {
       state.selectedColor = action.payload;
     },
     resetFilters: () => initialState,
     toggleSelection: (
       state,
-      action: PayloadAction<{ field: keyof FilterState; value: string }>
+      action: PayloadAction<{
+        field: keyof Omit<
+          FilterState,
+          'searchData' | 'searchIdentification1' | 'searchIdentification2'
+        >;
+        value: string;
+      }>
     ) => {
       const { field, value } = action.payload;
-      state[field] = state[field] === value ? '' : value;
+      const currentValues = state[field] as string[];
+      if (currentValues.includes(value)) {
+        state[field] = currentValues.filter((v) => v !== value);
+      } else {
+        state[field] = [...currentValues, value];
+      }
     },
   },
 });
