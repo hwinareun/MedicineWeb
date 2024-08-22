@@ -125,15 +125,19 @@ const showProfile = async (req, res, next) => {
     let sql = 'select drugId from Favorites where userId = ?';
     let results = await query(sql, userId);
 
-    const values = [];
+    if(results.length === 0){
+      results = [];
+    } else{
+      const values = [];
 
-    results.forEach(v => values.push(v.drugId));
-
-    sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
-        from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
-        left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
-        where DrugInfo.itemSeq in (?)`;
-    results = await query(sql, [values]);
+      results.forEach(v => values.push(v.drugId));
+  
+      sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
+          from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
+          left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
+          where DrugInfo.itemSeq in (?)`;
+      results = await query(sql, [values]);
+    }
 
     return res.status(StatusCodes.OK).json({
       nickname: nickname,
