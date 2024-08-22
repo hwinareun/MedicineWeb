@@ -4,8 +4,30 @@ interface ReferenceProps {
   data: DrugReferenceData[];
 }
 
+const cutPrefixSuffix = (description: string): string => {
+  if (!description) {
+    return '';
+  }
+
+  const prefix = '이 약은';
+  const suffix1 = '에 사용합니다.';
+  const suffix2 = '으로 사용합니다.';
+
+  let result = description.trim();
+
+  if (result.startsWith(prefix)) {
+    result = result.slice(prefix.length).trim();
+  }
+  if (result.endsWith(suffix1)) {
+    result = result.slice(0, -suffix1.length).trim();
+  } else if (result.endsWith(suffix2)) {
+    result = result.slice(0, -suffix2.length).trim();
+  }
+
+  return result;
+};
+
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
-  console.log(data);
   return (
     <div className="max-w-screen-lg p-8 mx-auto bg-medicineNeutral ">
       <table className="w-full border-2 table-fixed border-medicinePositive">
@@ -39,7 +61,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
                   drug.ingrEngName ? drug.ingrEngName : '-'
                 }
               </td>
-              <td className="p-2">{drug.efcyQesitm}</td>
+              <td className="p-2">{cutPrefixSuffix(drug.efcyQesitm)}</td>
             </tr>
           ))}
         </tbody>
