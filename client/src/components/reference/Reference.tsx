@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { DrugReferenceData } from '../../types/drug.type';
 import Pagination from '../common/Pagination';
 import { RootState } from '../../store';
+import { FaSearch } from 'react-icons/fa';
 
 interface ReferenceProps {
   data: DrugReferenceData[];
@@ -32,20 +33,24 @@ const cutPrefixSuffix = (description: string): string => {
 
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
   const currentPage = useSelector((state: RootState) => state.drug.currentPage);
-  const itemsPerPage = 10; // 페이지 당 나타나있는 아이템 개수
+  const itemsPerPage = 10;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = data.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="max-w-screen-lg p-8 mx-auto bg-medicineNeutral whitespace-nowrap">
+    <div className="max-w-screen-lg p-4 mx-auto text-xs bg-medicineNeutral whitespace-nowrap">
+      <p className="flex items-center gap-1 my-4 text-base font-semibold text-left">
+        <FaSearch />
+        검색 결과
+      </p>
       <table className="w-full border-2 table-fixed border-medicinePositive">
         <thead>
-          <tr className="text-lg border-b-2 border-medicinePositive">
-            <th className="w-12 border-r border-medicinePositive">No.</th>
+          <tr className="text-base border-b-2 border-medicinePositive bg-medicinePrimary">
+            <th className="w-10 border-r border-medicinePositive">No.</th>
             <th className="w-32 ">이미지</th>
-            <th className="w-40 border-x border-medicinePositive">의약품명</th>
-            <th className="w-40 ">성분</th>
+            <th className="w-24 border-x border-medicinePositive">의약품명</th>
+            <th className="w-32 ">성분</th>
             <th className="border-l w-80 border-medicinePositive">효능•효과</th>
           </tr>
         </thead>
