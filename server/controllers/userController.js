@@ -19,7 +19,7 @@ const createAccount = async (req, res, next) => {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?, ?, ?, ?, ?, ?, ?);";
+    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?);";
     const values = [
       id,
       hashPassword,
@@ -30,7 +30,7 @@ const createAccount = async (req, res, next) => {
       pwAnswer,
     ];
 
-    await query(sql, values);
+    await query(sql, [values]);
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {

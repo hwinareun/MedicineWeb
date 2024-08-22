@@ -11,7 +11,6 @@ const getCommonByKey = require('../utils/getCommonByKey');
 const CustomError = require("../utils/CustomError");
 
 const getDrugDetail = async (req, res) => {
-
   try {
     const itemSeq = Number(req.params.drugId);
 
@@ -30,7 +29,6 @@ const getDrugDetail = async (req, res) => {
 
     return next(new CustomError(error.message, statusCode));
   }
-
 };
 
 const addDrug = async (req, res) => { };
