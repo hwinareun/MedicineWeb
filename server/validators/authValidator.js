@@ -48,6 +48,11 @@ const resetPasswordValidator = [
   check("password").notEmpty()
 ];
 
+const addDrugValidator = [
+  check("drugId").notEmpty(),
+  check("itemName").notEmpty()
+];
+
 module.exports = {
   joinValidator,
   loginValidator,
@@ -57,5 +62,6 @@ module.exports = {
   dupCheckIdValidator,
   findIdValidator,
   requestResetPasswordValidator,
-  resetPasswordValidator
+  resetPasswordValidator,
+  addDrugValidator
 };

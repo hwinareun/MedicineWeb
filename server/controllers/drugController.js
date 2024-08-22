@@ -31,7 +31,62 @@ const getDrugDetail = async (req, res) => {
   }
 };
 
-const addDrug = async (req, res) => { };
+const addDrug = async (req, res, next) => {
+  const {
+    drugId,
+    itemName,
+    efcyQesitm,
+    useMethodQesitm,
+    seQesitm,
+    depositMethodQesitm,
+    itemImage,
+    printFront,
+    printBack,
+    drugShape,
+    colorClass1,
+    colorClass2,
+    lineFront,
+    lineBack,
+    ingrEngName,
+    ingrKorName,
+    dosageForm,
+    strength
+  } = req.body;
+  const itemSeq = Number(drugId);
+
+  try {
+    let sql = 'select * from DrugInfo where itemSeq = ?';
+    let results = await query(sql, itemSeq);
+    if(results.length !== 0){
+      throw new Error('The drugId already exists.');
+    }
+  
+    sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values (?, ?, ?, ?, ?, ?, ?)';
+    let values = [itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage];
+    results = await query(sql, values);
+    console.log(`DrugInfo results : ${results}`);
+  
+    sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values (?, ?, ?, ?, ?, ?, ?, ?)';
+    values = [itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack];
+    results = await query(sql, values);
+    console.log(`DrugImageInfo results : ${results}`);
+  
+    sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values (?, ?, ?, ?, ?)';
+    values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
+    results = await query(sql, values);
+    console.log(`DrugEtc results : ${results}`);
+  
+    return res.status(StatusCodes.OK).end();
+  } catch (error) {
+    let statusCode;
+
+    if(error.message === 'The drugId already exists.'){
+      statusCode = StatusCodes.CONFLICT;
+    }
+
+    return next(new CustomError(error.message, statusCode));
+  }
+};
 
 const modifyDrug = async (req, res) => { };
 
