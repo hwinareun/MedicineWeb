@@ -3,7 +3,7 @@ import { JoinInput } from '../components/join/JoinInput';
 import { WarnText } from '../components/common/WarnText';
 import { JoinSelect } from '../components/join/JoinSelect';
 import { JoinButton } from '../components/join/JoinButton';
-import { join } from '../apis/auth.api.';
+import { join } from '../apis/auth.api';
 import { useNavigate } from 'react-router-dom';
 import { JoinDupCheckButton } from '../components/join/JoinDupCheckButton';
 import { dupCheckId, dupCheckNickname } from '../apis/dupCheck.api';
@@ -100,15 +100,15 @@ const Join = () => {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center">
-      <div className="bg-blue-50 py-5 pl-10 pr-24 w-fit h-fit flex flex-col items-center rounded shadow-md">
-        <h3 className="text-2xl font-bold mb-5 pl-16">회원가입</h3>
+    <div className="flex items-center justify-center flex-grow">
+      <div className="flex flex-col items-center py-5 pl-10 pr-24 rounded shadow-md bg-blue-50 w-fit h-fit">
+        <h3 className="pl-16 mb-5 text-2xl font-bold">회원가입</h3>
         <form
           onSubmit={handleJoin}
-          className="flex flex-col gap-1 w-fit items-center"
+          className="flex flex-col items-center gap-1 w-fit"
         >
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center relative">
+            <div className="relative flex items-center justify-between w-full h-fit">
               <JoinInput
                 label="닉네임"
                 value={nickname}
@@ -124,7 +124,7 @@ const Join = () => {
             />
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center relative">
+            <div className="relative flex items-center justify-between w-full h-fit">
               <JoinInput label="아이디" value={id} onChange={handleIdChange} />
               <JoinDupCheckButton onClick={handleIdCheck} />
             </div>
@@ -134,7 +134,7 @@ const Join = () => {
             />
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex items-center justify-between w-full h-fit">
               <JoinSelect
                 label="아이디 질문"
                 value={idQuestion}
@@ -144,7 +144,7 @@ const Join = () => {
             </div>
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
                 label="답"
                 value={idAnswer}
@@ -154,7 +154,7 @@ const Join = () => {
             <WarnText warnText={''} />
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
                 label="비밀번호"
                 type="password"
@@ -165,7 +165,7 @@ const Join = () => {
             <WarnText warnText={''} />
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
                 label="비밀번호 확인"
                 type="password"
@@ -176,7 +176,7 @@ const Join = () => {
             <WarnText warnText={wanrPasswordCheck} />
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex items-center justify-between w-full h-fit">
               <JoinSelect
                 label="비밀번호 질문"
                 value={pwQuestion}
@@ -186,7 +186,7 @@ const Join = () => {
             </div>
           </div>
           <div className="flex flex-col w-full">
-            <div className="flex w-full justify-between h-fit items-center">
+            <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
                 label="답"
                 value={pwAnswer}
@@ -199,9 +199,9 @@ const Join = () => {
             <JoinButton />
           </div>
         </form>
-        <p className="text-xs mt-2 pl-14">
+        <p className="mt-2 text-xs pl-14">
           이미 회원이라면?
-          <a href="/login" className="underline ml-1">
+          <a href="/login" className="ml-1 underline">
             로그인하러 가기
           </a>
         </p>

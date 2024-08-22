@@ -14,9 +14,9 @@ import FilterOption from './FilterOption';
 
 const SelectedShape = () => {
   return (
-    <div className="flex flex-col gap-1 p-2">
-      <p>모양</p>
-      <div className="flex flex-row gap-1">
+    <div className="flex flex-col p-2">
+      <p className="pb-1 font-semibold">모양</p>
+      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
         <FilterOption
           label="원형"
           icon={TbCircle}
@@ -42,25 +42,26 @@ const SelectedShape = () => {
           value="반원형"
         />
         <FilterOption
+          label="마름모형"
+          icon={TbDiamonds}
+          field="selectedShape"
+          value="마름모형"
+        />
+        <FilterOption
           label="삼각형"
           icon={TbTriangle}
           field="selectedShape"
           value="삼각형"
         />
+      </div>
+      <div className="flex flex-row gap-1 p-2 pr-3 bg-medicinePrimary w-fit">
         <FilterOption
           label="사각형"
           icon={TbSquare}
           field="selectedShape"
           value="사각형"
         />
-      </div>
-      <div className="flex flex-row gap-1">
-        <FilterOption
-          label="마름모형"
-          icon={TbDiamonds}
-          field="selectedShape"
-          value="마름모형"
-        />
+
         <FilterOption
           label="오각형"
           icon={TbPentagon}
