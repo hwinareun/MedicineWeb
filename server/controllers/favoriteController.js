@@ -25,6 +25,7 @@ const addFavorite = async (req, res, next) => {
     let statusCode;
 
     if (error.message === "Already Added to favorites.") {
+
       statusCode = StatusCodes.CONFLICT;
     }
 
