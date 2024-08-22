@@ -39,4 +39,5 @@ export interface DrugState {
   selectedDrugCategory: string;
   searchResults: DrugData[];
   searchDrug: string;
+  currentPage: number;
 }

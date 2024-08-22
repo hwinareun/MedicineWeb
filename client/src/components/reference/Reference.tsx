@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux';
 import { DrugReferenceData } from '../../types/drug.type';
+import Pagination from '../common/Pagination';
+import { RootState } from '../../store';
 
 interface ReferenceProps {
   data: DrugReferenceData[];
@@ -28,6 +31,12 @@ const cutPrefixSuffix = (description: string): string => {
 };
 
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
+  const currentPage = useSelector((state: RootState) => state.drug.currentPage);
+  const itemsPerPage = 10; // 페이지 당 나타나있는 아이템 개수
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = data.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <div className="max-w-screen-lg p-8 mx-auto bg-medicineNeutral whitespace-nowrap">
       <table className="w-full border-2 table-fixed border-medicinePositive">
@@ -41,13 +50,13 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody className="overflow-y-auto">
-          {data.map((drug, index) => (
+          {currentItems.map((drug, index) => (
             <tr
               key={drug.drugid}
               className="border-b border-medicinePositive hover:bg-medicinePrimary"
             >
               <td className="p-2 border-r border-medicinePositive">
-                {index + 1}
+                {startIndex + index + 1}
               </td>
               <td className="flex justify-center m-2">
                 <img
@@ -72,6 +81,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
           ))}
         </tbody>
       </table>
+      <Pagination totalItems={data.length} />
     </div>
   );
 };
