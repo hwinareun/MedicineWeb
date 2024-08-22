@@ -5,8 +5,8 @@ import { GiMedicinePills, GiPill, GiPillDrop } from 'react-icons/gi';
 const SelectedForm = () => {
   return (
     <div className="flex flex-col gap-1 p-2">
-      <p>제형</p>
-      <div className="flex flex-row gap-1">
+      <p className="pb-1 font-semibold">제형</p>
+      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
         <FilterOption
           label="정제"
           icon={CiTablets1}
