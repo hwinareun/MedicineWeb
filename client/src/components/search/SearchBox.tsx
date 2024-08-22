@@ -42,16 +42,35 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
       const results = {
         [selectedDrugCategory]: searchDrug,
       };
-      console.log(`Search Params: ${results}`);
 
       const data = await fetchDrugs(results);
-      const filteredData = data.filter((drug: DrugData) =>
-        drug.itemName.includes(searchDrug)
-      );
+
+      let filteredData: DrugData[] = [];
+      switch (selectedDrugCategory) {
+        case '의약품명':
+          filteredData = data.filter((drug: DrugData) =>
+            drug.itemName.includes(searchDrug)
+          );
+          break;
+        case '성분명':
+          filteredData = data.filter(
+            (drug: DrugData) =>
+              drug.ingrEngName?.includes(searchDrug) ||
+              drug.ingrKorName?.includes(searchDrug)
+          );
+          break;
+        case '효능효과':
+          filteredData = data.filter((drug: DrugData) =>
+            drug.efcyQesitm.includes(searchDrug)
+          );
+          break;
+        default:
+          filteredData = data;
+          break;
+      }
 
       dispatch(setSearchResults(filteredData));
       setResults(filteredData);
-      console.log(`Search Results: ${JSON.stringify(filteredData, null, 2)}`);
     } catch (error) {
       console.error(error);
     }

@@ -18,19 +18,14 @@ interface SearchParams {
 export const fetchDrugs = async (params: SearchParams) => {
   const query = new URLSearchParams();
 
-  console.log(`Fetch Params: ${JSON.stringify(params, null, 2)}`);
-
   Object.entries(params).forEach(([key, value]) => {
     if (value) {
       query.append(key, value);
     }
   });
 
-  console.log(`Query String: ${query.toString()}`);
-
   try {
     const response = await httpClient.get(`/search?${query.toString()}`);
-    console.log(`API Response: ${JSON.stringify(response.data, null, 2)}`);
     return response.data;
   } catch (error) {
     console.error(

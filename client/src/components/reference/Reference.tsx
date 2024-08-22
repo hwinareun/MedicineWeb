@@ -32,8 +32,6 @@ const cutPrefixSuffix = (description: string): string => {
 };
 
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
-  console.log('Reference Data:', data);
-
   const currentPage = useSelector((state: RootState) => state.drug.currentPage);
   const itemsPerPage = 10;
 
