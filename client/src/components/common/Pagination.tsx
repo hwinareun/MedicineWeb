@@ -9,7 +9,7 @@ import {
   TbSquareChevronsRightFilled,
 } from 'react-icons/tb';
 
-const Pagination = ({ totalItems }) => {
+const Pagination = ({ totalItems }: { totalItems: number }) => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPage = useSelector((state: RootState) => state.drug.currentPage);
   const itemsPerPage = 10;
@@ -40,15 +40,29 @@ const Pagination = ({ totalItems }) => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4">
+    <div className="flex items-center justify-center gap-3 p-4 m-4 text-5xl text-medicinePositive">
       <div className="flex">
-        <TbSquareChevronsLeftFilled onClick={goToFirstPage} />
-        <TbSquareChevronLeftFilled onClick={goToPreviousPage} />
+        <TbSquareChevronsLeftFilled
+          onClick={goToFirstPage}
+          className="cursor-pointer hover:text-medicineFontBlue"
+        />
+        <TbSquareChevronLeftFilled
+          onClick={goToPreviousPage}
+          className="cursor-pointer hover:text-medicineFontBlue"
+        />
       </div>
-      <p> - {currentPage} 페이지 - </p>
+      <p className="text-sm font-bold text-medicineFontBlue">
+        - {currentPage} 페이지 -
+      </p>
       <div className="flex">
-        <TbSquareChevronRightFilled onClick={goToNextPage} />
-        <TbSquareChevronsRightFilled onClick={goToLastPage} />
+        <TbSquareChevronRightFilled
+          onClick={goToNextPage}
+          className="cursor-pointer hover:text-medicineFontBlue"
+        />
+        <TbSquareChevronsRightFilled
+          onClick={goToLastPage}
+          className="cursor-pointer hover:text-medicineFontBlue"
+        />
       </div>
     </div>
   );
