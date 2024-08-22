@@ -74,7 +74,7 @@ const addDrug = async (req, res, next) => {
 
     sql = 'select * from DrugEtc where itemSeq = ?';
     results = await query(sql, itemSeq);
-    if(results.length !== 0){
+    if (results.length !== 0) {
       sql = `update DrugEtc 
             set ingrEngName = ?, ingrKorName = ?, dosageForm = ?, strength = ? 
             where itemSeq = ?`;
@@ -144,7 +144,7 @@ const modifyDrug = async (req, res, next) => {
     sql = 'select * from DrugEtc where itemSeq = ?';
     results = await query(sql, itemSeq);
 
-    if(results.length === 0){
+    if (results.length === 0) {
       sql = `insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) 
             values (?, ?, ?, ?, ?)`;
       values = [itemSeq, ingrEngName, ingrKorName, dosageForm, strength];
@@ -222,7 +222,6 @@ const updateDrugData = async (req, res, next) => {
     const filteredDrugInfo = await getDifferenceByKeyAndToArray(drugInfo, dbData);
     console.log('filteredDrugInfo 완료');
 
-
     sql = 'select * from DrugImageInfo;';
     dbData = await query(sql);
 
@@ -237,57 +236,54 @@ const updateDrugData = async (req, res, next) => {
     const filteredDrugEtc = await getDifferenceByKeyAndToArray(drugEtc, dbData);
     console.log('filteredDrugEtc 완료');
 
-    if (filteredDrugInfo.length === 0 || filteredDrugImageInfo.length === 0) {
-      return res.status(StatusCodes.OK).json({ message: 'Nothing to update data.' });
+    let drugInfoResults, drugImageInfoResults;
+    if (filteredDrugInfo.length !== 0 && filteredDrugImageInfo.length !== 0) {
+      console.log('공통 데이터 추출 시작');
+      const [
+        jsonDrugInfo,
+        jsonDrugImageInfo,
+        arrayDrugInfo,
+        arrayDrugImageInfo,
+      ] = await getCommonByKey(filteredDrugInfo, filteredDrugImageInfo);
+      console.log('공통 데이터 추출 완료');
+
+      if (jsonDrugInfo.length !== 0 && jsonDrugImageInfo.length !== 0) {
+        console.log('DrugInfo 데이터 추가 시작');
+        sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values ?;';
+        drugInfoResults = await query(sql, [arrayDrugInfo]);
+        console.log('DrugInfo 데이터 추가 완료');
+
+        console.log('DrugImageInfo 데이터 추가 시작');
+        sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values ?;';
+        drugImageInfoResults = await query(sql, [arrayDrugImageInfo]);
+        console.log('DrugImageInfo 데이터 추가 완료');
+      }
     }
-
-    console.log('공통 데이터 추출 시작');
-    const [
-      jsonDrugInfo,
-      jsonDrugImageInfo,
-      // jsondrugEtc,
-      arrayDrugInfo,
-      arrayDrugImageInfo,
-      // arrayDrugEtc
-    ] = await getCommonByKey(filteredDrugInfo, filteredDrugImageInfo);
-    console.log('공통 데이터 추출 완료');
-
-    if (jsonDrugInfo.length === 0 || jsonDrugImageInfo.length === 0) {
-      return res.status(StatusCodes.OK).json({ message: 'Nothing to update data.' });
-    }
-
-    console.log('DrugInfo 데이터 추가 시작');
-    sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values ?;';
-    const drugInfoResults = await query(sql, [arrayDrugInfo]);
-    console.log('DrugInfo 데이터 추가 완료');
-
-    console.log('DrugImageInfo 데이터 추가 시작');
-    sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values ?;';
-    const drugImageInfoResults = await query(sql, [arrayDrugImageInfo]);
-    console.log('DrugImageInfo 데이터 추가 완료');
 
     let drugEtcResults;
-    if(filteredDrugEtc.length !== 0) {
+    if (filteredDrugEtc.length !== 0) {
       console.log('DrugEtc 중복제거 시작');
       const filteredDrugEtc2 = await removeDuplicateObjects(filteredDrugEtc);
       console.log('DrugEtc 중복제거 완료');
 
       const filteredDrugEtc3 = filteredDrugEtc2.filter(value => value.itemSeq !== 0);
 
-      console.log('DrugEtc 2차원 배열로 변환 시작');
-      const arrayDrugEtc = filteredDrugEtc3.map(obj => Object.values(obj));
-      console.log('DrugEtc 2차원 배열로 변환 완료');
-
-      console.log(arrayDrugEtc);
-
-      console.log('DrugEtc 데이터 추가 시작');
-      sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values ?;';
-      drugEtcResults = await query(sql, [arrayDrugEtc]);
-      console.log('DrugEtc 데이터 추가 완료');
+      if(filteredDrugEtc3.length !== 0){
+        console.log('DrugEtc 2차원 배열로 변환 시작');
+        const arrayDrugEtc = filteredDrugEtc3.map(obj => Object.values(obj));
+        console.log('DrugEtc 2차원 배열로 변환 완료');
+  
+        console.log('DrugEtc 데이터 추가 시작');
+        sql = 'insert into DrugEtc (itemSeq, ingrEngName, ingrKorName, dosageForm, strength) values ?;';
+        drugEtcResults = await query(sql, [arrayDrugEtc]);
+        console.log('DrugEtc 데이터 추가 완료');
+      }
     }
 
-    console.log('데이터 업데이트 완료');
-    return res.status(StatusCodes.OK).end();
+    console.log('업데이트 완료');
+    return res.status(StatusCodes.OK).json({
+      results: [drugInfoResults, drugImageInfoResults, drugEtcResults]
+    });
   } catch (error) {
     let statusCode;
 
@@ -306,11 +302,8 @@ const getAllDrugInfo = async (serviceKey, baseUrl, filterFunc) => {
     const response = await axios.get(baseUrl + queryParams);
 
     const result = await response.data;
-
-    const items = await result.body.items;
-    console.log(response.data);
-    console.log(result.body);
-    console.log(result.body.items);
+    const itemsBody = await result.body;
+    const items = await itemsBody.items;
 
     if (!items) {
       throw new Error('Failed to retrieve data from the API.');
