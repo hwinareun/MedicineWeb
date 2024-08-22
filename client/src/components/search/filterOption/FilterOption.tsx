@@ -27,7 +27,7 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   return (
     <div
       onClick={() => dispatch(toggleSelection({ field, value }))}
-      className={`py-2 px-4 items-center text-xs text-center justify-center rounded-lg bg-medicineSecondary hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint' : ''} ${isSelected ? 'text-medicineSecondary' : ''}`}
+      className={`py-2 px-4 m-1 items-center text-xs text-center shadow-sm shadow-medicinePoint justify-center rounded-lg  hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint' : 'bg-medicineSecondary'} ${isSelected ? 'text-medicineSecondary' : ''}`}
       role="button"
       aria-label={label}
     >
