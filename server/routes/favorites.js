@@ -7,7 +7,7 @@ const {
 } = require("../controllers/favoriteController");
 const { authenticateJWT } = require('../middlewares/auth');
 
-router.get("/", getFavorites);
+router.get("/", authenticateJWT, getFavorites);
 router.post("/:drugId", authenticateJWT, addFavorite);
 router.delete("/:drugId", authenticateJWT, removeFavorite);
 
