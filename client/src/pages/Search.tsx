@@ -18,9 +18,9 @@ const Search = () => {
         </div>
         {results.length > 0 ? <Reference data={results} /> : <ReferenceEmpty />}
       </div>
-      <div className="absolute flex items-center justify-center w-svw h-svh">
+      {/* <div className="absolute flex items-center justify-center w-svw h-svh">
         <ReferenceDetail />
-      </div>
+      </div> */}
     </div>
   );
 };
