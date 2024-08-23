@@ -22,11 +22,11 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
         <div className="flex justify-between py-2 m-4">
           <p className="flex items-center gap-1 text-2xl font-semibold">
             {drug.itemName}
-            <HiOutlineStar className="text-3xl text-medicinePoint hover:text-medicinePositive" />
-            {/* <HiStar className="text-3xl text-medicinePoint hover:text-medicinePositive" /> */}
+            <HiOutlineStar className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive" />
+            {/* <HiStar className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive" /> */}
           </p>
           <FiX
-            className="text-3xl text-medicinePoint hover:text-medicinePositive"
+            className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive"
             onClick={onClose}
           />
         </div>

@@ -78,7 +78,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
           {currentItems.map((drug, index) => (
             <tr
               key={drug.drugId}
-              className="border-b border-medicinePositive hover:bg-medicinePrimary"
+              className="border-b cursor-pointer border-medicinePositive hover:bg-medicinePrimary"
               onClick={() => handleRowClick(drug.drugId)}
             >
               <td className="p-2 border-r border-medicinePositive">
