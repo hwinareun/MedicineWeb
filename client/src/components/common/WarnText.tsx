@@ -9,7 +9,7 @@ export const WarnText: React.FC<Props> = ({ warnText, success }) => {
   return (
     <div
       className={clsx(
-        'self-end text-sm h-6',
+        'self-end text-lg h-6',
         success && 'text-green-600',
         !success && 'text-red-600'
       )}

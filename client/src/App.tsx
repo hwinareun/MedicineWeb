@@ -7,6 +7,7 @@ import Error from './components/common/Error';
 import Main from './pages/Main';
 import Login from './pages/Login';
 import Join from './pages/Join';
+import FindUser from './pages/FindUser';
 
 const routeList = [
   {
@@ -24,6 +25,10 @@ const routeList = [
   {
     path: '/search',
     element: <Search />,
+  },
+  {
+    path: '/findUser',
+    element: <FindUser />,
   },
 ];
 
