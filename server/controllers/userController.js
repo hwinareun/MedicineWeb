@@ -19,7 +19,7 @@ const createAccount = async (req, res, next) => {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?);";
+    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?)";
     const values = [
       id,
       hashPassword,
@@ -38,8 +38,6 @@ const createAccount = async (req, res, next) => {
 
     if (error.code === "ER_DUP_ENTRY") {
       statusCode = StatusCodes.CONFLICT;
-    } else if (error.message === "All fields are required.") {
-      statusCode = StatusCodes.BAD_REQUEST;
     }
 
     return next(new CustomError(error.message, statusCode));
@@ -50,7 +48,7 @@ const deleteAccount = async (req, res, next) => {
   const { userId } = req.user;
 
   try {
-    const sql = "delete from Users where userId = ?;";
+    const sql = "delete from Users where userId = ?";
     const results = await query(sql, userId);
     if (results.affectedRows === 0) {
       throw new Error("User does not exist.");
@@ -72,7 +70,7 @@ const login = async (req, res, next) => {
   const { id, password } = req.body;
 
   try {
-    const sql = "select * from Users where id = ?;";
+    const sql = "select * from Users where id = ?";
     const results = await query(sql, id);
 
     const loginUser = results[0];
@@ -92,10 +90,6 @@ const login = async (req, res, next) => {
       expiresIn: "1h",
     });
 
-    res.cookie('token', token, {
-      httpOnly: true
-    });
-
     return res.status(StatusCodes.OK).json({ token: token });
   } catch (error) {
     let statusCode;
@@ -106,16 +100,6 @@ const login = async (req, res, next) => {
 
     return next(new CustomError(error.message, statusCode));
   }
-};
-
-const logout = async (req, res, next) => {
-  // await req.session.destroy(error => {
-  //   if (error) {
-  //     return next(new CustomError('Failed to logout.', StatusCodes.INTERNAL_SERVER_ERROR));
-  //   }
-  // });
-
-  return res.status(StatusCodes.OK).end();
 };
 
 const showProfile = async (req, res, next) => {
@@ -158,7 +142,7 @@ const updateUserInfo = async (req, res, next) => {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = 'update Users set nickname = ?, password = ? where userId = ?;';
+    const sql = 'update Users set nickname = ?, password = ? where userId = ?';
     const values = [nickname, hashPassword, userId];
     await query(sql, values);
 
@@ -175,7 +159,7 @@ const checkPassword = async (req, res, next) => {
   const { password } = req.body;
 
   try {
-    const sql = "select * from Users where userId = ?;";
+    const sql = "select * from Users where userId = ?";
     const results = await query(sql, userId);
 
     const loginUser = results[0];
@@ -201,7 +185,7 @@ const findId = async (req, res, next) => {
   const { nickname, idQuestion, idAnswer } = req.body;
 
   try {
-    const sql = 'select * from Users where nickname = ? and idQuestion = ? and idAnswer = ?;';
+    const sql = 'select * from Users where nickname = ? and idQuestion = ? and idAnswer = ?';
     const values = [nickname, idQuestion, idAnswer];
     const results = await query(sql, values);
 
@@ -227,7 +211,7 @@ const requestResetPassword = async (req, res, next) => {
   const { id, pwQuestion, pwAnswer } = req.body;
 
   try {
-    const sql = 'select * from Users where id = ? and pwQuestion = ? and pwAnswer = ?;';
+    const sql = 'select * from Users where id = ? and pwQuestion = ? and pwAnswer = ?';
     const values = [id, pwQuestion, pwAnswer];
     const results = await query(sql, values);
 
@@ -242,7 +226,7 @@ const requestResetPassword = async (req, res, next) => {
     let statusCode;
 
     if (error.message === 'User does not exist.') {
-      statusCode = StatusCodes.BAD_REQUEST;
+      statusCode = StatusCodes.NOT_FOUND;
     }
 
     return next(new CustomError(error.message, statusCode));
@@ -256,7 +240,7 @@ const resetPassword = async (req, res, next) => {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = 'update Users set password = ? where id = ?;';
+    const sql = 'update Users set password = ? where id = ?';
     const values = [hashPassword, id];
     await query(sql, values);
 
@@ -272,7 +256,7 @@ const checkNicknameDuplication = async (req, res, next) => {
   const { nickname } = req.body;
 
   try {
-    const sql = 'select * from Users where nickname = ?;';
+    const sql = 'select * from Users where nickname = ?';
     const results = await query(sql, nickname);
     if (results.length) {
       throw new Error('Nickname is already in use.');
@@ -294,7 +278,7 @@ const checkIdDuplication = async (req, res, next) => {
   const { id } = req.body;
 
   try {
-    const sql = 'select * from Users where id = ?;';
+    const sql = 'select * from Users where id = ?';
     const results = await query(sql, id);
     if (results.length) {
       throw new Error('Id is already in use.');
@@ -316,7 +300,6 @@ module.exports = {
   createAccount,
   deleteAccount,
   login,
-  logout,
   showProfile,
   updateUserInfo,
   checkPassword,

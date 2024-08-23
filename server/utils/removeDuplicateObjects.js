@@ -1,11 +1,3 @@
-// const removeDuplicateObjects = async (arr) => {
-//     return await arr.filter((value, index, self) =>
-//         index === self.findIndex((t) => (
-//             JSON.stringify(t) === JSON.stringify(value)
-//         ))
-//     );
-// };
-
 const removeDuplicateObjects = async (arr) => {
     const uniqueJsonArray = [];
     const seen = new Set();
