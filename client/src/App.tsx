@@ -8,6 +8,7 @@ import Main from './pages/Main';
 import Login from './pages/Login';
 import Join from './pages/Join';
 import FindUser from './pages/FindUser';
+import Profile from './pages/Profile';
 
 const routeList = [
   {
@@ -29,6 +30,10 @@ const routeList = [
   {
     path: '/findUser',
     element: <FindUser />,
+  },
+  {
+    path: '/myprofile',
+    element: <Profile />,
   },
 ];
 
