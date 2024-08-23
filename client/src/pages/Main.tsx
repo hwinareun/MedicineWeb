@@ -9,6 +9,8 @@ import { PositiveButton } from '../components/common/Button';
 import { SearchBoxProps } from '../components/search/SearchBox';
 import { fetchDrugs } from '../apis/drugs.api';
 import { DrugData } from '../types/drug.type';
+import { LoginBox } from '../components/login/LoginBox';
+import { FaList, FaSearch } from 'react-icons/fa';
 
 const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const navigate = useNavigate();
@@ -50,9 +52,15 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchDrugItem(event.target.value));
   };
+  const handleSearchClick = () => {
+    navigate('/search');
+  };
+  const handlePostsClick = () => {
+    navigate('/posts');
+  };
 
   return (
-    <div className="px-4 bg-blue-100 whitespace-nowrap">
+    <div className="px-4 bg-blue-100 whitespace-nowrap relative">
       <div className="w-5/12 p-2 m-2">
         <img src={Logo1} alt="medicineWebLogo" />
         <div className="flex gap-1">
@@ -65,7 +73,23 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
           <PositiveButton onClick={handleSearch}>확인</PositiveButton>
         </div>
       </div>
-      {/* 로그인 */}
+      <div className="absolute right-96 top-60">
+        <LoginBox />
+        <div className="flex h-fit w-full justify-evenly mt-10">
+          <div
+            className="flex items-center gap-2 cursor-pointer text-2xl"
+            onClick={handleSearchClick}
+          >
+            <FaSearch /> 상세 검색
+          </div>
+          <div
+            className="flex items-center gap-2 cursor-pointer text-2xl"
+            onClick={handlePostsClick}
+          >
+            <FaList /> 게시판
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
