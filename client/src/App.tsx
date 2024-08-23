@@ -49,6 +49,7 @@ const routeList = [
 
 const router = createBrowserRouter(
   routeList.map((item) => {
+    if (item.path === '/') return item;
     return {
       ...item,
       element: <Layout>{item.element}</Layout>,

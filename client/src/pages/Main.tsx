@@ -60,30 +60,32 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   };
 
   return (
-    <div className="px-4 bg-blue-100 whitespace-nowrap relative">
-      <div className="w-5/12 p-2 m-2">
-        <img src={Logo1} alt="medicineWebLogo" />
-        <div className="flex gap-1">
-          <Input
-            value={searchDrug}
-            placeholder="의약품명"
-            onChange={handleSearchChange}
-            onKeyDown={handleSearchEnter}
-          />
-          <PositiveButton onClick={handleSearch}>확인</PositiveButton>
+    <div className="min-h-screen flex bg-blue-100">
+      <div className="flex items-center justify-center pl-4 whitespace-nowrap">
+        <div className="w-4/5 p-6">
+          <img src={Logo1} alt="medicineWebLogo" />
+          <div className="flex gap-1">
+            <Input
+              value={searchDrug}
+              placeholder="의약품명"
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchEnter}
+            />
+            <PositiveButton onClick={handleSearch}>확인</PositiveButton>
+          </div>
         </div>
       </div>
-      <div className="absolute right-96 top-60">
+      <div className="pr-4 flex flex-col items-center justify-center flex-grow">
         <LoginBox />
         <div className="flex h-fit w-full justify-evenly mt-10">
           <div
-            className="flex items-center gap-2 cursor-pointer text-2xl"
+            className="flex items-center gap-2 cursor-pointer text-xl"
             onClick={handleSearchClick}
           >
             <FaSearch /> 상세 검색
           </div>
           <div
-            className="flex items-center gap-2 cursor-pointer text-2xl"
+            className="flex items-center gap-2 cursor-pointer text-xl"
             onClick={handlePostsClick}
           >
             <FaList /> 게시판
