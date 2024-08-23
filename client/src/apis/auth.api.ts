@@ -40,6 +40,17 @@ export const getProfile = async () => {
   return response.data;
 };
 
+export interface ChangeProfileData {
+  nickname?: string;
+  password?: string;
+}
+
+export const changeProfile = async (data: ChangeProfileData) => {
+  const response = await httpClient.put('/users/userInfo', data);
+
+  return response.status;
+};
+
 export const checkPw = async (data: Pick<IAuth, 'password'>) => {
   const response = await httpClient.post('/users/checkPwd', data);
 
