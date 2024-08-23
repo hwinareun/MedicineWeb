@@ -39,3 +39,9 @@ export const getProfile = async () => {
 
   return response.data;
 };
+
+export const checkPw = async (data: Pick<IAuth, 'password'>) => {
+  const response = await httpClient.post('/users/checkPwd', data);
+
+  return response.status;
+};
