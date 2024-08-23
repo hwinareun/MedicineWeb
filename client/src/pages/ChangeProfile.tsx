@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { PwCheck } from '../components/changeProfile/PwCheck';
+import { ChangeProfileBox } from '../components/changeProfile/ChangeProfileBox';
 
 const ChangeProfile = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
 
   return (
     <div className="flex-grow flex items-center justify-center">
       {isChecked ? (
-        <div>개인정보수정</div>
+        <ChangeProfileBox />
       ) : (
         <PwCheck setIsChecked={setIsChecked} />
       )}
