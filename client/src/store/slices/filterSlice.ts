@@ -14,10 +14,10 @@ const initialState: FilterState = {
   searchData: '',
   searchIdentification1: '',
   searchIdentification2: '',
-  selectedForm: [],
-  selectedLine: [],
-  selectedShape: [],
-  selectedColor: [],
+  selectedForm: ['전체'],
+  selectedLine: ['전체'],
+  selectedShape: ['전체'],
+  selectedColor: ['전체'],
 };
 
 const filterSlice = createSlice({
@@ -55,10 +55,18 @@ const filterSlice = createSlice({
     ) => {
       const { field, value } = action.payload;
       const currentValues = state[field] as string[];
-      if (currentValues.includes(value)) {
-        state[field] = currentValues.filter((v) => v !== value);
+      if (value === '전체') {
+        state[field] = ['전체'];
       } else {
-        state[field] = [...currentValues, value];
+        if (currentValues.includes('전체')) {
+          state[field] = [value];
+        } else {
+          if (currentValues.includes(value)) {
+            state[field] = currentValues.filter((v) => v !== value);
+          } else {
+            state[field] = [...currentValues, value];
+          }
+        }
       }
     },
   },
