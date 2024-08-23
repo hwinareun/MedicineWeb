@@ -8,8 +8,6 @@ interface ReferenceDetailProps {
 }
 
 const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
-  console.log(drug);
-
   const ingrEngName = drug.ingrEngName
     ? drug.ingrEngName.split(/[,;]/).map((item) => item.trim())
     : [];
@@ -19,13 +17,13 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
     : [];
 
   return (
-    <div className="absolute flex items-center justify-center text-left">
-      <div className="px-8 py-5 bg-white shadow-sm rounded-3xl w-fit max-h-fit">
+    <div className="fixed inset-0 z-50 flex items-center justify-center text-left bg-gray-900 bg-opacity-50">
+      <div className="w-full max-w-3xl px-8 py-5 bg-white shadow-sm rounded-3xl max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between py-2 m-4">
           <p className="flex items-center gap-1 text-2xl font-semibold">
             {drug.itemName}
             <HiOutlineStar className="text-3xl text-medicinePoint hover:text-medicinePositive" />
-            <HiStar className="text-3xl text-medicinePoint hover:text-medicinePositive" />
+            {/* <HiStar className="text-3xl text-medicinePoint hover:text-medicinePositive" /> */}
           </p>
           <FiX
             className="text-3xl text-medicinePoint hover:text-medicinePositive"
@@ -37,11 +35,12 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
             <img
               src={drug.itemImage}
               className="h-32 border-2 w-60 border-medicineSecondary rounded-3xl bg-medicinePrimary"
+              alt={drug.itemName}
             />
             <div>
               <div className="w-96">
                 <p className="font-semibold">성분•함량</p>
-                <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+                <p className="px-8 py-2 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
                   {ingrEngName.map((name, index) => (
                     <p key={index}>
                       {name} ({strength[index]})
@@ -51,7 +50,7 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
               </div>
               <div className="w-96">
                 <p className="font-semibold">제형</p>
-                <p className="px-8 py-5 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+                <p className="px-8 py-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
                   {drug.dosageForm}
                 </p>
               </div>

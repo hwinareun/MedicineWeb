@@ -87,7 +87,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
               <td className="flex justify-center m-2">
                 <img
                   src={drug.itemImage}
-                  alt="drugIdentification"
+                  alt={drug.itemName}
                   className="object-contain w-32 border-2 rounded-lg border-medicinePositive"
                 />
               </td>
