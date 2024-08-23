@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type FilterState = {
-  searchData: string;
-  searchIdentification1: string;
-  searchIdentification2: string;
+  printFront: string;
+  printBack: string;
   selectedForm: string[];
   selectedLine: string[];
   selectedShape: string[];
@@ -11,24 +10,23 @@ type FilterState = {
 };
 
 const initialState: FilterState = {
-  searchData: '',
-  searchIdentification1: '',
-  searchIdentification2: '',
-  selectedForm: [],
-  selectedLine: [],
-  selectedShape: [],
-  selectedColor: [],
+  printFront: '',
+  printBack: '',
+  selectedForm: [''],
+  selectedLine: [''],
+  selectedShape: [''],
+  selectedColor: [''],
 };
 
 const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    setSearchIdentification1: (state, action: PayloadAction<string>) => {
-      state.searchIdentification1 = action.payload;
+    setPrintFront: (state, action: PayloadAction<string>) => {
+      state.printFront = action.payload;
     },
-    setSearchIdentification2: (state, action: PayloadAction<string>) => {
-      state.searchIdentification2 = action.payload;
+    setPrintBack: (state, action: PayloadAction<string>) => {
+      state.printBack = action.payload;
     },
     setSelectedForm: (state, action: PayloadAction<string[]>) => {
       state.selectedForm = action.payload;
@@ -48,25 +46,33 @@ const filterSlice = createSlice({
       action: PayloadAction<{
         field: keyof Omit<
           FilterState,
-          'searchData' | 'searchIdentification1' | 'searchIdentification2'
+          'searchData' | 'printFront' | 'printBack'
         >;
         value: string;
       }>
     ) => {
       const { field, value } = action.payload;
       const currentValues = state[field] as string[];
-      if (currentValues.includes(value)) {
-        state[field] = currentValues.filter((v) => v !== value);
+      if (value === '') {
+        state[field] = [''];
       } else {
-        state[field] = [...currentValues, value];
+        if (currentValues.includes('')) {
+          state[field] = [value];
+        } else {
+          if (currentValues.includes(value)) {
+            state[field] = currentValues.filter((v) => v !== value);
+          } else {
+            state[field] = [...currentValues, value];
+          }
+        }
       }
     },
   },
 });
 
 export const {
-  setSearchIdentification1,
-  setSearchIdentification2,
+  setPrintFront,
+  setPrintBack,
   setSelectedForm,
   setSelectedLine,
   setSelectedShape,

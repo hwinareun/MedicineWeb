@@ -11,6 +11,7 @@ import {
   TbTriangle,
 } from 'react-icons/tb';
 import FilterOption from './FilterOption';
+import { FiHelpCircle, FiStopCircle } from 'react-icons/fi';
 
 const SelectedShape = () => {
   return (
@@ -81,15 +82,15 @@ const SelectedShape = () => {
         />
         <FilterOption
           label="기타"
-          icon={TbCircle}
+          icon={FiStopCircle}
           field="selectedShape"
           value="기타"
         />
         <FilterOption
           label="전체"
-          icon={TbCircle}
+          icon={FiHelpCircle}
           field="selectedShape"
-          value="전체"
+          value=""
         />
       </div>
     </div>

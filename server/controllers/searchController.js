@@ -66,7 +66,7 @@ const search = async (req, res, next) => {
             params.push(`%${colorClass2}%`);
         }
         if (linFront) {
-            sql += ' AND linFront LIKE ?';
+            sql += ' AND lineFront LIKE ?';
             params.push(`%${linFront}%`);
         }
         if (lineBack) {

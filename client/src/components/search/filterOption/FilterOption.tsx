@@ -18,15 +18,32 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   color,
 }) => {
   const dispatch = useDispatch();
-  const isSelected = useSelector((state: RootState) =>
-    state.filter[field].includes(value)
-  );
+  const selectedValues = useSelector((state: RootState) => state.filter[field]);
+  const isSelected = selectedValues.includes(value);
 
   const iconStyle = color ? { color } : {};
 
+  const handleClick = () => {
+    if (value === '') {
+      selectedValues.forEach((v) => {
+        if (v !== '') {
+          dispatch(toggleSelection({ field, value: v }));
+        }
+      });
+      if (!isSelected) {
+        dispatch(toggleSelection({ field, value }));
+      }
+    } else {
+      if (selectedValues.includes('')) {
+        dispatch(toggleSelection({ field, value: '' }));
+      }
+      dispatch(toggleSelection({ field, value }));
+    }
+  };
+
   return (
     <div
-      onClick={() => dispatch(toggleSelection({ field, value }))}
+      onClick={handleClick}
       className={`py-2 px-4 m-1 items-center text-center shadow-sm shadow-medicinePoint justify-center rounded-lg  hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint text-medicineSecondary' : 'bg-medicineSecondary'}`}
       role="button"
       aria-label={label}

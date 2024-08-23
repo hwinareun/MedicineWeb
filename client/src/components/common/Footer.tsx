@@ -7,7 +7,7 @@ const Footer = () => {
 
   return (
     <div className="flex flex-row items-center justify-end w-auto px-2 text-sm bg-blue-100 h-14">
-      <div className="py-10 text-xs text-right text-medicineFontBlue">
+      <div className="text-xs text-right text-medicineFontBlue">
         ⓒ 2024. Team.medicineWeb. All rights reserved. <br />
       </div>
       <img
