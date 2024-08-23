@@ -49,7 +49,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
       switch (selectedDrugCategory) {
         case '의약품명':
           filteredData = data.filter((drug: DrugData) =>
-            drug.itemName.includes(searchDrug)
+            drug.itemName?.includes(searchDrug)
           );
           break;
         case '성분명':
@@ -61,7 +61,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
           break;
         case '효능효과':
           filteredData = data.filter((drug: DrugData) =>
-            drug.efcyQesitm.includes(searchDrug)
+            drug.efcyQesitm?.includes(searchDrug)
           );
           break;
         default:
