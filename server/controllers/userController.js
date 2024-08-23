@@ -5,21 +5,15 @@ const CustomError = require("../utils/CustomError");
 const jwt = require("jsonwebtoken");
 
 const createAccount = async (req, res, next) => {
-  const {
-    id,
-    password,
-    nickname,
-    idQuestion,
-    idAnswer,
-    pwQuestion,
-    pwAnswer
-  } = req.body;
+  const { id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer } =
+    req.body;
 
   try {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?)";
+    const sql =
+      "insert into Users (id, password, nickname, idQuestion, idAnswer, pwQuestion, pwAnswer) values (?)";
     const values = [
       id,
       hashPassword,
@@ -86,8 +80,7 @@ const login = async (req, res, next) => {
 
     const payload = {
       userId: loginUser.userId,
-      nickname: loginUser.nickname,
-      role: loginUser.role
+      role: loginUser.role,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
@@ -108,17 +101,21 @@ const login = async (req, res, next) => {
 
 const showProfile = async (req, res, next) => {
   try {
-    const { nickname, userId } = req.user;
+    const { userId } = req.user;
 
-    let sql = 'select drugId from Favorites where userId = ?';
+    let sql = "select * from Users where userId = ?";
     let results = await query(sql, userId);
+    const nickname = results[0].nickname;
+
+    sql = "select drugId from Favorites where userId = ?";
+    results = await query(sql, userId);
 
     if (results.length === 0) {
       results = [];
     } else {
       const values = [];
 
-      results.forEach(v => values.push(v.drugId));
+      results.forEach((v) => values.push(v.drugId));
 
       sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
           from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
@@ -129,7 +126,7 @@ const showProfile = async (req, res, next) => {
 
     return res.status(StatusCodes.OK).json({
       nickname: nickname,
-      favorites: results
+      favorites: results,
     });
   } catch (error) {
     let statusCode;
@@ -144,30 +141,29 @@ const updateUserInfo = async (req, res, next) => {
 
   try {
     if (!(nickname || password)) {
-      throw new Error('validate failed: nickname, password');
+      throw new Error("validate failed: nickname, password");
     }
 
-    let sql;
+    let sql = "update Users set";
     let values = [];
 
+    let saltRound = 10;
+    let hashPassword;
+
     if (nickname && !password) {
-      sql = 'update Users set nickname = ?';
+      sql += " nickname = ?";
       values.push(nickname);
     } else if (!nickname && password) {
-      const saltRound = 10;
-      const hashPassword = await bcrypt.hash(password, saltRound);
-
-      sql = 'update Users set password = ?';
+      hashPassword = await bcrypt.hash(password, saltRound);
+      sql += " password = ?";
       values.push(hashPassword);
     } else {
-      const saltRound = 10;
-      const hashPassword = await bcrypt.hash(password, saltRound);
-
-      sql = 'update Users set nickname = ?, password = ?';
+      hashPassword = await bcrypt.hash(password, saltRound);
+      sql += " nickname = ?, password = ?";
       values.push(nickname, hashPassword);
     }
 
-    sql += ' where userId = ?';
+    sql += " where userId = ?";
     values.push(userId);
 
     await query(sql, values);
@@ -176,7 +172,7 @@ const updateUserInfo = async (req, res, next) => {
   } catch (error) {
     let statusCode;
 
-    if(error.message === 'validate failed: nickname, password'){
+    if (error.message === "validate failed: nickname, password") {
       statusCode = StatusCodes.BAD_REQUEST;
     }
 
@@ -215,12 +211,13 @@ const findId = async (req, res, next) => {
   const { nickname, idQuestion, idAnswer } = req.body;
 
   try {
-    const sql = 'select * from Users where nickname = ? and idQuestion = ? and idAnswer = ?';
+    const sql =
+      "select * from Users where nickname = ? and idQuestion = ? and idAnswer = ?";
     const values = [nickname, idQuestion, idAnswer];
     const results = await query(sql, values);
 
     if (results.length === 0) {
-      throw new Error('User does not exist.');
+      throw new Error("User does not exist.");
     }
 
     const user = results[0];
@@ -229,7 +226,7 @@ const findId = async (req, res, next) => {
   } catch (error) {
     let statusCode;
 
-    if (error.message === 'User does not exist.') {
+    if (error.message === "User does not exist.") {
       statusCode = StatusCodes.NOT_FOUND;
     }
 
@@ -241,12 +238,13 @@ const requestResetPassword = async (req, res, next) => {
   const { id, pwQuestion, pwAnswer } = req.body;
 
   try {
-    const sql = 'select * from Users where id = ? and pwQuestion = ? and pwAnswer = ?';
+    const sql =
+      "select * from Users where id = ? and pwQuestion = ? and pwAnswer = ?";
     const values = [id, pwQuestion, pwAnswer];
     const results = await query(sql, values);
 
     if (results.length === 0) {
-      throw new Error('User does not exist.');
+      throw new Error("User does not exist.");
     }
 
     const user = results[0];
@@ -255,7 +253,7 @@ const requestResetPassword = async (req, res, next) => {
   } catch (error) {
     let statusCode;
 
-    if (error.message === 'User does not exist.') {
+    if (error.message === "User does not exist.") {
       statusCode = StatusCodes.NOT_FOUND;
     }
 
@@ -270,7 +268,7 @@ const resetPassword = async (req, res, next) => {
     const saltRound = 10;
     const hashPassword = await bcrypt.hash(password, saltRound);
 
-    const sql = 'update Users set password = ? where id = ?';
+    const sql = "update Users set password = ? where id = ?";
     const values = [hashPassword, id];
     await query(sql, values);
 
@@ -280,23 +278,23 @@ const resetPassword = async (req, res, next) => {
 
     return next(new CustomError(error.message, statusCode));
   }
-}
+};
 
 const checkNicknameDuplication = async (req, res, next) => {
   const { nickname } = req.body;
 
   try {
-    const sql = 'select * from Users where nickname = ?';
+    const sql = "select * from Users where nickname = ?";
     const results = await query(sql, nickname);
     if (results.length) {
-      throw new Error('Nickname is already in use.');
+      throw new Error("Nickname is already in use.");
     }
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
 
-    if (error.message === 'Nickname is already in use.') {
+    if (error.message === "Nickname is already in use.") {
       statusCode = StatusCodes.CONFLICT;
     }
 
@@ -308,17 +306,17 @@ const checkIdDuplication = async (req, res, next) => {
   const { id } = req.body;
 
   try {
-    const sql = 'select * from Users where id = ?';
+    const sql = "select * from Users where id = ?";
     const results = await query(sql, id);
     if (results.length) {
-      throw new Error('Id is already in use.');
+      throw new Error("Id is already in use.");
     }
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
 
-    if (error.message === 'Id is already in use.') {
+    if (error.message === "Id is already in use.") {
       statusCode = StatusCodes.CONFLICT;
     }
 
