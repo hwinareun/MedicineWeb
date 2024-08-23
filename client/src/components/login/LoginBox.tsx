@@ -55,7 +55,7 @@ export const LoginBox = () => {
           dispatch(storeLogin({ jwtToken: res.token }));
           // console.log(res);
           setShowWarning([0, 0]);
-          navigate('/search');
+          navigate('/');
         })
         .catch((err) => {
           // 실패 시 다시 로그인 안내
