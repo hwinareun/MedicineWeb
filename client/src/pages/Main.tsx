@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Logo1 from '../assets/images/Logo1.png';
+import Icon from '../assets/images/Icon.png';
 import Input from '../components/common/Input';
 import { RootState } from '../store';
 import { setSearchDrugItem, setSearchResults } from '../store/slices/drugSlice';
@@ -94,29 +95,49 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
           )}
         >
           <div
-            className="flex items-center gap-2 cursor-pointer text-xl w-fit"
+            className="flex items-center gap-2 cursor-pointer text-xl w-fit relative"
             onClick={handleSearchClick}
           >
+            <img
+              src={Icon}
+              alt="medicineWebIcon"
+              className="absolute w-10 top-[-27px] right-0"
+            />
             <FaSearch /> {isLogin ? '상세 검색 하러 가기' : '상세 검색'}
           </div>
           <div
-            className="flex items-center gap-2 cursor-pointer text-xl"
+            className="flex items-center gap-2 cursor-pointer text-xl relative"
             onClick={handlePostsClick}
           >
+            <img
+              src={Icon}
+              alt="medicineWebIcon"
+              className="absolute w-10 top-[-20px] left-[-25px] -rotate-45"
+            />
             <FaList /> {isLogin ? '게시판 보러 가기' : '게시판'}
           </div>
           {isLogin && (
             <>
               <div
-                className="flex items-center gap-2 cursor-pointer text-xl"
+                className="flex items-center gap-2 cursor-pointer text-xl relative"
                 onClick={handleMyProfileClick}
               >
+                <img
+                  src={Icon}
+                  alt="medicineWebIcon"
+                  className="absolute w-10 top-[-18px] right-[-28px] rotate-45"
+                />
                 <FaUserAlt /> 마이프로필
               </div>
               <div
-                className="flex items-center gap-2 cursor-pointer text-xl"
+                className="flex items-center justify-center gap-2 cursor-pointer text-xl relative"
                 onClick={handleLogout}
               >
+                <img
+                  src={Icon}
+                  alt="medicineWebIcon"
+                  className="absolute w-10 top-[-27px]"
+                />
                 <FiLogIn /> 로그아웃
               </div>
             </>
