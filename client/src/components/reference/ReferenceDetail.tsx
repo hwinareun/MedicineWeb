@@ -3,6 +3,10 @@ import { HiOutlineStar, HiStar } from 'react-icons/hi2';
 import { DrugData } from '../../types/drug.type';
 import unprepared from '../../assets/images/Unprepared.png';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 interface ReferenceDetailProps {
   drug: DrugData;
@@ -10,7 +14,10 @@ interface ReferenceDetailProps {
 }
 
 const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
+  const navigate = useNavigate();
   const [isFavorites, setIsFavorites] = useState(false);
+  const [loginMessage, setLoginMessage] = useState('');
+  const isLogin = useSelector((state: RootState) => state.auth.isLogin);
 
   const ingrEngName = drug.ingrEngName
     ? drug.ingrEngName.split(/[,;]/).map((item) => item.trim())
@@ -20,17 +27,49 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
     ? drug.strength.split(/[,;]/).map((item) => item.trim())
     : [];
 
+  const handleFavoriteClick = () => {
+    if (!isLogin) {
+      setLoginMessage(
+        '로그인이 필요한 서비스입니다. \n로그인하시려면 메세지를 클릭해주세요!'
+      );
+      setTimeout(() => setLoginMessage(''), 2000);
+      return;
+    }
+
+    if (isFavorites) {
+      setIsFavorites(false);
+    } else {
+      setIsFavorites(true);
+    }
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login'); // /login 페이지로 이동
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center text-left bg-gray-900 bg-opacity-50">
       <div className="w-full max-w-3xl px-8 py-5 bg-white shadow-sm rounded-3xl max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between py-2 m-4">
           <div className="flex items-center gap-1 text-2xl font-semibold">
             {drug.itemName}
-            <div className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive">
-              {isFavorites ? (
-                <HiStar onClick={() => {}} />
-              ) : (
-                <HiOutlineStar onClick={() => {}} />
+            <div
+              className="flex flex-row items-center gap-2 text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive"
+              onClick={handleFavoriteClick}
+            >
+              {isFavorites ? <HiStar /> : <HiOutlineStar />}
+              {loginMessage && (
+                <div
+                  className="text-xs text-red-500 underline cursor-pointer" // 커서 모양을 포인터로 설정하여 클릭 가능하다는 시각적 효과 추가
+                  onClick={handleLoginClick} // 메시지 클릭 시 /login 페이지로 이동
+                >
+                  {loginMessage.split('\n').map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </div>
               )}
             </div>
           </div>
