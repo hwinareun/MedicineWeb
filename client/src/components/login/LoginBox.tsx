@@ -4,7 +4,7 @@ import { LoginWarnText } from './LoginWarnText';
 import { LoginButton } from './LoginButton';
 import { LoginNavigation } from './LoginNavigation';
 import { useDispatch } from 'react-redux';
-import { IAuth } from '../../types/user.type';
+import { IAuth } from '../../types/auth.type';
 import { login } from '../../apis/auth.api';
 import { storeLogin } from '../../store/slices/authSlice';
 
