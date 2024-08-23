@@ -1,5 +1,4 @@
 import { FiX } from 'react-icons/fi';
-import Logo3 from '../../assets/images/Logo3.png';
 import { HiOutlineStar, HiStar } from 'react-icons/hi2';
 import { DrugData } from '../../types/drug.type';
 
@@ -8,6 +7,16 @@ interface ReferenceDetailProps {
 }
 
 const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
+  const ingrEngName = drug.ingrEngName
+    ? drug.ingrEngName.split(/[,;]/).map((item) => item.trim())
+    : [];
+
+  const strength = drug.strength
+    ? drug.strength.split(/[,;]/).map((item) => item.trim())
+    : [];
+
+  const handleClose = () => {};
+
   return (
     <div className="absolute flex items-center justify-center w-svw h-svh">
       <div className="px-8 py-5 bg-white shadow-sm rounded-3xl w-fit max-h-fit">
@@ -19,26 +28,30 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
           </p>
           <FiX
             className="text-3xl text-medicinePoint hover:text-medicinePositive"
-            onClick={() => {}}
+            onClick={handleClose}
           />
         </div>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-row items-center gap-8">
             <img
-              src={Logo3}
-              className="w-48 border-2 border-medicineSecondary rounded-3xl bg-medicinePrimary"
+              src={drug.itemImage}
+              className="h-32 border-2 w-60 border-medicineSecondary rounded-3xl bg-medicinePrimary"
             />
             <div>
               <div className="w-96">
                 <p className="font-semibold">성분•함량</p>
                 <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-                  {drug.ingrEngName}({drug.ingrKorName})
+                  {ingrEngName.map((name, index) => (
+                    <p key={index}>
+                      {name} ({strength[index]})
+                    </p>
+                  ))}
                 </p>
               </div>
               <div className="w-96">
                 <p className="font-semibold">제형</p>
                 <p className="px-8 py-5 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-                  정제
+                  {drug.dosageForm}
                 </p>
               </div>
             </div>
@@ -46,27 +59,25 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
           <div>
             <p className="font-semibold">효능•효과</p>
             <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-              통증 경감
+              {drug.efcyQesitm}
             </p>
           </div>
           <div>
             <p className="font-semibold">복용 방법</p>
             <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-              일 최대 3회를 넘지 않도록 하며, 적당량의 물과 함께 복용하도록
-              한다.
+              {drug.useMethodQesitm}
             </p>
           </div>
           <div>
             <p className="font-semibold">주의 사항</p>
             <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-              복용 후 졸음이 있을 수 있으니, 운전과 같은 집중력이 필요한 활동은
-              자제하도록 한다.
+              {drug.seQesitm}
             </p>
           </div>
           <div>
             <p className="font-semibold">보관 방법</p>
             <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-              실온 30도 이하에서 보관 가능하다.
+              {drug.depositMethodQesitm}
             </p>
           </div>
         </div>
