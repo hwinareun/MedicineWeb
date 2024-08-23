@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { IAuth } from '../../types/auth.type';
 import { login } from '../../apis/auth.api';
 import { storeLogin } from '../../store/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const WARN_TEXT_ID = {
   1: '아이디를 입력해주세요',
@@ -22,6 +23,7 @@ export const LoginBox = () => {
   const [password, setPassword] = useState('');
   const [showWarning, setShowWarning] = useState([0, 0]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -53,6 +55,7 @@ export const LoginBox = () => {
           dispatch(storeLogin({ jwtToken: res.token }));
           // console.log(res);
           setShowWarning([0, 0]);
+          navigate('/search');
         })
         .catch((err) => {
           // 실패 시 다시 로그인 안내
