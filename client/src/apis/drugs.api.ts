@@ -11,7 +11,7 @@ interface SearchParams {
   drugShape?: string;
   colorClass1?: string;
   colorClass2?: string;
-  linFront?: string;
+  lineFront?: string;
   lineBack?: string;
 }
 

@@ -46,7 +46,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
     drugShape: selectedShape.length > 0 ? selectedShape.join(',') : undefined,
     colorClass1: selectedColor.length > 0 ? selectedColor[0] : undefined,
     colorClass2: selectedColor.length > 1 ? selectedColor[1] : undefined,
-    linFront: selectedLine.length > 0 ? selectedLine[0] : undefined,
+    lineFront: selectedLine.length > 0 ? selectedLine[0] : undefined,
     lineBack: selectedLine.length > 1 ? selectedLine[1] : undefined,
   };
 
