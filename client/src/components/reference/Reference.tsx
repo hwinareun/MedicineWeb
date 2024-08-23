@@ -60,18 +60,24 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
   };
 
   return (
-    <div className="max-w-screen-lg p-4 mx-auto text-xs bg-medicineNeutral whitespace-nowrap">
-      <p className="flex items-center gap-1 my-4 text-base font-semibold text-left">
-        <FaSearch />
-        검색 결과
-      </p>
+    <div className="px-4 py-2 mx-auto text-xs rounded-lg bg-medicineNeutral whitespace-nowrap">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1 pb-2 text-base font-semibold text-left">
+          <FaSearch />
+          검색 결과
+        </div>
+        {selectedDrugDetail && (
+          <ReferenceDetail drug={selectedDrugDetail} onClose={handleClose} />
+        )}
+        <Pagination totalItems={data.length} />
+      </div>
       <table className="w-full border-2 table-fixed border-medicinePositive">
         <thead>
-          <tr className="text-base border-b-2 border-medicinePositive bg-medicinePrimary">
+          <tr className="font-bold border-b-2 border-medicinePositive bg-medicinePrimary">
             <th className="w-10 border-r border-medicinePositive">No.</th>
             <th className="w-32 ">이미지</th>
             <th className="w-24 border-x border-medicinePositive">의약품명</th>
-            <th className="w-32 ">성분</th>
+            <th className="w-20 ">성분</th>
             <th className="border-l w-80 border-medicinePositive">효능•효과</th>
           </tr>
         </thead>
@@ -82,41 +88,41 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
               className="border-b cursor-pointer border-medicinePositive hover:bg-medicinePrimary"
               onClick={() => handleRowClick(drug.drugId)}
             >
-              <td className="p-2 border-r border-medicinePositive">
+              <td className="px-1 border-r border-medicinePositive">
                 {startIndex + index + 1}
               </td>
-              <td className="flex justify-center m-2">
+              <td className="flex justify-center px-1 m-1">
                 <img
                   src={drug.itemImage}
                   alt={drug.itemName}
-                  className="object-contain w-32 border-2 rounded-lg border-medicinePositive"
+                  className="object-contain w-24 border-2 rounded-lg border-medicinePositive"
                 />
               </td>
-              <td className="p-2 break-words whitespace-normal border-x border-medicinePositive">
+              <td className="px-1 break-words whitespace-normal border-x border-medicinePositive">
                 {drug.itemName}
               </td>
-              <td className="p-2 break-words whitespace-normal border-x border-medicinePositive">
+              <td className="px-1 break-words whitespace-normal border-x border-medicinePositive">
                 {drug.ingrEngName ? (
                   drug.ingrEngName
                 ) : (
-                  <img src={unprepared} alt="unprepared" className="w-28" />
+                  <img src={unprepared} alt="unprepared" className="w-20" />
                 )}
               </td>
-              <td className="p-3 break-words whitespace-normal border-l border-medicinePositive">
+              <td className="px-3 break-words whitespace-normal border-l border-medicinePositive">
                 {drug.efcyQesitm ? (
-                  cutPrefixSuffix(drug.efcyQesitm)
+                  cutPrefixSuffix(drug.efcyQesitm).length > 80 ? (
+                    `${cutPrefixSuffix(drug.efcyQesitm).slice(0, 80)}...`
+                  ) : (
+                    cutPrefixSuffix(drug.efcyQesitm)
+                  )
                 ) : (
-                  <img src={unprepared} alt="unprepared" className="w-28" />
+                  <img src={unprepared} alt="unprepared" className="w-20" />
                 )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {selectedDrugDetail && (
-        <ReferenceDetail drug={selectedDrugDetail} onClose={handleClose} />
-      )}
-      <Pagination totalItems={data.length} />
     </div>
   );
 };

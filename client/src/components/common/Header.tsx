@@ -31,7 +31,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between w-auto px-2 bg-blue-100 h-14">
+    <div className="flex flex-row items-center justify-between w-auto px-2 bg-blue-100 h-11">
       <a href="/">
         <img src={Title1} alt="medicineWebTitle" className="w-48" />
       </a>

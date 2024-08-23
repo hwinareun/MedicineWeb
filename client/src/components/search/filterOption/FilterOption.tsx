@@ -44,11 +44,11 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   return (
     <div
       onClick={handleClick}
-      className={`py-2 px-4 m-1 items-center text-center shadow-sm shadow-medicinePoint justify-center rounded-lg  hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint text-medicineSecondary' : 'bg-medicineSecondary'}`}
+      className={`px-2 m-1 items-center text-center shadow-sm shadow-medicinePoint justify-center rounded-lg  hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint text-medicineSecondary' : 'bg-medicineSecondary'}`}
       role="button"
       aria-label={label}
     >
-      <Icon className="m-1 text-3xl" style={iconStyle} />
+      <Icon className="m-1 text-2xl" style={iconStyle} />
       {label}
     </div>
   );

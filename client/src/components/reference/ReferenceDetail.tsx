@@ -1,5 +1,5 @@
 import { FiX } from 'react-icons/fi';
-import { HiOutlineStar, HiStar } from 'react-icons/hi2';
+import { HiOutlineStar /* HiStar */ } from 'react-icons/hi2';
 import { DrugData } from '../../types/drug.type';
 import unprepared from '../../assets/images/Unprepared.png';
 
@@ -35,7 +35,7 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
           <div className="flex flex-row items-center gap-8">
             <img
               src={drug.itemImage}
-              className="h-32 border-2 w-60 border-medicineSecondary rounded-3xl bg-medicinePrimary"
+              className="h-40 border-2 w-72 border-medicineSecondary rounded-3xl bg-medicinePrimary"
               alt={drug.itemName}
             />
             <div>

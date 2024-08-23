@@ -40,7 +40,7 @@ const Pagination = ({ totalItems }: { totalItems: number }) => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-3 p-4 m-4 text-5xl text-medicinePositive">
+    <div className="flex items-center justify-center gap-3 p-1 m-2 text-3xl text-medicinePositive">
       <div className="flex">
         <TbSquareChevronsLeftFilled
           onClick={goToFirstPage}
