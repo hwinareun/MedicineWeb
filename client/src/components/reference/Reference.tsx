@@ -6,6 +6,7 @@ import { DrugData } from '../../types/drug.type';
 import { useState } from 'react';
 import { fetchDrugDetail } from '../../apis/drugs.api';
 import ReferenceDetail from './ReferenceDetail';
+import unprepared from '../../assets/images/Unprepared.png';
 
 interface ReferenceProps {
   data: DrugData[];
@@ -95,10 +96,18 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
                 {drug.itemName}
               </td>
               <td className="p-2 break-words whitespace-normal border-x border-medicinePositive">
-                {drug.ingrEngName}
+                {drug.ingrEngName ? (
+                  drug.ingrEngName
+                ) : (
+                  <img src={unprepared} alt="unprepared" className="w-28" />
+                )}
               </td>
               <td className="p-3 break-words whitespace-normal border-l border-medicinePositive">
-                {cutPrefixSuffix(drug.efcyQesitm)}
+                {drug.efcyQesitm ? (
+                  cutPrefixSuffix(drug.efcyQesitm)
+                ) : (
+                  <img src={unprepared} alt="unprepared" className="w-28" />
+                )}
               </td>
             </tr>
           ))}
