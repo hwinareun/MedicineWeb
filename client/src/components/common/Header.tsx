@@ -2,9 +2,14 @@ import { FaList, FaSearch, FaUserAlt } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 import Title1 from '../../assets/images/Title1.png';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { storeLogout } from '../../store/slices/authSlice';
 
 const Header = () => {
   const navigate = useNavigate();
+  const isLogin = useSelector((state: RootState) => state.auth.isLogin);
+  const dispatch = useDispatch();
 
   const handleSearchClick = () => {
     navigate('/search');
@@ -16,7 +21,13 @@ const Header = () => {
     navigate('/myprofile');
   };
   const handleLoginClick = () => {
-    navigate('/login');
+    if (isLogin) {
+      // 로그아웃 상태
+      dispatch(storeLogout());
+      navigate('/');
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -38,18 +49,20 @@ const Header = () => {
           >
             <FaList /> 게시판
           </div>
-          <div
-            className="flex items-center gap-1 cursor-pointer"
-            onClick={handleMyProfileClick}
-          >
-            <FaUserAlt /> 마이프로필
-          </div>
+          {isLogin && (
+            <div
+              className="flex items-center gap-1 cursor-pointer"
+              onClick={handleMyProfileClick}
+            >
+              <FaUserAlt /> 마이프로필
+            </div>
+          )}
         </div>
         <div
           className="flex items-center gap-1 cursor-pointer"
           onClick={handleLoginClick}
         >
-          <FiLogIn /> 로그인
+          <FiLogIn /> {isLogin ? '로그아웃' : '로그인'}
         </div>
       </div>
     </div>

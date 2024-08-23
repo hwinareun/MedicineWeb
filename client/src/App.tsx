@@ -10,6 +10,7 @@ import Join from './pages/Join';
 import FindUser from './pages/FindUser';
 import Profile from './pages/Profile';
 import ChangeProfile from './pages/ChangeProfile';
+import Post from './pages/Post';
 
 const routeList = [
   {
@@ -40,10 +41,15 @@ const routeList = [
     path: '/changeProfile',
     element: <ChangeProfile />,
   },
+  {
+    path: '/posts',
+    element: <Post />,
+  },
 ];
 
 const router = createBrowserRouter(
   routeList.map((item) => {
+    if (item.path === '/') return item;
     return {
       ...item,
       element: <Layout>{item.element}</Layout>,

@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Logo1 from '../assets/images/Logo1.png';
+import Icon from '../assets/images/Icon.png';
 import Input from '../components/common/Input';
 import { RootState } from '../store';
 import { setSearchDrugItem, setSearchResults } from '../store/slices/drugSlice';
@@ -9,13 +10,18 @@ import { PositiveButton } from '../components/common/Button';
 import { SearchBoxProps } from '../components/search/SearchBox';
 import { fetchDrugs } from '../apis/drugs.api';
 import { DrugData } from '../types/drug.type';
+import { LoginBox } from '../components/login/LoginBox';
+import { FaList, FaSearch, FaUserAlt } from 'react-icons/fa';
+import clsx from 'clsx';
+import { FiLogIn } from 'react-icons/fi';
+import { storeLogout } from '../store/slices/authSlice';
 
 const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { selectedDrugCategory, searchDrug } = useSelector(
-    (state: RootState) => state.drug
-  );
+  const { drug, auth } = useSelector((state: RootState) => state);
+  const { selectedDrugCategory, searchDrug } = drug;
+  const { isLogin } = auth;
 
   const handleSearch = async () => {
     navigate('/search');
@@ -50,22 +56,94 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchDrugItem(event.target.value));
   };
+  const handleSearchClick = () => {
+    navigate('/search');
+  };
+  const handlePostsClick = () => {
+    navigate('/posts');
+  };
+  const handleMyProfileClick = () => {
+    navigate('/myprofile');
+  };
+  const handleLogout = () => {
+    dispatch(storeLogout());
+  };
 
   return (
-    <div className="px-4 bg-blue-100 whitespace-nowrap">
-      <div className="w-5/12 p-2 m-2">
-        <img src={Logo1} alt="medicineWebLogo" />
-        <div className="flex gap-1">
-          <Input
-            value={searchDrug}
-            placeholder="의약품명"
-            onChange={handleSearchChange}
-            onKeyDown={handleSearchEnter}
-          />
-          <PositiveButton onClick={handleSearch}>확인</PositiveButton>
+    <div className="min-h-screen flex bg-blue-100">
+      <div className="flex items-center justify-center pl-4 whitespace-nowrap">
+        <div className="w-4/5 p-6">
+          <img src={Logo1} alt="medicineWebLogo" />
+          <div className="flex gap-1">
+            <Input
+              value={searchDrug}
+              placeholder="의약품명"
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchEnter}
+            />
+            <PositiveButton onClick={handleSearch}>확인</PositiveButton>
+          </div>
         </div>
       </div>
-      {/* 로그인 */}
+      <div className="pr-4 flex flex-col items-center justify-center flex-grow">
+        {!isLogin && <LoginBox />}
+        <div
+          className={clsx(
+            'flex h-fit w-full',
+            !isLogin && 'justify-evenly mt-10',
+            isLogin && 'flex-col gap-10 items-center'
+          )}
+        >
+          <div
+            className="flex items-center gap-2 cursor-pointer text-xl w-fit relative"
+            onClick={handleSearchClick}
+          >
+            <img
+              src={Icon}
+              alt="medicineWebIcon"
+              className="absolute w-10 top-[-27px] right-0"
+            />
+            <FaSearch /> {isLogin ? '상세 검색 하러 가기' : '상세 검색'}
+          </div>
+          <div
+            className="flex items-center gap-2 cursor-pointer text-xl relative"
+            onClick={handlePostsClick}
+          >
+            <img
+              src={Icon}
+              alt="medicineWebIcon"
+              className="absolute w-10 top-[-20px] left-[-25px] -rotate-45"
+            />
+            <FaList /> {isLogin ? '게시판 보러 가기' : '게시판'}
+          </div>
+          {isLogin && (
+            <>
+              <div
+                className="flex items-center gap-2 cursor-pointer text-xl relative"
+                onClick={handleMyProfileClick}
+              >
+                <img
+                  src={Icon}
+                  alt="medicineWebIcon"
+                  className="absolute w-10 top-[-18px] right-[-28px] rotate-45"
+                />
+                <FaUserAlt /> 마이프로필
+              </div>
+              <div
+                className="flex items-center justify-center gap-2 cursor-pointer text-xl relative"
+                onClick={handleLogout}
+              >
+                <img
+                  src={Icon}
+                  alt="medicineWebIcon"
+                  className="absolute w-10 top-[-27px]"
+                />
+                <FiLogIn /> 로그아웃
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
