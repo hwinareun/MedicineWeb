@@ -28,6 +28,12 @@ export const login = async (userData: IAuth) => {
   return response.data;
 };
 
+export const resign = async () => {
+  const response = await httpClient.delete('/users/resign');
+
+  return response.status;
+};
+
 export const getProfile = async () => {
   const response = await httpClient.get<IUser>('/users/profile');
 
