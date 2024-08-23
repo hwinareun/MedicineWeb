@@ -24,7 +24,7 @@ const getDrugDetail = async (req, res, next) => {
 
     const results = await query(sql, itemSeq);
 
-    return res.status(StatusCodes.OK).json(results);
+    return res.status(StatusCodes.OK).json(results[0]);
   } catch (error) {
     let statusCode;
 
@@ -162,7 +162,7 @@ const modifyDrug = async (req, res, next) => {
     let statusCode;
 
     if (error.message === 'No item to update.') {
-      statusCode = StatusCodes.BAD_REQUEST;
+      statusCode = StatusCodes.NOT_FOUND;
     }
 
     return next(new CustomError(error.message, statusCode));
@@ -196,7 +196,7 @@ const removeDrug = async (req, res, next) => {
     let statusCode;
 
     if (error.message === 'No item to remove.') {
-      statusCode = StatusCodes.BAD_REQUEST;
+      statusCode = StatusCodes.NOT_FOUND;
     }
 
     return next(new CustomError(error.message, statusCode));

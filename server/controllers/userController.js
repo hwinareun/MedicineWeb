@@ -73,6 +73,10 @@ const login = async (req, res, next) => {
     const sql = "select * from Users where id = ?";
     const results = await query(sql, id);
 
+    if(results.length === 0){
+      throw new Error("Invalid id or password.");
+    }
+
     const loginUser = results[0];
     const isMatch = await bcrypt.compare(password, loginUser.password);
 
