@@ -5,9 +5,8 @@ import Input from '../components/common/Input';
 import { RootState } from '../store';
 import { setSearchDrugItem, setSearchResults } from '../store/slices/drugSlice';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import { PositiveButton } from '../components/common/Button';
-import { SearchBoxProps } from '../components/search/SearchBox';
 import { fetchDrugs } from '../apis/drugs.api';
 import { DrugData } from '../types/drug.type';
 import { LoginBox } from '../components/login/LoginBox';
@@ -16,7 +15,10 @@ import clsx from 'clsx';
 import { FiLogIn } from 'react-icons/fi';
 import { storeLogout } from '../store/slices/authSlice';
 
-const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
+const Main: React.FC = () => {
+  const [results, setResults] = useState<DrugData[]>([]);
+  console.log(results);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { drug, auth } = useSelector((state: RootState) => state);
@@ -24,24 +26,24 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const { isLogin } = auth;
 
   const handleSearch = async () => {
-    navigate('/search');
-
     if (!searchDrug) {
       return;
     }
 
     setResults([]);
     try {
-      const results = {
+      const searchResults = {
         [selectedDrugCategory]: searchDrug,
       };
-      const data = await fetchDrugs(results);
+      const data = await fetchDrugs(searchResults);
       const filteredData = data.filter((drug: DrugData) =>
         drug.itemName.includes(searchDrug)
       );
 
       dispatch(setSearchResults(filteredData));
       setResults(filteredData);
+
+      navigate('/search', { state: { results: filteredData } });
     } catch (error) {
       console.error(error);
     }
@@ -70,7 +72,7 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   };
 
   return (
-    <div className="min-h-screen flex bg-blue-100">
+    <div className="flex min-h-screen bg-blue-100">
       <div className="flex items-center justify-center pl-4 whitespace-nowrap">
         <div className="w-4/5 p-6">
           <img src={Logo1} alt="medicineWebLogo" />
@@ -85,7 +87,7 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
           </div>
         </div>
       </div>
-      <div className="pr-4 flex flex-col items-center justify-center flex-grow">
+      <div className="flex flex-col items-center justify-center flex-grow pr-4">
         {!isLogin && <LoginBox />}
         <div
           className={clsx(
@@ -95,7 +97,7 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
           )}
         >
           <div
-            className="flex items-center gap-2 cursor-pointer text-xl w-fit relative"
+            className="relative flex items-center gap-2 text-xl cursor-pointer w-fit"
             onClick={handleSearchClick}
           >
             <img
@@ -106,7 +108,7 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
             <FaSearch /> {isLogin ? '상세 검색 하러 가기' : '상세 검색'}
           </div>
           <div
-            className="flex items-center gap-2 cursor-pointer text-xl relative"
+            className="relative flex items-center gap-2 text-xl cursor-pointer"
             onClick={handlePostsClick}
           >
             <img
@@ -119,7 +121,7 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
           {isLogin && (
             <>
               <div
-                className="flex items-center gap-2 cursor-pointer text-xl relative"
+                className="relative flex items-center gap-2 text-xl cursor-pointer"
                 onClick={handleMyProfileClick}
               >
                 <img
@@ -130,7 +132,7 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
                 <FaUserAlt /> 마이프로필
               </div>
               <div
-                className="flex items-center justify-center gap-2 cursor-pointer text-xl relative"
+                className="relative flex items-center justify-center gap-2 text-xl cursor-pointer"
                 onClick={handleLogout}
               >
                 <img

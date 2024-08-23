@@ -4,9 +4,13 @@ import SearchBox from '../components/search/SearchBox';
 import SearchFilter from '../components/search/SearchFilter';
 import { DrugData } from '../types/drug.type';
 import ReferenceEmpty from '../components/reference/ReferenceEmpty';
+import { useLocation } from 'react-router-dom';
 
 const Search = () => {
-  const [results, setResults] = useState<DrugData[]>([]);
+  const location = useLocation();
+  const [results, setResults] = useState<DrugData[]>(
+    location.state?.results || []
+  );
 
   return (
     <div className="flex flex-col p-4 m-4">
