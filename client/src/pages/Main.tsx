@@ -10,14 +10,17 @@ import { SearchBoxProps } from '../components/search/SearchBox';
 import { fetchDrugs } from '../apis/drugs.api';
 import { DrugData } from '../types/drug.type';
 import { LoginBox } from '../components/login/LoginBox';
-import { FaList, FaSearch } from 'react-icons/fa';
+import { FaList, FaSearch, FaUserAlt } from 'react-icons/fa';
+import clsx from 'clsx';
+import { FiLogIn } from 'react-icons/fi';
+import { storeLogout } from '../store/slices/authSlice';
 
 const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { selectedDrugCategory, searchDrug } = useSelector(
-    (state: RootState) => state.drug
-  );
+  const { drug, auth } = useSelector((state: RootState) => state);
+  const { selectedDrugCategory, searchDrug } = drug;
+  const { isLogin } = auth;
 
   const handleSearch = async () => {
     navigate('/search');
@@ -58,6 +61,12 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const handlePostsClick = () => {
     navigate('/posts');
   };
+  const handleMyProfileClick = () => {
+    navigate('/myprofile');
+  };
+  const handleLogout = () => {
+    dispatch(storeLogout());
+  };
 
   return (
     <div className="min-h-screen flex bg-blue-100">
@@ -76,20 +85,42 @@ const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
         </div>
       </div>
       <div className="pr-4 flex flex-col items-center justify-center flex-grow">
-        <LoginBox />
-        <div className="flex h-fit w-full justify-evenly mt-10">
+        {!isLogin && <LoginBox />}
+        <div
+          className={clsx(
+            'flex h-fit w-full',
+            !isLogin && 'justify-evenly mt-10',
+            isLogin && 'flex-col gap-10 items-center'
+          )}
+        >
           <div
-            className="flex items-center gap-2 cursor-pointer text-xl"
+            className="flex items-center gap-2 cursor-pointer text-xl w-fit"
             onClick={handleSearchClick}
           >
-            <FaSearch /> 상세 검색
+            <FaSearch /> {isLogin ? '상세 검색 하러 가기' : '상세 검색'}
           </div>
           <div
             className="flex items-center gap-2 cursor-pointer text-xl"
             onClick={handlePostsClick}
           >
-            <FaList /> 게시판
+            <FaList /> {isLogin ? '게시판 보러 가기' : '게시판'}
           </div>
+          {isLogin && (
+            <>
+              <div
+                className="flex items-center gap-2 cursor-pointer text-xl"
+                onClick={handleMyProfileClick}
+              >
+                <FaUserAlt /> 마이프로필
+              </div>
+              <div
+                className="flex items-center gap-2 cursor-pointer text-xl"
+                onClick={handleLogout}
+              >
+                <FiLogIn /> 로그아웃
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
