@@ -16,7 +16,7 @@ export interface DrugData {
   useMethodQesitm: string; // 복용방법
   seQesitm: string; // 부작용
   depositMethodQesitm: string; // 주의사항
-  strength: string;
+  strength: string; // 함량
 }
 
 export interface DrugState {

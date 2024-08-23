@@ -4,9 +4,12 @@ import { DrugData } from '../../types/drug.type';
 
 interface ReferenceDetailProps {
   drug: DrugData;
+  onClose: () => void;
 }
 
-const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
+const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
+  console.log(drug);
+
   const ingrEngName = drug.ingrEngName
     ? drug.ingrEngName.split(/[,;]/).map((item) => item.trim())
     : [];
@@ -15,10 +18,8 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
     ? drug.strength.split(/[,;]/).map((item) => item.trim())
     : [];
 
-  const handleClose = () => {};
-
   return (
-    <div className="absolute flex items-center justify-center w-svw h-svh">
+    <div className="absolute flex items-center justify-center text-left">
       <div className="px-8 py-5 bg-white shadow-sm rounded-3xl w-fit max-h-fit">
         <div className="flex justify-between py-2 m-4">
           <p className="flex items-center gap-1 text-2xl font-semibold">
@@ -28,7 +29,7 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
           </p>
           <FiX
             className="text-3xl text-medicinePoint hover:text-medicinePositive"
-            onClick={handleClose}
+            onClick={onClose}
           />
         </div>
         <div className="flex flex-col gap-4">
@@ -58,25 +59,25 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug }) => {
           </div>
           <div>
             <p className="font-semibold">효능•효과</p>
-            <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+            <p className="px-8 py-5 mb-2 break-words whitespace-normal border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
               {drug.efcyQesitm}
             </p>
           </div>
           <div>
             <p className="font-semibold">복용 방법</p>
-            <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+            <p className="px-8 py-5 mb-2 break-words whitespace-normal border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
               {drug.useMethodQesitm}
             </p>
           </div>
           <div>
             <p className="font-semibold">주의 사항</p>
-            <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+            <p className="px-8 py-5 mb-2 break-words whitespace-normal border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
               {drug.seQesitm}
             </p>
           </div>
           <div>
             <p className="font-semibold">보관 방법</p>
-            <p className="px-8 py-5 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+            <p className="px-8 py-5 mb-2 break-words whitespace-normal border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
               {drug.depositMethodQesitm}
             </p>
           </div>
