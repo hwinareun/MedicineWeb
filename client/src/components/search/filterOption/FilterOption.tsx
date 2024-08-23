@@ -8,7 +8,6 @@ interface FilterOptionProps {
   field: 'selectedForm' | 'selectedLine' | 'selectedShape' | 'selectedColor';
   value: string;
   color?: string;
-  excludeValues?: string[];
 }
 
 const FilterOption: React.FC<FilterOptionProps> = ({
@@ -35,7 +34,6 @@ const FilterOption: React.FC<FilterOptionProps> = ({
         dispatch(toggleSelection({ field, value }));
       }
     } else {
-      // 특정 필터 선택 시
       if (selectedValues.includes('All')) {
         dispatch(toggleSelection({ field, value: 'All' }));
       }

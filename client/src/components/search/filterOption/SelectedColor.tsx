@@ -11,13 +11,6 @@ const SelectedColor = () => {
       <p className="pb-1 font-semibold">색상</p>
       <div className="flex flex-row justify-center min-w-full gap-1 p-1 pt-2 border-2 border-b-0 rounded-t-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
-          label="분홍"
-          icon={TbSquareRoundedFilled}
-          field="selectedColor"
-          value="분홍"
-          color="pink"
-        />
-        <FilterOption
           label="빨강"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
@@ -52,8 +45,6 @@ const SelectedColor = () => {
           value="초록"
           color="green"
         />
-      </div>
-      <div className="flex flex-row justify-center min-w-full gap-1 p-1 border-2 border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="청록"
           icon={TbSquareRoundedFilled}
@@ -61,26 +52,14 @@ const SelectedColor = () => {
           value="청록"
           color="teal"
         />
+      </div>
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 border-2 border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="파랑"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="파랑"
           color="blue"
-        />
-        <FilterOption
-          label="남색"
-          icon={TbSquareRoundedFilled}
-          field="selectedColor"
-          value="남색"
-          color="darkblue"
-        />
-        <FilterOption
-          label="자주"
-          icon={TbSquareRoundedFilled}
-          field={'selectedColor'}
-          value="자주"
-          color="fuchsia"
         />
         <FilterOption
           label="보라"
@@ -90,14 +69,35 @@ const SelectedColor = () => {
           color="indigo"
         />
         <FilterOption
+          label="자주"
+          icon={TbSquareRoundedFilled}
+          field={'selectedColor'}
+          value="자주"
+          color="fuchsia"
+        />
+        <FilterOption
+          label="분홍"
+          icon={TbSquareRoundedFilled}
+          field="selectedColor"
+          value="분홍"
+          color="pink"
+        />
+        <FilterOption
+          label="갈색"
+          icon={TbSquareRoundedFilled}
+          field="selectedColor"
+          value="갈색"
+          color="brown"
+        />
+      </div>
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pb-2 border-2 border-t-0 rounded-b-lg bg-medicinePrimary border-medicineSecondary">
+        <FilterOption
           label="회색"
           icon={TbSquareRoundedFilled}
           field={'selectedColor'}
           value="회색"
           color="gray"
         />
-      </div>
-      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pb-2 border-2 border-t-0 rounded-b-lg bg-medicinePrimary border-medicineSecondary">
         <FilterOption
           label="검정"
           icon={TbSquareRoundedFilled}
@@ -123,7 +123,7 @@ const SelectedColor = () => {
           label="전체"
           icon={TbHelpSquareRoundedFilled}
           field={'selectedColor'}
-          value="전체"
+          value=""
           color="white"
         />
       </div>

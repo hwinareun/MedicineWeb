@@ -90,7 +90,7 @@ const SelectedShape = () => {
           label="전체"
           icon={FiHelpCircle}
           field="selectedShape"
-          value="전체"
+          value=""
         />
       </div>
     </div>

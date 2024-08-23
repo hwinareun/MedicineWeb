@@ -1,10 +1,4 @@
-import {
-  FiCircle,
-  FiHelpCircle,
-  FiMinusCircle,
-  FiPlusCircle,
-  FiStopCircle,
-} from 'react-icons/fi';
+import { FiHelpCircle, FiMinusCircle, FiPlusCircle } from 'react-icons/fi';
 import FilterOption from './FilterOption';
 
 const SelectedLine = () => {
@@ -13,34 +7,22 @@ const SelectedLine = () => {
       <p className="pb-1 font-semibold">분할선</p>
       <div className="flex flex-row justify-center min-w-full gap-1 p-1 py-2 border-2 rounded-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
-          label="없음"
-          icon={FiCircle}
-          field="selectedLine"
-          value="없음"
-        />
-        <FilterOption
           label="(+)형"
           icon={FiPlusCircle}
           field="selectedLine"
-          value="(+)형"
+          value="+"
         />
         <FilterOption
           label="(-)형"
           icon={FiMinusCircle}
           field="selectedLine"
-          value="(-)형"
-        />
-        <FilterOption
-          label="기타"
-          icon={FiStopCircle}
-          field="selectedLine"
-          value="기타"
+          value="-"
         />
         <FilterOption
           label="전체"
           icon={FiHelpCircle}
           field="selectedLine"
-          value="전체"
+          value=""
         />
       </div>
     </div>
