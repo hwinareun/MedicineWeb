@@ -13,7 +13,7 @@ const Input = ({ value, placeholder, onChange, onKeyDown }: Props) => {
       value={value}
       placeholder={`${placeholder}(으)로 검색합니다.`}
       onChange={onChange}
-      className="w-full h-10 px-1 border-2 rounded-xl border-medicineSecondary bg-medicineNeutral placeholder:text-medicineSecondary placeholder:text-xs text-medicineFont"
+      className="w-full h-10 px-2 border-2 rounded-xl border-medicineSecondary bg-medicineNeutral placeholder:text-medicineSecondary placeholder:text-xs text-medicineFont"
       onKeyDown={onKeyDown}
     />
   );

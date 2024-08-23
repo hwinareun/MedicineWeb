@@ -57,7 +57,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
         <tbody className="overflow-y-auto">
           {currentItems.map((drug, index) => (
             <tr
-              key={drug.drugid}
+              key={drug.drugId}
               className="border-b border-medicinePositive hover:bg-medicinePrimary"
             >
               <td className="p-2 border-r border-medicinePositive">
@@ -73,11 +73,8 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
               <td className="p-2 break-words whitespace-normal border-x border-medicinePositive">
                 {drug.itemName}
               </td>
-              <td className="p-2 border-x border-medicinePositive">
-                {
-                  /* 성분 DB 연동 후 확인 */
-                  drug.ingrEngName ? drug.ingrEngName : '-'
-                }
+              <td className="p-2 break-words whitespace-normal border-x border-medicinePositive">
+                {drug.ingrEngName}
               </td>
               <td className="p-3 break-words whitespace-normal border-l border-medicinePositive">
                 {cutPrefixSuffix(drug.efcyQesitm)}

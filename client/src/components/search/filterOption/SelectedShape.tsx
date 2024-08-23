@@ -16,7 +16,7 @@ const SelectedShape = () => {
   return (
     <div className="flex flex-col p-2">
       <p className="pb-1 font-semibold">모양</p>
-      <div className="flex flex-row gap-1 p-2 bg-medicinePrimary w-fit">
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pt-2 border-2 border-b-0 rounded-t-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="원형"
           icon={TbCircle}
@@ -54,14 +54,13 @@ const SelectedShape = () => {
           value="삼각형"
         />
       </div>
-      <div className="flex flex-row gap-1 p-2 pr-3 bg-medicinePrimary w-fit">
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pb-2 pr-2 border-2 rounded-b-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="사각형"
           icon={TbSquare}
           field="selectedShape"
           value="사각형"
         />
-
         <FilterOption
           label="오각형"
           icon={TbPentagon}

@@ -2,40 +2,67 @@ import { useDispatch, useSelector } from 'react-redux';
 import Logo1 from '../assets/images/Logo1.png';
 import Input from '../components/common/Input';
 import { RootState } from '../store';
-import { setSearchDrugItem } from '../store/slices/drugSlice';
+import { setSearchDrugItem, setSearchResults } from '../store/slices/drugSlice';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { PositiveButton } from '../components/common/Button';
+import { SearchBoxProps } from '../components/search/SearchBox';
+import { fetchDrugs } from '../apis/drugs.api';
+import { DrugData } from '../types/drug.type';
 
-const Main = () => {
+const Main: React.FC<SearchBoxProps> = ({ setResults }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { searchDrug } = useSelector((state: RootState) => state.drug);
+  const { selectedDrugCategory, searchDrug } = useSelector(
+    (state: RootState) => state.drug
+  );
 
-  const handleButtonClick = () => {
+  const handleSearch = async () => {
     navigate('/search');
-    console.log(searchDrug);
+
+    if (!searchDrug) {
+      return;
+    }
+
+    setResults([]);
+    try {
+      const results = {
+        [selectedDrugCategory]: searchDrug,
+      };
+      const data = await fetchDrugs(results);
+      const filteredData = data.filter((drug: DrugData) =>
+        drug.itemName.includes(searchDrug)
+      );
+
+      dispatch(setSearchResults(filteredData));
+      setResults(filteredData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSearchEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      navigate('/search');
-      console.log(searchDrug);
+      handleSearch();
     }
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchDrugItem(event.target.value));
+  };
+
   return (
-    <div className="bg-blue-100 whitespace-nowrap">
-      <div className="w-1/2 p-2 m-2">
-        <img src={Logo1} alt="medicineWebLogo" className="" />
+    <div className="px-4 bg-blue-100 whitespace-nowrap">
+      <div className="w-5/12 p-2 m-2">
+        <img src={Logo1} alt="medicineWebLogo" />
         <div className="flex gap-1">
           <Input
             value={searchDrug}
             placeholder="의약품명"
-            onChange={(e) => dispatch(setSearchDrugItem(e.target.value))}
-            onKeyDown={(e) => handleSearchEnter(e)}
+            onChange={handleSearchChange}
+            onKeyDown={handleSearchEnter}
           />
-          <PositiveButton onClick={handleButtonClick}>확인</PositiveButton>
+          <PositiveButton onClick={handleSearch}>확인</PositiveButton>
         </div>
       </div>
       {/* 로그인 */}
