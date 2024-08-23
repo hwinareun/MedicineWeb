@@ -86,7 +86,6 @@ const login = async (req, res, next) => {
 
     const payload = {
       userId: loginUser.userId,
-      nickname: loginUser.nickname,
       role: loginUser.role
     };
 
@@ -108,10 +107,14 @@ const login = async (req, res, next) => {
 
 const showProfile = async (req, res, next) => {
   try {
-    const { nickname, userId } = req.user;
+    const { userId } = req.user;
 
-    let sql = 'select drugId from Favorites where userId = ?';
+    let sql = 'select * from Users where userId = ?';
     let results = await query(sql, userId);
+    const nickname = results[0].nickname;
+
+    sql = 'select drugId from Favorites where userId = ?';
+    results = await query(sql, userId);
 
     if (results.length === 0) {
       results = [];
@@ -147,23 +150,22 @@ const updateUserInfo = async (req, res, next) => {
       throw new Error('validate failed: nickname, password');
     }
 
-    let sql;
+    let sql = 'update Users set';
     let values = [];
 
+    let saltRound = 10;
+    let hashPassword;
+
     if (nickname && !password) {
-      sql = 'update Users set nickname = ?';
+      sql += ' nickname = ?';
       values.push(nickname);
     } else if (!nickname && password) {
-      const saltRound = 10;
-      const hashPassword = await bcrypt.hash(password, saltRound);
-
-      sql = 'update Users set password = ?';
+      hashPassword = await bcrypt.hash(password, saltRound);
+      sql += ' password = ?';
       values.push(hashPassword);
     } else {
-      const saltRound = 10;
-      const hashPassword = await bcrypt.hash(password, saltRound);
-
-      sql = 'update Users set nickname = ?, password = ?';
+      hashPassword = await bcrypt.hash(password, saltRound);
+      sql += ' nickname = ?, password = ?';
       values.push(nickname, hashPassword);
     }
 
