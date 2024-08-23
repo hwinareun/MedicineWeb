@@ -1,4 +1,10 @@
-import { FiCircle, FiMinusCircle, FiPlusCircle } from 'react-icons/fi';
+import {
+  FiCircle,
+  FiHelpCircle,
+  FiMinusCircle,
+  FiPlusCircle,
+  FiStopCircle,
+} from 'react-icons/fi';
 import FilterOption from './FilterOption';
 
 const SelectedLine = () => {
@@ -26,13 +32,13 @@ const SelectedLine = () => {
         />
         <FilterOption
           label="기타"
-          icon={FiCircle}
+          icon={FiStopCircle}
           field="selectedLine"
           value="기타"
         />
         <FilterOption
           label="전체"
-          icon={FiCircle}
+          icon={FiHelpCircle}
           field="selectedLine"
           value="전체"
         />
