@@ -1,6 +1,9 @@
+import programming from '../assets/images/programming.png';
+
 const Post = () => {
   return (
-    <div className="flex-grow flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center flex-grow">
+      <img src={programming} className="w-48" />
       Coming soon~
     </div>
   );

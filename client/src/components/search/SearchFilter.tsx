@@ -1,5 +1,5 @@
 import Input from '../common/Input';
-import Logo4 from '../../assets/images/Logo4.png';
+import printHelp from '../../assets/images/printHelp.png';
 import { NegativeButton, PositiveButton } from '../common/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -69,7 +69,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
 
   return (
     <div className="p-5 m-5 border-t-2 border-medicinePositive">
-      <div className="flex items-center justify-between gap-6 py-2">
+      <div className="flex items-center justify-between gap-6 p-2">
         <div className="flex flex-col w-full gap-1">
           <p className="font-semibold">식별문자</p>
           <Input
@@ -86,9 +86,9 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
         <div>
           <p className="font-semibold">식별문자 설명</p>
           <img
-            src={Logo4}
-            alt="drugIdentification"
-            className="object-contain w-32 border-2 rounded-lg border-medicineSecondary"
+            src={printHelp}
+            alt="drugPrintHelp"
+            className="object-contain border-2 rounded-lg w-96 border-medicineSecondary"
           />
         </div>
       </div>
