@@ -1,17 +1,17 @@
 import { httpClient } from './http';
 
 interface SearchParams {
-  itemName?: string; // 의약품명
-  ingrEngName?: string; // 성분
+  itemName?: string;
+  ingrEngName?: string;
   ingrKorName?: string;
-  efcyQesitm?: string; //효능효과
-  printFront?: string; // 식별문자
+  efcyQesitm?: string;
+  printFront?: string;
   printBack?: string;
-  dosageForm?: string; // 제형
-  drugShape?: string; // 모양
-  colorClass1?: string; // 색상
+  dosageForm?: string;
+  drugShape?: string;
+  colorClass1?: string;
   colorClass2?: string;
-  linFront?: string; // 분할선
+  linFront?: string;
   lineBack?: string;
 }
 
@@ -35,8 +35,3 @@ export const fetchDrugs = async (params: SearchParams) => {
     throw new Error('Failed to fetch drugs');
   }
 };
-
-export const fetchDrug = async () => {};
-
-export const likeDrug = async () => {};
-export const unlikeDrug = async () => {};

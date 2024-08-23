@@ -1,5 +1,5 @@
 export interface DrugData {
-  drugid: number;
+  drugId: number;
   itemName: string; // 의약품명
   ingrEngName: string; // 성분(영문)
   ingrKorName: string; // 성분
@@ -15,7 +15,7 @@ export interface DrugData {
 }
 
 export interface DrugReferenceData {
-  drugid: number;
+  drugId: number;
   itemImage?: string; // 이미지URL
   itemName: string; // 의약품명
   ingrEngName: string; // 성분(영문)
