@@ -20,7 +20,7 @@ const getDrugDetail = async (req, res, next) => {
                 ingrEngName, ingrKorName, dosageForm, strength
                 from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
                 left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
-                where DrugInfo.itemSeq = ?;`;
+                where DrugInfo.itemSeq = ?`;
 
     const results = await query(sql, itemSeq);
 
@@ -62,14 +62,14 @@ const addDrug = async (req, res, next) => {
       throw new Error('The drugId already exists.');
     }
 
-    sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values (?, ?, ?, ?, ?, ?, ?)';
+    sql = 'insert into DrugInfo (itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage) values (?)';
     let values = [itemSeq, itemName, efcyQesitm, useMethodQesitm, seQesitm, depositMethodQesitm, itemImage];
-    await query(sql, values);
+    await query(sql, [values]);
     console.log('DrugInfo 추가 완료');
 
-    sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values (?, ?, ?, ?, ?, ?, ?, ?)';
+    sql = 'insert into DrugImageInfo (itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack) values (?)';
     values = [itemSeq, printFront, printBack, drugShape, colorClass1, colorClass2, lineFront, lineBack];
-    await query(sql, values);
+    await query(sql, [values]);
     console.log('DrugImageInfo 추가 완료');
 
     sql = 'select * from DrugEtc where itemSeq = ?';
@@ -218,34 +218,34 @@ const updateDrugData = async (req, res, next) => {
     let sql = 'select * from DrugInfo;';
     let dbData = await query(sql);
 
-    console.log('filteredDrugInfo 시작');
+    console.log('DrugInfo에 추가될 데이터 추출 시작');
     const filteredDrugInfo = await getDifferenceByKeyAndToArray(drugInfo, dbData);
-    console.log('filteredDrugInfo 완료');
+    console.log('DrugInfo에 추가될 데이터 추출 완료');
 
     sql = 'select * from DrugImageInfo;';
     dbData = await query(sql);
 
-    console.log('filteredDrugImageInfo 시작');
+    console.log('filteredDrugImageInfo에 추가될 데이터 추출 시작');
     const filteredDrugImageInfo = await getDifferenceByKeyAndToArray(drugImageInfo, dbData);
-    console.log('filteredDrugImageInfo 완료');
+    console.log('filteredDrugImageInfo에 추가될 데이터 추출 완료');
 
     sql = 'select * from DrugEtc;';
     dbData = await query(sql);
 
-    console.log('filteredDrugEtc 시작');
+    console.log('filteredDrugImageInfo에 추가될 데이터 추출 시작');
     const filteredDrugEtc = await getDifferenceByKeyAndToArray(drugEtc, dbData);
-    console.log('filteredDrugEtc 완료');
+    console.log('filteredDrugImageInfo에 추가될 데이터 추출 완료');
 
     let drugInfoResults, drugImageInfoResults;
     if (filteredDrugInfo.length !== 0 && filteredDrugImageInfo.length !== 0) {
-      console.log('공통 데이터 추출 시작');
+      console.log('DrugInfo, DrugImageInfo 공통 데이터 추출 시작');
       const [
         jsonDrugInfo,
         jsonDrugImageInfo,
         arrayDrugInfo,
         arrayDrugImageInfo,
       ] = await getCommonByKey(filteredDrugInfo, filteredDrugImageInfo);
-      console.log('공통 데이터 추출 완료');
+      console.log('DrugInfo, DrugImageInfo 공통 데이터 추출 완료');
 
       if (jsonDrugInfo.length !== 0 && jsonDrugImageInfo.length !== 0) {
         console.log('DrugInfo 데이터 추가 시작');
@@ -262,9 +262,9 @@ const updateDrugData = async (req, res, next) => {
 
     let drugEtcResults;
     if (filteredDrugEtc.length !== 0) {
-      console.log('DrugEtc 중복제거 시작');
+      console.log('DrugEtc 중복 데이터 제거 시작');
       const filteredDrugEtc2 = await removeDuplicateObjects(filteredDrugEtc);
-      console.log('DrugEtc 중복제거 완료');
+      console.log('DrugEtc 중복 데이터 제거 완료');
 
       const filteredDrugEtc3 = filteredDrugEtc2.filter(value => value.itemSeq !== 0);
 
@@ -281,9 +281,7 @@ const updateDrugData = async (req, res, next) => {
     }
 
     console.log('업데이트 완료');
-    return res.status(StatusCodes.OK).json({
-      results: [drugInfoResults, drugImageInfoResults, drugEtcResults]
-    });
+    return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
 
@@ -302,6 +300,10 @@ const getAllDrugInfo = async (serviceKey, baseUrl, filterFunc) => {
     const response = await axios.get(baseUrl + queryParams);
 
     const result = await response.data;
+    if(typeof result === 'string'){
+      const match = result.match(/<returnAuthMsg>(.*?)<\/returnAuthMsg>/);
+      throw new Error(match[1]);
+    }
     const itemsBody = await result.body;
     const items = await itemsBody.items;
 

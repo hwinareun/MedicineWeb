@@ -4,7 +4,6 @@ const {
   createAccount,
   deleteAccount,
   login,
-  logout,
   showProfile,
   updateUserInfo,
   checkPassword,
@@ -31,8 +30,7 @@ const {authenticateJWT} = require("../middlewares/auth");
 router.post("/join", joinValidator, validateHandler, createAccount);
 router.delete("/resign", authenticateJWT, deleteAccount);
 router.post("/login", loginValidator, validateHandler, login);
-router.post("/logout", authenticateJWT, logout);
-router.get("/profile", authenticateJWT, showProfile); // 추후 작업예정 drug, favorite 이후
+router.get("/profile", authenticateJWT, showProfile);
 router.put("/userInfo", authenticateJWT, userInfoValidator, validateHandler, updateUserInfo);
 router.post("/checkPwd", authenticateJWT, checkPwdIValidator, validateHandler, checkPassword);
 router.post("/findId", findIdValidator, validateHandler, findId);
