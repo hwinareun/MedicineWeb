@@ -12,23 +12,7 @@ export interface DrugData {
   colorClass2: string;
   lineFront: string; // 분할선(앞)
   lineBack: string; // 분할선(뒤)
-}
-
-export interface DrugReferenceData {
-  drugId: number;
   itemImage?: string; // 이미지URL
-  itemName: string; // 의약품명
-  ingrEngName: string; // 성분(영문)
-  efcyQesitm: string; //효능효과
-}
-
-export interface DrugReferenceDetail {
-  data: DrugReferenceData[];
-  itemImage: string; // 이미지URL
-  itemName: string; // 의약품명
-  ingrEngName: string; // 성분(영문)
-  efcyQesitm: string; //효능효과
-  dosageForm: string; // 제형
   useMethodQesitm: string; // 복용방법
   seQesitm: string; // 부작용
   depositMethodQesitm: string; // 주의사항

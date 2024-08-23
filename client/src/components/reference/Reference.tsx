@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
-import { DrugReferenceData } from '../../types/drug.type';
 import Pagination from '../common/Pagination';
 import { RootState } from '../../store';
 import { FaSearch } from 'react-icons/fa';
+import { DrugData } from '../../types/drug.type';
 
 interface ReferenceProps {
-  data: DrugReferenceData[];
+  data: DrugData[];
+  onSelectDrugDetail: (drug: DrugData) => void;
 }
 
 const cutPrefixSuffix = (description: string): string => {
@@ -31,7 +32,7 @@ const cutPrefixSuffix = (description: string): string => {
   return result;
 };
 
-const Reference: React.FC<ReferenceProps> = ({ data }) => {
+const Reference: React.FC<ReferenceProps> = ({ data, onSelectDrugDetail }) => {
   const currentPage = useSelector((state: RootState) => state.drug.currentPage);
   const itemsPerPage = 10;
 
@@ -59,6 +60,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
             <tr
               key={drug.drugId}
               className="border-b border-medicinePositive hover:bg-medicinePrimary"
+              onClick={() => onSelectDrugDetail(drug)}
             >
               <td className="p-2 border-r border-medicinePositive">
                 {startIndex + index + 1}
