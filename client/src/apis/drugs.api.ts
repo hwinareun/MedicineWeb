@@ -24,8 +24,11 @@ export const fetchDrugs = async (params: SearchParams) => {
     }
   });
 
+  const url = `/search?${query.toString()}`;
+  console.log(`Fetching drugs with URL: ${url}`);
+
   try {
-    const response = await httpClient.get(`/search?${query.toString()}`);
+    const response = await httpClient.get(url);
     return response.data;
   } catch (error) {
     console.error(

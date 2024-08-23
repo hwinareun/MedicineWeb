@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type FilterState = {
-  searchData: string;
-  searchIdentification1: string;
-  searchIdentification2: string;
+  printFront: string;
+  printBack: string;
   selectedForm: string[];
   selectedLine: string[];
   selectedShape: string[];
@@ -11,9 +10,8 @@ type FilterState = {
 };
 
 const initialState: FilterState = {
-  searchData: '',
-  searchIdentification1: '',
-  searchIdentification2: '',
+  printFront: '',
+  printBack: '',
   selectedForm: ['전체'],
   selectedLine: ['전체'],
   selectedShape: ['전체'],
@@ -24,11 +22,11 @@ const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    setSearchIdentification1: (state, action: PayloadAction<string>) => {
-      state.searchIdentification1 = action.payload;
+    setPrintFront: (state, action: PayloadAction<string>) => {
+      state.printFront = action.payload;
     },
-    setSearchIdentification2: (state, action: PayloadAction<string>) => {
-      state.searchIdentification2 = action.payload;
+    setPrintBack: (state, action: PayloadAction<string>) => {
+      state.printBack = action.payload;
     },
     setSelectedForm: (state, action: PayloadAction<string[]>) => {
       state.selectedForm = action.payload;
@@ -48,7 +46,7 @@ const filterSlice = createSlice({
       action: PayloadAction<{
         field: keyof Omit<
           FilterState,
-          'searchData' | 'searchIdentification1' | 'searchIdentification2'
+          'searchData' | 'printFront' | 'printBack'
         >;
         value: string;
       }>
@@ -73,8 +71,8 @@ const filterSlice = createSlice({
 });
 
 export const {
-  setSearchIdentification1,
-  setSearchIdentification2,
+  setPrintFront,
+  setPrintBack,
   setSelectedForm,
   setSelectedLine,
   setSelectedShape,

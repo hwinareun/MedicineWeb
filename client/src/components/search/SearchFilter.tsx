@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import {
   resetFilters,
-  setSearchIdentification1,
-  setSearchIdentification2,
+  setPrintFront,
+  setPrintBack,
 } from '../../store/slices/filterSlice';
 import SelectedForm from './filterOption/SelectedForm';
 import SelectedLine from './filterOption/SelectedLine';
@@ -23,8 +23,8 @@ interface SearchFilterProps {
 const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
   const dispatch = useDispatch();
   const {
-    searchIdentification1,
-    searchIdentification2,
+    printFront,
+    printBack,
     selectedForm,
     selectedLine,
     selectedShape,
@@ -40,18 +40,21 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
     ingrEngName: selectedDrugCategory === '성분명' ? searchDrug : undefined,
     ingrKorName: selectedDrugCategory === '성분명' ? searchDrug : undefined,
     efcyQesitm: selectedDrugCategory === '효능효과' ? searchDrug : undefined,
-    identification1: searchIdentification1,
-    identification2: searchIdentification2,
-    form: selectedForm,
-    line: selectedLine,
-    shape: selectedShape,
-    color: selectedColor,
+    printFront: printFront || undefined,
+    printBack: printBack || undefined,
+    dosageForm: selectedForm.length > 0 ? selectedForm.join(',') : undefined,
+    drugShape: selectedShape.length > 0 ? selectedShape.join(',') : undefined,
+    colorClass1: selectedColor.length > 0 ? selectedColor[0] : undefined,
+    colorClass2: selectedColor.length > 1 ? selectedColor[1] : undefined,
+    linFront: selectedLine.length > 0 ? selectedLine[0] : undefined,
+    lineBack: selectedLine.length > 1 ? selectedLine[1] : undefined,
   };
 
   const applyFilters = async () => {
     setResults([]);
     try {
       const data = await fetchDrugs(filters);
+
       dispatch(setSearchResults(data));
       setResults(data);
       console.log(filters);
@@ -62,6 +65,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
 
   const handleResetClick = () => {
     dispatch(resetFilters());
+    setResults([]);
   };
 
   return (
@@ -70,14 +74,14 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
         <div className="flex flex-col w-full gap-1">
           <p className="font-semibold">식별문자</p>
           <Input
-            value={searchIdentification1}
+            value={printFront}
             placeholder={'문자1'}
-            onChange={(e) => dispatch(setSearchIdentification1(e.target.value))}
+            onChange={(e) => dispatch(setPrintFront(e.target.value))}
           />
           <Input
-            value={searchIdentification2}
+            value={printBack}
             placeholder={'문자2'}
-            onChange={(e) => dispatch(setSearchIdentification2(e.target.value))}
+            onChange={(e) => dispatch(setPrintBack(e.target.value))}
           />
         </div>
         <div>

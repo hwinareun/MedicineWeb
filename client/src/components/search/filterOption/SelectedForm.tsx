@@ -1,11 +1,6 @@
 import FilterOption from './FilterOption';
 import { CiTablets1 } from 'react-icons/ci';
-import {
-  GiMedicinePills,
-  GiMedicines,
-  GiPill,
-  GiPillDrop,
-} from 'react-icons/gi';
+import { GiMedicinePills, GiMedicines, GiPill } from 'react-icons/gi';
 
 const SelectedForm = () => {
   return (
@@ -16,31 +11,25 @@ const SelectedForm = () => {
           label="정제"
           icon={CiTablets1}
           field="selectedForm"
-          value="정제"
+          value="Tablet"
         />
         <FilterOption
-          label="경질캡슐"
+          label="캡슐"
           icon={GiPill}
           field="selectedForm"
-          value="경질캡슐"
-        />
-        <FilterOption
-          label="연질캡슐"
-          icon={GiPillDrop}
-          field="selectedForm"
-          value="연질캡슐"
+          value="Capsule"
         />
         <FilterOption
           label="기타"
-          icon={GiMedicinePills}
+          icon={GiMedicines}
           field="selectedForm"
-          value="기타"
+          value="ETC"
         />
         <FilterOption
           label="전체"
-          icon={GiMedicines}
+          icon={GiMedicinePills}
           field="selectedForm"
-          value="전체"
+          value="All"
         />
       </div>
     </div>
