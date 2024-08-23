@@ -57,7 +57,6 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
 
       dispatch(setSearchResults(data));
       setResults(data);
-      console.log(filters);
     } catch (error) {
       console.error(error);
     }

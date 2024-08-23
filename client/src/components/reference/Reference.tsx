@@ -1,11 +1,14 @@
 import { useSelector } from 'react-redux';
-import { DrugReferenceData } from '../../types/drug.type';
 import Pagination from '../common/Pagination';
 import { RootState } from '../../store';
 import { FaSearch } from 'react-icons/fa';
+import { DrugData } from '../../types/drug.type';
+import { useState } from 'react';
+import { fetchDrugDetail } from '../../apis/drugs.api';
+import ReferenceDetail from './ReferenceDetail';
 
 interface ReferenceProps {
-  data: DrugReferenceData[];
+  data: DrugData[];
 }
 
 const cutPrefixSuffix = (description: string): string => {
@@ -32,11 +35,28 @@ const cutPrefixSuffix = (description: string): string => {
 };
 
 const Reference: React.FC<ReferenceProps> = ({ data }) => {
+  const [selectedDrugDetail, setSelectedDrugDetail] = useState<DrugData | null>(
+    null
+  );
+
   const currentPage = useSelector((state: RootState) => state.drug.currentPage);
   const itemsPerPage = 10;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = data.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleRowClick = async (drugId: number) => {
+    try {
+      const drugDetail = await fetchDrugDetail({ drugId });
+      setSelectedDrugDetail(drugDetail);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClose = () => {
+    setSelectedDrugDetail(null);
+  };
 
   return (
     <div className="max-w-screen-lg p-4 mx-auto text-xs bg-medicineNeutral whitespace-nowrap">
@@ -58,7 +78,8 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
           {currentItems.map((drug, index) => (
             <tr
               key={drug.drugId}
-              className="border-b border-medicinePositive hover:bg-medicinePrimary"
+              className="border-b cursor-pointer border-medicinePositive hover:bg-medicinePrimary"
+              onClick={() => handleRowClick(drug.drugId)}
             >
               <td className="p-2 border-r border-medicinePositive">
                 {startIndex + index + 1}
@@ -66,7 +87,7 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
               <td className="flex justify-center m-2">
                 <img
                   src={drug.itemImage}
-                  alt="drugIdentification"
+                  alt={drug.itemName}
                   className="object-contain w-32 border-2 rounded-lg border-medicinePositive"
                 />
               </td>
@@ -83,6 +104,9 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
           ))}
         </tbody>
       </table>
+      {selectedDrugDetail && (
+        <ReferenceDetail drug={selectedDrugDetail} onClose={handleClose} />
+      )}
       <Pagination totalItems={data.length} />
     </div>
   );

@@ -4,7 +4,6 @@ import SearchBox from '../components/search/SearchBox';
 import SearchFilter from '../components/search/SearchFilter';
 import { DrugData } from '../types/drug.type';
 import ReferenceEmpty from '../components/reference/ReferenceEmpty';
-// import ReferenceDetail from '../components/reference/ReferenceDetail';
 
 const Search = () => {
   const [results, setResults] = useState<DrugData[]>([]);
@@ -24,9 +23,6 @@ const Search = () => {
           )}
         </div>
       </div>
-      {/* <div className="absolute flex items-center justify-center w-svw h-svh">
-        <ReferenceDetail />
-      </div> */}
     </div>
   );
 };
