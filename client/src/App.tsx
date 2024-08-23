@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Join from './pages/Join';
 import FindUser from './pages/FindUser';
 import Profile from './pages/Profile';
+import ChangeProfile from './pages/ChangeProfile';
 
 const routeList = [
   {
@@ -34,6 +35,10 @@ const routeList = [
   {
     path: '/myprofile',
     element: <Profile />,
+  },
+  {
+    path: '/changeProfile',
+    element: <ChangeProfile />,
   },
 ];
 
