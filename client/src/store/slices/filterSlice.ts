@@ -12,10 +12,10 @@ type FilterState = {
 const initialState: FilterState = {
   printFront: '',
   printBack: '',
-  selectedForm: ['전체'],
-  selectedLine: ['전체'],
-  selectedShape: ['전체'],
-  selectedColor: ['전체'],
+  selectedForm: [''],
+  selectedLine: [''],
+  selectedShape: [''],
+  selectedColor: [''],
 };
 
 const filterSlice = createSlice({
@@ -53,10 +53,10 @@ const filterSlice = createSlice({
     ) => {
       const { field, value } = action.payload;
       const currentValues = state[field] as string[];
-      if (value === '전체') {
-        state[field] = ['전체'];
+      if (value === '') {
+        state[field] = [''];
       } else {
-        if (currentValues.includes('전체')) {
+        if (currentValues.includes('')) {
           state[field] = [value];
         } else {
           if (currentValues.includes(value)) {

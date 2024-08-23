@@ -11,13 +11,13 @@ const SelectedForm = () => {
           label="정제"
           icon={CiTablets1}
           field="selectedForm"
-          value="Tablet"
+          value="tablet"
         />
         <FilterOption
           label="캡슐"
           icon={GiPill}
           field="selectedForm"
-          value="Capsule"
+          value="capsule"
         />
         <FilterOption
           label="전체"

@@ -24,9 +24,9 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   const iconStyle = color ? { color } : {};
 
   const handleClick = () => {
-    if (value === 'All') {
+    if (value === '') {
       selectedValues.forEach((v) => {
-        if (v !== 'All') {
+        if (v !== '') {
           dispatch(toggleSelection({ field, value: v }));
         }
       });
@@ -34,8 +34,8 @@ const FilterOption: React.FC<FilterOptionProps> = ({
         dispatch(toggleSelection({ field, value }));
       }
     } else {
-      if (selectedValues.includes('All')) {
-        dispatch(toggleSelection({ field, value: 'All' }));
+      if (selectedValues.includes('')) {
+        dispatch(toggleSelection({ field, value: '' }));
       }
       dispatch(toggleSelection({ field, value }));
     }

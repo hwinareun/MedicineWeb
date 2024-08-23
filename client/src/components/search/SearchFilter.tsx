@@ -75,12 +75,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
           <p className="font-semibold">식별문자</p>
           <Input
             value={printFront}
-            placeholder={'문자1'}
+            placeholder={'문자1(앞)'}
             onChange={(e) => dispatch(setPrintFront(e.target.value))}
           />
           <Input
             value={printBack}
-            placeholder={'문자2'}
+            placeholder={'문자2(뒤)'}
             onChange={(e) => dispatch(setPrintBack(e.target.value))}
           />
         </div>
