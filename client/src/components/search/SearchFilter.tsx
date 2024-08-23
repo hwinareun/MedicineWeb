@@ -68,8 +68,8 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
   };
 
   return (
-    <div className="p-5 m-5 border-t-2 border-medicinePositive">
-      <div className="flex items-center justify-between gap-6 p-2">
+    <div className="p-1 m-2 border-t-2 border-medicinePositive">
+      <div className="flex items-center justify-between gap-6 p-1">
         <div className="flex flex-col w-full gap-1">
           <p className="font-semibold">식별문자</p>
           <Input
@@ -92,11 +92,13 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ setResults }) => {
           />
         </div>
       </div>
-      <SelectedForm />
-      <SelectedLine />
+      <div className="flex flex-row justify-between">
+        <SelectedForm />
+        <SelectedLine />
+      </div>
       <SelectedShape />
       <SelectedColor />
-      <div className="flex justify-end gap-2 pt-2">
+      <div className="flex justify-end gap-2 p-2 pb-5">
         <PositiveButton onClick={applyFilters}>확인</PositiveButton>
         <NegativeButton onClick={handleResetClick}>초기화</NegativeButton>
       </div>

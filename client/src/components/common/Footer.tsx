@@ -6,7 +6,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-end w-auto px-2 text-sm bg-blue-100 h-14">
+    <div className="flex flex-row items-center justify-end w-auto px-2 text-sm bg-blue-100 h-11">
       <div className="text-xs text-right text-medicineFontBlue">
         ⓒ 2024. Team.medicineWeb. All rights reserved. <br />
       </div>

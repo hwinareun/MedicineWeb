@@ -87,7 +87,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-between gap-4 px-5 pt-5 my-5">
+    <div className="flex flex-row items-center justify-between gap-4 px-5 pt-2">
       <ul
         onClick={() => setView(!view)}
         className="flex flex-col items-center text-sm"

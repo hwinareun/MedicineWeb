@@ -7,7 +7,7 @@ import FilterOption from './FilterOption';
 
 const SelectedColor = () => {
   return (
-    <div className="flex flex-col p-2">
+    <div className="flex flex-col p-1">
       <p className="pb-1 font-semibold">색상</p>
       <div className="flex flex-row justify-center min-w-full gap-1 p-1 pt-2 border-2 border-b-0 rounded-t-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
@@ -52,8 +52,6 @@ const SelectedColor = () => {
           value="청록"
           color="teal"
         />
-      </div>
-      <div className="flex flex-row justify-center min-w-full gap-1 p-1 border-2 border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="파랑"
           icon={TbSquareRoundedFilled}
@@ -68,6 +66,8 @@ const SelectedColor = () => {
           value="보라"
           color="indigo"
         />
+      </div>
+      <div className="flex flex-row justify-center min-w-full gap-1 p-1 border-2 rounded-b-lg border-medicineSecondary bg-medicinePrimary">
         <FilterOption
           label="자주"
           icon={TbSquareRoundedFilled}
@@ -89,8 +89,6 @@ const SelectedColor = () => {
           value="갈색"
           color="brown"
         />
-      </div>
-      <div className="flex flex-row justify-center min-w-full gap-1 p-1 pb-2 border-2 border-t-0 rounded-b-lg bg-medicinePrimary border-medicineSecondary">
         <FilterOption
           label="회색"
           icon={TbSquareRoundedFilled}

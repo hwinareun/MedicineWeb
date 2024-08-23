@@ -13,13 +13,13 @@ const Search = () => {
   );
 
   return (
-    <div className="flex flex-col p-4 m-4">
-      <div className="flex justify-center">
-        <div className="flex flex-col max-w-screen-sm m-2 text-xs bg-medicineNeutral w-fit h-fit whitespace-nowrap">
+    <div className="flex flex-col items-center px-4 m-4">
+      <div className="flex justify-center flex-grow gap-6">
+        <div className="flex flex-col max-w-screen-sm text-xs rounded-lg shadow-md shadow-medicinePositive bg-medicineNeutral whitespace-nowrap w-fit h-fit">
           <SearchBox setResults={setResults} />
           <SearchFilter setResults={setResults} />
         </div>
-        <div className="m-4 text-center">
+        <div className="max-h-full overflow-y-auto text-center rounded-lg shadow-md shadow-medicinePositive w-fit h-fit">
           {results.length > 0 ? (
             <Reference data={results} />
           ) : (
