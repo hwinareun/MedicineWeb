@@ -1,12 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { removeToken, setToken } from '../../utils/localStorage';
+import { getToken, removeToken, setToken } from '../../utils/localStorage';
+import { IUser, TAuthState } from '../../types/auth.type';
 
 type TStoreLogin = {
   jwtToken: string;
 };
 
-const initialState = {
-  isLogin: false,
+const initialState: TAuthState = {
+  isLogin: getToken() ? true : false,
+  userInfo: {
+    nickname: '',
+    favorites: [],
+  },
 };
 
 const authSlice = createSlice({
@@ -21,8 +26,11 @@ const authSlice = createSlice({
       state.isLogin = false;
       removeToken();
     },
+    storeUserInfo: (state, { payload }: PayloadAction<IUser>) => {
+      state.userInfo = payload;
+    },
   },
 });
 
-export const { storeLogin, storeLogout } = authSlice.actions;
+export const { storeLogin, storeLogout, storeUserInfo } = authSlice.actions;
 export const authReducer = authSlice.reducer;

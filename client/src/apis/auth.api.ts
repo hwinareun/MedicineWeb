@@ -1,4 +1,4 @@
-import { IAuth } from '../types/user.type';
+import { IAuth, IUser } from '../types/auth.type';
 import { httpClient } from './http';
 
 interface JoinUserData extends IAuth {
@@ -24,6 +24,12 @@ export const login = async (userData: IAuth) => {
     '/users/login',
     userData
   );
+
+  return response.data;
+};
+
+export const getProfile = async () => {
+  const response = await httpClient.get<IUser>('/users/profile');
 
   return response.data;
 };
