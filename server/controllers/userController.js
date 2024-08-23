@@ -73,7 +73,7 @@ const login = async (req, res, next) => {
     const sql = "select * from Users where id = ?";
     const results = await query(sql, id);
 
-    if(results.length === 0){
+    if (results.length === 0) {
       throw new Error("Invalid id or password.");
     }
 
@@ -113,13 +113,13 @@ const showProfile = async (req, res, next) => {
     let sql = 'select drugId from Favorites where userId = ?';
     let results = await query(sql, userId);
 
-    if(results.length === 0){
+    if (results.length === 0) {
       results = [];
-    } else{
+    } else {
       const values = [];
 
       results.forEach(v => values.push(v.drugId));
-  
+
       sql = `select DrugInfo.itemSeq as drugId, itemName, itemImage, ingrEngName, efcyQesitm, strength
           from DrugInfo inner join DrugImageInfo on DrugInfo.itemSeq = DrugImageInfo.itemSeq 
           left join DrugEtc on DrugInfo.itemSeq = DrugEtc.itemSeq
@@ -139,20 +139,46 @@ const showProfile = async (req, res, next) => {
 };
 
 const updateUserInfo = async (req, res, next) => {
-  const { userId } = req.user;
+  const userId = Number(req.user.userId);
   const { nickname, password } = req.body;
 
   try {
-    const saltRound = 10;
-    const hashPassword = await bcrypt.hash(password, saltRound);
+    if (!(nickname || password)) {
+      throw new Error('validate failed: nickname, password');
+    }
 
-    const sql = 'update Users set nickname = ?, password = ? where userId = ?';
-    const values = [nickname, hashPassword, userId];
+    let sql;
+    let values = [];
+
+    if (nickname && !password) {
+      sql = 'update Users set nickname = ?';
+      values.push(nickname);
+    } else if (!nickname && password) {
+      const saltRound = 10;
+      const hashPassword = await bcrypt.hash(password, saltRound);
+
+      sql = 'update Users set password = ?';
+      values.push(hashPassword);
+    } else {
+      const saltRound = 10;
+      const hashPassword = await bcrypt.hash(password, saltRound);
+
+      sql = 'update Users set nickname = ?, password = ?';
+      values.push(nickname, hashPassword);
+    }
+
+    sql += ' where userId = ?';
+    values.push(userId);
+
     await query(sql, values);
 
     return res.status(StatusCodes.OK).end();
   } catch (error) {
     let statusCode;
+
+    if(error.message === 'validate failed: nickname, password'){
+      statusCode = StatusCodes.BAD_REQUEST;
+    }
 
     return next(new CustomError(error.message, statusCode));
   }

@@ -31,7 +31,7 @@ router.post("/join", joinValidator, validateHandler, createAccount);
 router.delete("/resign", authenticateJWT, deleteAccount);
 router.post("/login", loginValidator, validateHandler, login);
 router.get("/profile", authenticateJWT, showProfile);
-router.put("/userInfo", authenticateJWT, userInfoValidator, validateHandler, updateUserInfo);
+router.put("/userInfo", authenticateJWT, updateUserInfo);
 router.post("/checkPwd", authenticateJWT, checkPwdIValidator, validateHandler, checkPassword);
 router.post("/findId", findIdValidator, validateHandler, findId);
 router.post("/resetPassword", requestResetPasswordValidator, validateHandler, requestResetPassword);
