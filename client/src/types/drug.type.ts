@@ -10,7 +10,7 @@ export interface DrugData {
   drugShape: string; // 모양
   colorClass1: string; // 색상
   colorClass2: string;
-  linFront: string; // 분할선(앞)
+  lineFront: string; // 분할선(앞)
   lineBack: string; // 분할선(뒤)
 }
 
