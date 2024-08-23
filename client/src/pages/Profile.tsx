@@ -1,21 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { useEffect } from 'react';
-import { getProfile } from '../apis/auth.api';
-import { storeUserInfo } from '../store/slices/authSlice';
+import { useEffect, useState } from 'react';
+import { getProfile, resign } from '../apis/auth.api';
+import { storeLogout, storeUserInfo } from '../store/slices/authSlice';
 import { NegativeButton, PositiveButton } from '../components/common/Button';
 import { useNavigate } from 'react-router-dom';
+import { WarnText } from '../components/common/WarnText';
 
 const Profile = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showWarnText, setShowWarnText] = useState(false);
 
   useEffect(() => {
     // profile 데이터 업데이트
     getProfile()
       .then((res) => {
-        console.log('getProfile success', res);
         dispatch(storeUserInfo(res));
       })
       .catch((err) => {
@@ -27,7 +28,16 @@ const Profile = () => {
     navigate('/changeProfile');
   };
   const handleResign = () => {
-    // 회원 탈퇴 구현
+    resign()
+      .then((res) => {
+        setShowWarnText(false);
+        dispatch(storeLogout());
+        navigate('/');
+      })
+      .catch((err) => {
+        console.log(err);
+        setShowWarnText(true);
+      });
   };
 
   return (
@@ -45,8 +55,11 @@ const Profile = () => {
               개인정보 수정
             </PositiveButton>
           </div>
-          <div>
+          <div className="flex flex-col items-center">
             <NegativeButton onClick={handleResign}>회원 탈퇴</NegativeButton>
+            {showWarnText && (
+              <WarnText warnText="탈퇴에 실패했습니다. 문의 부탁드립니다" />
+            )}
           </div>
         </div>
       </div>
