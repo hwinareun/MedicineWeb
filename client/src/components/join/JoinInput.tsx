@@ -4,6 +4,7 @@ interface Props {
   value: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -12,6 +13,7 @@ export const JoinInput: React.FC<Props> = ({
   type,
   value,
   disabled,
+  required,
   placeholder,
   onChange,
 }) => {
@@ -22,7 +24,7 @@ export const JoinInput: React.FC<Props> = ({
       </label>
       <input
         disabled={disabled}
-        required
+        required={required}
         type={type ?? 'text'}
         value={value}
         placeholder={placeholder}

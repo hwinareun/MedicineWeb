@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { JoinInput } from '../join/JoinInput';
 import { WarnText } from '../common/WarnText';
 import { JoinSelect } from '../join/JoinSelect';
@@ -64,6 +64,7 @@ export const FindUserBox: React.FC<Props> = ({
       >
         <div className="flex items-center justify-between w-full h-fit">
           <JoinInput
+            required
             disabled={showResetPw}
             label={title.includes('아이디') ? '닉네임' : '아이디'}
             value={seperator}
@@ -88,6 +89,7 @@ export const FindUserBox: React.FC<Props> = ({
         <div className="flex flex-col items-center w-full">
           <div className="flex items-center justify-between w-full h-fit">
             <JoinInput
+              required
               disabled={showResetPw}
               label="답"
               value={answer}
@@ -101,6 +103,7 @@ export const FindUserBox: React.FC<Props> = ({
           <div className="flex flex-col items-center w-full">
             <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
+                required
                 type="password"
                 label="비밀번호"
                 value={password}

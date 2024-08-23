@@ -110,6 +110,7 @@ const Join = () => {
           <div className="flex flex-col w-full">
             <div className="relative flex items-center justify-between w-full h-fit">
               <JoinInput
+                required
                 label="닉네임"
                 value={nickname}
                 onChange={handleNicknameChange}
@@ -125,7 +126,12 @@ const Join = () => {
           </div>
           <div className="flex flex-col w-full">
             <div className="relative flex items-center justify-between w-full h-fit">
-              <JoinInput label="아이디" value={id} onChange={handleIdChange} />
+              <JoinInput
+                required
+                label="아이디"
+                value={id}
+                onChange={handleIdChange}
+              />
               <JoinDupCheckButton onClick={handleIdCheck} />
             </div>
             <WarnText
@@ -146,6 +152,7 @@ const Join = () => {
           <div className="flex flex-col w-full">
             <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
+                required
                 label="답"
                 value={idAnswer}
                 onChange={handleIdAnswerChange}
@@ -156,6 +163,7 @@ const Join = () => {
           <div className="flex flex-col w-full">
             <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
+                required
                 label="비밀번호"
                 type="password"
                 value={password}
@@ -167,6 +175,7 @@ const Join = () => {
           <div className="flex flex-col w-full">
             <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
+                required
                 label="비밀번호 확인"
                 type="password"
                 value={passwordRe}
@@ -188,6 +197,7 @@ const Join = () => {
           <div className="flex flex-col w-full">
             <div className="flex items-center justify-between w-full h-fit">
               <JoinInput
+                required
                 label="답"
                 value={pwAnswer}
                 onChange={handlePwAnswerChange}
