@@ -1,4 +1,4 @@
-import FavoritesFolder from './FavoritesFolder';
+import FavoritesDrug from './FavoriteDrug';
 
 const FavoritesBox = () => {
   return (
@@ -7,7 +7,7 @@ const FavoritesBox = () => {
         내 즐겨찾기
       </div>
       <div className="p-5">
-        <FavoritesFolder />
+        <FavoritesDrug />
       </div>
     </div>
   );

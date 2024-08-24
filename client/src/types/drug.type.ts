@@ -27,7 +27,6 @@ export interface DrugState {
   currentPage: number;
 }
 
-export interface favoriteDrugState {
-  data: DrugData[];
-  isFavorited: boolean;
+export interface FavoriteDrugState {
+  favoriteDrugs: DrugData[];
 }

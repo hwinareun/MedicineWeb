@@ -6,7 +6,7 @@ import { storeLogout, storeUserInfo } from '../store/slices/authSlice';
 import { NegativeButton, PositiveButton } from '../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { WarnText } from '../components/common/WarnText';
-import FavoritesBox from '../components/favorites/FavoritesBox';
+import FavoritesBox from '../components/favorite/FavoritesBox';
 
 const Profile = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
