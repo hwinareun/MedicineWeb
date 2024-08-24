@@ -151,7 +151,11 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
           <div>
             <p className="font-semibold">주의 사항</p>
             <p className="px-8 py-5 mb-2 break-words whitespace-normal border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-              {drug.seQesitm}
+              {drug.seQesitm ? (
+                drug.seQesitm
+              ) : (
+                <img src={unprepared} alt="unprepared" className="w-10" />
+              )}
             </p>
           </div>
           <div>
