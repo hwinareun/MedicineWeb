@@ -15,10 +15,10 @@ const loginValidator = [
   check("password").notEmpty()
 ];
 
-const userInfoValidator = [
-  check("nickname").notEmpty(),
-  check("password").notEmpty()
-];
+// const userInfoValidator = [
+//   check("nickname").notEmpty(),
+//   check("password").notEmpty()
+// ];
 
 const checkPwdIValidator = [
   check("password").notEmpty()
@@ -56,7 +56,7 @@ const addDrugValidator = [
 module.exports = {
   joinValidator,
   loginValidator,
-  userInfoValidator,
+  // userInfoValidator,
   checkPwdIValidator,
   dupCheckNicknameValidator,
   dupCheckIdValidator,
