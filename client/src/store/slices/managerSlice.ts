@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '../../store';
-import { updateDrugData } from '../../apis/manager.api';
+import { addDrugData, updateDrugData } from '../../apis/manager.api';
+import { DrugData } from '../../types/drug.type';
 
 interface ManagerState {
   isLoading: boolean;
@@ -27,11 +28,28 @@ const managerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    startAdd(state) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    addSuccess(state) {
+      state.isLoading = false;
+    },
+    addFailure(state, action: PayloadAction<string>) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export const { startUpdate, updateSuccess, updateFailure } =
-  managerSlice.actions;
+export const {
+  startUpdate,
+  updateSuccess,
+  updateFailure,
+  startAdd,
+  addSuccess,
+  addFailure,
+} = managerSlice.actions;
 export const managerReducer = managerSlice.reducer;
 
 export const updateDrugDataAction = () => async (dispatch: AppDispatch) => {
@@ -47,3 +65,18 @@ export const updateDrugDataAction = () => async (dispatch: AppDispatch) => {
     }
   }
 };
+
+export const addDrugDataAction =
+  (drugData: DrugData) => async (dispatch: AppDispatch) => {
+    dispatch(startAdd());
+    try {
+      await addDrugData(drugData);
+      dispatch(addSuccess());
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(addFailure(error.message));
+      } else {
+        dispatch(addFailure('Unknown error occurred'));
+      }
+    }
+  };
