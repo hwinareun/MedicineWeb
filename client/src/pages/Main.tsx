@@ -79,7 +79,7 @@ const Main: React.FC = () => {
           <div className="flex gap-1">
             <Input
               value={searchDrug}
-              placeholder="의약품명"
+              placeholder="의약품명(으)로 검색합니다."
               onChange={handleSearchChange}
               onKeyDown={handleSearchEnter}
             />

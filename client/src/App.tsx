@@ -9,6 +9,7 @@ import FindUser from './pages/FindUser';
 import Profile from './pages/Profile';
 import ChangeProfile from './pages/ChangeProfile';
 import Post from './pages/Post';
+import Manager from './pages/Manager';
 
 const routeList = [
   {
@@ -42,6 +43,10 @@ const routeList = [
   {
     path: '/posts',
     element: <Post />,
+  },
+  {
+    path: '/manager',
+    element: <Manager />,
   },
 ];
 
