@@ -22,124 +22,69 @@ const managerSlice = createSlice({
   name: 'manager',
   initialState,
   reducers: {
-    startUpdate(state) {
+    setStart(state) {
       state.isLoading = true;
       state.error = null;
     },
-    updateSuccess(state) {
+    setSuccess(state) {
       state.isLoading = false;
     },
-    updateFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    startAdd(state) {
-      state.isLoading = true;
-      state.error = null;
-    },
-    addSuccess(state) {
-      state.isLoading = false;
-    },
-    addFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    startEdit(state) {
-      state.isLoading = true;
-      state.error = null;
-    },
-    editSuccess(state) {
-      state.isLoading = false;
-    },
-    editFailure(state, action: PayloadAction<string>) {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    startRemove(state) {
-      state.isLoading = true;
-      state.error = null;
-    },
-    removeSuccess(state) {
-      state.isLoading = false;
-    },
-    removeFailure(state, action: PayloadAction<string>) {
+    setFailure(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const {
-  startUpdate,
-  updateSuccess,
-  updateFailure,
-  startAdd,
-  addSuccess,
-  addFailure,
-  editFailure,
-  editSuccess,
-  startEdit,
-  startRemove,
-  removeSuccess,
-  removeFailure,
-} = managerSlice.actions;
+export const { setFailure, setStart, setSuccess } = managerSlice.actions;
 export const managerReducer = managerSlice.reducer;
 
+const handleError = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return 'Unknown error occurred';
+};
+
 export const updateDrugDataAction = () => async (dispatch: AppDispatch) => {
-  dispatch(startUpdate());
+  dispatch(setStart());
   try {
     await updateDrugData();
-    dispatch(updateSuccess());
+    dispatch(setSuccess());
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      dispatch(updateFailure(error.message));
-    } else {
-      dispatch(updateFailure('Unknown error occurred'));
-    }
+    dispatch(setFailure(handleError(error)));
   }
 };
 
 export const addDrugDataAction =
   (drugData: DrugData) => async (dispatch: AppDispatch) => {
-    dispatch(startAdd());
+    dispatch(setStart());
     try {
       await addDrugData(drugData);
-      dispatch(addSuccess());
+      dispatch(setSuccess());
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(addFailure(error.message));
-      } else {
-        dispatch(addFailure('Unknown error occurred'));
-      }
+      dispatch(setFailure(handleError(error)));
     }
   };
 
 export const editDrugDataAction =
   (drugData: DrugData) => async (dispatch: AppDispatch) => {
-    dispatch(startEdit());
+    dispatch(setStart());
     try {
       await editDrugData(drugData);
-      dispatch(editSuccess());
+      dispatch(setSuccess());
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(editFailure(error.message));
-      } else {
-        dispatch(editFailure('Unknown error occurred'));
-      }
+      dispatch(setFailure(handleError(error)));
     }
   };
 
 export const removeDrugDataAction =
   (drugId: number) => async (dispatch: AppDispatch) => {
-    dispatch(startUpdate());
+    dispatch(setStart());
     try {
       await removeDrugData(drugId);
-      dispatch(updateSuccess());
+      dispatch(setSuccess());
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(removeFailure(error.message));
-      } else {
-        dispatch(removeFailure('Unknown error occurred'));
-      }
+      dispatch(setFailure(handleError(error)));
     }
   };
