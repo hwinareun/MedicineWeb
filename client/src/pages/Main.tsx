@@ -91,8 +91,8 @@ const Main: React.FC = () => {
         {!isLogin && <LoginBox />}
         <div
           className={clsx(
-            'flex h-fit w-full',
-            !isLogin && 'justify-evenly mt-10',
+            'flex h-fit w-80',
+            !isLogin && 'justify-between mt-10',
             isLogin && 'flex-col gap-10 items-center'
           )}
         >
@@ -105,7 +105,7 @@ const Main: React.FC = () => {
               alt="medicineWebIcon"
               className="absolute w-10 top-[-27px] right-0"
             />
-            <FaSearch /> {isLogin ? '상세 검색 하러 가기' : '상세 검색'}
+            <FaSearch /> 상세 검색
           </div>
           <div
             className="relative flex items-center gap-2 text-xl cursor-pointer"
@@ -116,7 +116,7 @@ const Main: React.FC = () => {
               alt="medicineWebIcon"
               className="absolute w-10 top-[-20px] left-[-25px] -rotate-45"
             />
-            <FaList /> {isLogin ? '게시판 보러 가기' : '게시판'}
+            <FaList /> 게시판
           </div>
           {isLogin && (
             <>

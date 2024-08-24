@@ -7,6 +7,7 @@ import { NegativeButton, PositiveButton } from '../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { WarnText } from '../components/common/WarnText';
 import FavoritesBox from '../components/favorite/FavoritesBox';
+import UnpreparedImg from '../assets/images/Unprepared.png';
 
 const Profile = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -67,8 +68,9 @@ const Profile = () => {
       <div className="flex items-center justify-center flex-1">
         <FavoritesBox />
       </div>
-      <div className="flex items-center justify-center flex-1">
-        게시판-나중에 만나요~
+      <div className="flex flex-col items-center justify-center flex-1">
+        <img src={UnpreparedImg} alt="UnpreparedImg" className="w-3/5" />
+        게시판 준비 중..
       </div>
     </div>
   );
