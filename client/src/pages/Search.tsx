@@ -13,7 +13,7 @@ const Search = () => {
   );
 
   return (
-    <div className="flex flex-col items-center px-4 m-4">
+    <div className="flex flex-grow items-center px-4 m-4">
       <div className="flex justify-center flex-grow gap-6">
         <div className="flex flex-col max-w-screen-sm text-xs rounded-lg shadow-md shadow-medicinePositive bg-medicineNeutral whitespace-nowrap w-fit h-fit">
           <SearchBox setResults={setResults} />
