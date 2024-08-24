@@ -13,10 +13,7 @@ const ManagerDrugUpadate = () => {
   };
 
   return (
-    <div className="flex items-center gap-1 text-xs">
-      <PositiveButton onClick={handleUpdateClick}>
-        의약품 데이터 자동 업데이트
-      </PositiveButton>
+    <div className="flex items-end gap-1 text-xs">
       {isLoading && (
         <div className="flex items-center gap-1 p-1 text-sm text-medicineFontBlue">
           <FaSpinner className="animate-spin" />
@@ -24,6 +21,9 @@ const ManagerDrugUpadate = () => {
         </div>
       )}
       {error && <p className="text-red-500">업데이트 실패: {error}</p>}
+      <PositiveButton onClick={handleUpdateClick}>
+        의약품 데이터 자동 업데이트
+      </PositiveButton>
     </div>
   );
 };

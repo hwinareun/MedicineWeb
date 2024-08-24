@@ -45,11 +45,16 @@ const ManagerDrugAdd = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center flex-grow bg-medicineNeutral">
-      <h3 className="w-full px-5 py-1 m-1 font-semibold text-left text-medicineFontBlue">
-        데이터 추가
+    <div className="flex flex-col items-center justify-center flex-grow max-h-full p-4 shadow-md bg-medicineNeutral rounded-3xl">
+      <h3 className="flex items-end justify-between w-full px-5 py-1 m-1 text-left">
+        데이터 수정
+        <div className="flex items-end">
+          {isLoading && <p className="text-xs">추가 중...</p>}
+          {error && <p className="text-xs text-red-500">추가 실패: {error}</p>}
+          <PositiveButton onClick={handleAddClick}>추가</PositiveButton>
+        </div>
       </h3>
-      <div className="flex flex-col justify-center w-full gap-1 px-4 text-xs">
+      <div className="flex flex-col w-full gap-1 px-4 overflow-y-auto text-xs">
         <Input
           value={drugData.drugId}
           placeholder={'품복번호'}
@@ -94,7 +99,7 @@ const ManagerDrugAdd = () => {
         />
         <Input
           value={drugData.drugShape}
-          placeholder={'모양 gap-1'}
+          placeholder={'모양'}
           onChange={handleChange}
           name={'drugShape'}
         />
@@ -134,38 +139,31 @@ const ManagerDrugAdd = () => {
           onChange={handleChange}
           name={'colorClass2'}
         />
-        <textarea
+        <Input
           name="efcyQesitm"
           placeholder="효능 효과"
           value={drugData.efcyQesitm}
           onChange={handleChange}
-          className="p-1 mb-2 border rounded-lg"
         />
-        <textarea
+        <Input
           name="useMethodQesitm"
           placeholder="복용 방법"
           value={drugData.useMethodQesitm}
           onChange={handleChange}
-          className="p-1 mb-2 border rounded-lg"
         />
-        <textarea
+        <Input
           name="seQesitm"
           placeholder="주의 사항"
           value={drugData.seQesitm}
           onChange={handleChange}
-          className="p-1 mb-2 border rounded-lg"
         />
-        <textarea
+        <Input
           name="depositMethodQesitm"
           placeholder="보관 방법"
           value={drugData.depositMethodQesitm}
           onChange={handleChange}
-          className="p-1 mb-2 border rounded-lg"
         />
       </div>
-      <PositiveButton onClick={handleAddClick}>추가하기</PositiveButton>
-      {isLoading && <p className="text-xs">추가 중...</p>}
-      {error && <p className="text-xs text-red-500">추가 실패: {error}</p>}
     </div>
   );
 };

@@ -25,3 +25,14 @@ export const addDrugData = async (drugData: DrugData) => {
     throw new Error('Failed to add drug data');
   }
 };
+
+export const editDrugData = async (drugData: DrugData) => {
+  const url = `/drugs/${drugData.drugId}`;
+  try {
+    const response = await httpClient.put(url, drugData);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to edit drug data`, error);
+    throw new Error('Failed to edit drug data');
+  }
+};
