@@ -3,6 +3,7 @@ import { AppDispatch } from '../../store';
 import {
   addDrugData,
   editDrugData,
+  removeDrugData,
   updateDrugData,
 } from '../../apis/manager.api';
 import { DrugData } from '../../types/drug.type';
@@ -54,6 +55,17 @@ const managerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    startRemove(state) {
+      state.isLoading = true;
+      state.error = null;
+    },
+    removeSuccess(state) {
+      state.isLoading = false;
+    },
+    removeFailure(state, action: PayloadAction<string>) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -67,6 +79,9 @@ export const {
   editFailure,
   editSuccess,
   startEdit,
+  startRemove,
+  removeSuccess,
+  removeFailure,
 } = managerSlice.actions;
 export const managerReducer = managerSlice.reducer;
 
@@ -110,6 +125,21 @@ export const editDrugDataAction =
         dispatch(editFailure(error.message));
       } else {
         dispatch(editFailure('Unknown error occurred'));
+      }
+    }
+  };
+
+export const removeDrugDataAction =
+  (drugId: number) => async (dispatch: AppDispatch) => {
+    dispatch(startUpdate());
+    try {
+      await removeDrugData(drugId);
+      dispatch(updateSuccess());
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(removeFailure(error.message));
+      } else {
+        dispatch(removeFailure('Unknown error occurred'));
       }
     }
   };

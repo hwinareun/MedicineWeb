@@ -69,11 +69,21 @@ const FavoritesDrug: React.FC = () => {
               {selectedDrugId === drug.drugId && (
                 <li className="p-2 m-1 text-xs rounded-lg shadow-inner bg-medicinePrimary">
                   <div className="flex justify-center">
-                    <img
-                      src={drug.itemImage}
-                      className="w-48 border-2 h-28 border-medicineSecondary rounded-2xl bg-medicinePrimary"
-                      alt={drug.itemName}
-                    />
+                    {drug.itemImage ? (
+                      <img
+                        src={drug.itemImage}
+                        className="w-48 border-2 h-28 border-medicineSecondary rounded-2xl"
+                        alt={drug.itemName}
+                      />
+                    ) : (
+                      <div>
+                        <img
+                          src={unprepared}
+                          alt="unprepared"
+                          className="w-48 border-2 h-28 border-medicineSecondary rounded-2xl"
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="pt-2">
                     <p className="font-semibold">성분•함량</p>

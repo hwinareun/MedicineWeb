@@ -57,7 +57,7 @@ const ManagerDrugEdit: React.FC = () => {
       <div className="flex flex-col w-full gap-1 px-4 overflow-y-auto text-xs">
         <Input
           value={drugData.drugId}
-          placeholder={'품복번호'}
+          placeholder={'품목번호'}
           onChange={handleChange}
           name={'drugId'}
         />

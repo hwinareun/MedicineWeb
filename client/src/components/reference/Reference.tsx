@@ -92,11 +92,15 @@ const Reference: React.FC<ReferenceProps> = ({ data }) => {
                 {startIndex + index + 1}
               </td>
               <td className="flex justify-center px-1 m-1">
-                <img
-                  src={drug.itemImage}
-                  alt={drug.itemName}
-                  className="object-contain w-24 border-2 rounded-lg border-medicinePositive"
-                />
+                {drug.itemImage ? (
+                  <img
+                    src={drug.itemImage}
+                    alt={drug.itemName}
+                    className="object-contain w-24 border-2 rounded-lg border-medicinePositive"
+                  />
+                ) : (
+                  <img src={unprepared} alt="unprepared" className="w-20" />
+                )}
               </td>
               <td className="px-1 break-words whitespace-normal border-x border-medicinePositive">
                 {drug.itemName}

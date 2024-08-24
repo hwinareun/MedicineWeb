@@ -13,7 +13,7 @@ const ManagerBox = () => {
           </span>
           <ManagerDrugUpadate />
         </div>
-        <div className="flex flex-1 max-h-[70vh] gap-5 mt-5">
+        <div className="flex flex-1 max-h-[70vh] gap-5 mt-5 w-full">
           <ManagerDrugAdd />
           <ManagerDrugEdit />
           <ManagerDrugRemove />

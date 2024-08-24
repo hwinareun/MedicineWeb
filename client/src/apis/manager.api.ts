@@ -36,3 +36,14 @@ export const editDrugData = async (drugData: DrugData) => {
     throw new Error('Failed to edit drug data');
   }
 };
+
+export const removeDrugData = async (drugId: number) => {
+  const url = `/drugs/${drugId}`;
+  try {
+    const response = await httpClient.delete(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to remove drug data`, error);
+    throw new Error('Failed to remove drug data');
+  }
+};
