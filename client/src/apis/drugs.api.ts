@@ -19,7 +19,6 @@ interface DrugDetailParams {
   drugId: number;
 }
 
-// 검색 + 전체 조회
 export const fetchDrugs = async (params: SearchParams) => {
   const query = new URLSearchParams();
 
@@ -44,7 +43,6 @@ export const fetchDrugs = async (params: SearchParams) => {
   }
 };
 
-// 상세 조회
 export const fetchDrugDetail = async (params: DrugDetailParams) => {
   const { drugId } = params;
 
@@ -57,5 +55,56 @@ export const fetchDrugDetail = async (params: DrugDetailParams) => {
   } catch (error) {
     console.error(`Failed to fetch drug detail with ID: ${drugId}`, error);
     throw new Error('Failed to fetch drug detail');
+  }
+};
+
+export const fetchFavorites = async () => {
+  const url = `/favorites`;
+
+  try {
+    const response = await httpClient.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch Favorites`, error);
+    throw new Error('Failed to fetch Favorites');
+  }
+};
+
+export const fetchFavoriteDetail = async (params: DrugDetailParams) => {
+  const { drugId } = params;
+  const url = `/favorites/${drugId}`;
+
+  try {
+    const response = await httpClient.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch Favorite Detail with ID: ${drugId}`, error);
+    throw new Error('Failed to fetch Favorite Detail');
+  }
+};
+
+export const favoriteDrug = async (params: DrugDetailParams) => {
+  const { drugId } = params;
+  const url = `/favorites/${drugId}`;
+
+  try {
+    const response = await httpClient.post(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch Favorite Drug with ID: ${drugId}`, error);
+    throw new Error('Failed to fetch Favorite Drug');
+  }
+};
+
+export const unfavoriteDrug = async (params: DrugDetailParams) => {
+  const { drugId } = params;
+  const url = `/favorites/${drugId}`;
+
+  try {
+    const response = await httpClient.delete(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch unfavorite Drug with ID: ${drugId}`, error);
+    throw new Error('Failed to fetch unfavorite Drug');
   }
 };

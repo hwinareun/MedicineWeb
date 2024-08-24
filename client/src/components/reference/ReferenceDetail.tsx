@@ -1,7 +1,16 @@
 import { FiX } from 'react-icons/fi';
-import { HiOutlineStar /* HiStar */ } from 'react-icons/hi2';
+import { HiOutlineStar, HiStar } from 'react-icons/hi2';
 import { DrugData } from '../../types/drug.type';
 import unprepared from '../../assets/images/Unprepared.png';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import {
+  addFavoriteDrug,
+  removeFavoriteDrug,
+} from '../../store/slices/favoriteSlice';
 
 interface ReferenceDetailProps {
   drug: DrugData;
@@ -9,6 +18,9 @@ interface ReferenceDetailProps {
 }
 
 const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const ingrEngName = drug.ingrEngName
     ? drug.ingrEngName.split(/[,;]/).map((item) => item.trim())
     : [];
@@ -17,15 +29,64 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
     ? drug.strength.split(/[,;]/).map((item) => item.trim())
     : [];
 
+  const [loginMessage, setLoginMessage] = useState('');
+  const isLogin = useSelector((state: RootState) => state.auth.isLogin);
+  const [isFavorites, setIsFavorites] = useState(
+    useSelector((state: RootState) =>
+      state.favorite.favoriteDrugs.some(
+        (favoriteDrug) => favoriteDrug.drugId === drug.drugId
+      )
+    )
+  );
+
+  const handleFavoriteClick = () => {
+    if (!isLogin) {
+      setLoginMessage(
+        '로그인이 필요한 서비스입니다.\n로그인하시려면 메세지를 클릭해주세요!'
+      );
+      setTimeout(() => setLoginMessage(''), 2000);
+      return;
+    }
+
+    if (isFavorites) {
+      setIsFavorites(false);
+      dispatch(removeFavoriteDrug(drug.drugId));
+    } else {
+      setIsFavorites(true);
+      dispatch(addFavoriteDrug(drug.drugId));
+    }
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center text-left bg-gray-900 bg-opacity-50">
       <div className="w-full max-w-3xl px-8 py-5 bg-white shadow-sm rounded-3xl max-h-[80vh] overflow-y-auto">
         <div className="flex justify-between py-2 m-4">
-          <p className="flex items-center gap-1 text-2xl font-semibold">
+          <div className="flex items-center gap-1 text-2xl font-semibold">
             {drug.itemName}
-            <HiOutlineStar className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive" />
-            {/* <HiStar className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive" /> */}
-          </p>
+            <div
+              className="flex flex-row items-center gap-2 text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive"
+              onClick={handleFavoriteClick}
+            >
+              {isFavorites ? <HiStar /> : <HiOutlineStar />}
+              {loginMessage && (
+                <div
+                  className="text-xs text-red-500 underline cursor-pointer"
+                  onClick={handleLoginClick}
+                >
+                  {loginMessage.split('\n').map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           <FiX
             className="text-3xl cursor-pointer text-medicinePoint hover:text-medicinePositive"
             onClick={onClose}
@@ -90,7 +151,11 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
           <div>
             <p className="font-semibold">주의 사항</p>
             <p className="px-8 py-5 mb-2 break-words whitespace-normal border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
-              {drug.seQesitm}
+              {drug.seQesitm ? (
+                drug.seQesitm
+              ) : (
+                <img src={unprepared} alt="unprepared" className="w-10" />
+              )}
             </p>
           </div>
           <div>

@@ -26,3 +26,7 @@ export interface DrugState {
   searchDrug: string;
   currentPage: number;
 }
+
+export interface FavoriteDrugState {
+  favoriteDrugs: DrugData[];
+}

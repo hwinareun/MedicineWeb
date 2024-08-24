@@ -6,6 +6,7 @@ import { storeLogout, storeUserInfo } from '../store/slices/authSlice';
 import { NegativeButton, PositiveButton } from '../components/common/Button';
 import { useNavigate } from 'react-router-dom';
 import { WarnText } from '../components/common/WarnText';
+import FavoritesBox from '../components/favorite/FavoritesBox';
 
 const Profile = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
@@ -41,13 +42,13 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex-grow flex">
-      <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="w-fit h-40">
+    <div className="flex flex-grow">
+      <div className="flex flex-col items-center justify-center flex-1">
+        <div className="h-40 w-fit">
           <span className="text-medicineFontBlue text-7xl">
             {userInfo.nickname}
           </span>
-          <span className="text-2xl ml-2">님, 환영합니다</span>
+          <span className="ml-2 text-2xl">님, 환영합니다</span>
         </div>
         <div className="flex flex-col items-center gap-3">
           <div>
@@ -63,8 +64,10 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="flex-1 flex items-center justify-center">favorite</div>
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex items-center justify-center flex-1">
+        <FavoritesBox />
+      </div>
+      <div className="flex items-center justify-center flex-1">
         게시판-나중에 만나요~
       </div>
     </div>
