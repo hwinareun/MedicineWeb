@@ -58,21 +58,21 @@ const Profile = () => {
     <div className="flex flex-grow">
       <div className="flex flex-col items-center justify-center flex-1">
         <div className="h-40 w-fit">
-          <span className="text-medicineFontBlue text-7xl">
+          <span className="text-5xl text-medicineFontBlue">
             {userInfo.nickname}
           </span>
           <span className="ml-2 text-2xl">님, 환영합니다</span>
         </div>
         {role === 'manager' && isLogin && (
-          <div className="flex items-center">
-            <div>
+          <div className="flex items-center justify-center p-3">
+            <div className="">
               <PositiveButton onClick={handleManager}>
                 관리자 페이지로 이동
               </PositiveButton>
             </div>
           </div>
         )}
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex items-center gap-3">
           <div>
             <PositiveButton onClick={handleChangeProfie}>
               개인정보 수정
