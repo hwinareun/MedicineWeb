@@ -3,10 +3,14 @@ import { HiOutlineStar, HiStar } from 'react-icons/hi2';
 import { DrugData } from '../../types/drug.type';
 import unprepared from '../../assets/images/Unprepared.png';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import {
+  addFavoriteDrug,
+  removeFavoriteDrug,
+} from '../../store/slices/favoriteSlice';
 
 interface ReferenceDetailProps {
   drug: DrugData;
@@ -15,9 +19,7 @@ interface ReferenceDetailProps {
 
 const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
   const navigate = useNavigate();
-  const [isFavorites, setIsFavorites] = useState(false);
-  const [loginMessage, setLoginMessage] = useState('');
-  const isLogin = useSelector((state: RootState) => state.auth.isLogin);
+  const dispatch = useDispatch<AppDispatch>();
 
   const ingrEngName = drug.ingrEngName
     ? drug.ingrEngName.split(/[,;]/).map((item) => item.trim())
@@ -27,10 +29,20 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
     ? drug.strength.split(/[,;]/).map((item) => item.trim())
     : [];
 
+  const [loginMessage, setLoginMessage] = useState('');
+  const isLogin = useSelector((state: RootState) => state.auth.isLogin);
+  const [isFavorites, setIsFavorites] = useState(
+    useSelector((state: RootState) =>
+      state.favorite.favoriteDrugs.some(
+        (favoriteDrug) => favoriteDrug.drugId === drug.drugId
+      )
+    )
+  );
+
   const handleFavoriteClick = () => {
     if (!isLogin) {
       setLoginMessage(
-        '로그인이 필요한 서비스입니다. \n로그인하시려면 메세지를 클릭해주세요!'
+        '로그인이 필요한 서비스입니다.\n로그인하시려면 메세지를 클릭해주세요!'
       );
       setTimeout(() => setLoginMessage(''), 2000);
       return;
@@ -38,13 +50,15 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
 
     if (isFavorites) {
       setIsFavorites(false);
+      dispatch(removeFavoriteDrug(drug.drugId));
     } else {
       setIsFavorites(true);
+      dispatch(addFavoriteDrug(drug.drugId));
     }
   };
 
   const handleLoginClick = () => {
-    navigate('/login'); // /login 페이지로 이동
+    navigate('/login');
   };
 
   return (
@@ -60,8 +74,8 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
               {isFavorites ? <HiStar /> : <HiOutlineStar />}
               {loginMessage && (
                 <div
-                  className="text-xs text-red-500 underline cursor-pointer" // 커서 모양을 포인터로 설정하여 클릭 가능하다는 시각적 효과 추가
-                  onClick={handleLoginClick} // 메시지 클릭 시 /login 페이지로 이동
+                  className="text-xs text-red-500 underline cursor-pointer"
+                  onClick={handleLoginClick}
                 >
                   {loginMessage.split('\n').map((line, index) => (
                     <React.Fragment key={index}>
