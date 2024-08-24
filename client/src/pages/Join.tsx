@@ -113,6 +113,7 @@ const Join = () => {
                 required
                 label="닉네임"
                 value={nickname}
+                placeholder="닉네임을 입력해주세요"
                 onChange={handleNicknameChange}
               />
               <JoinDupCheckButton onClick={handleNicknameCheck} />
@@ -130,6 +131,7 @@ const Join = () => {
                 required
                 label="아이디"
                 value={id}
+                placeholder="아이디를 입력해주세요"
                 onChange={handleIdChange}
               />
               <JoinDupCheckButton onClick={handleIdCheck} />
@@ -155,6 +157,7 @@ const Join = () => {
                 required
                 label="답"
                 value={idAnswer}
+                placeholder="답을 입력해주세요"
                 onChange={handleIdAnswerChange}
               />
             </div>
@@ -167,6 +170,7 @@ const Join = () => {
                 label="비밀번호"
                 type="password"
                 value={password}
+                placeholder="비밀번호를 입력해주세요"
                 onChange={handlePasswordChange}
               />
             </div>
@@ -179,6 +183,7 @@ const Join = () => {
                 label="비밀번호 확인"
                 type="password"
                 value={passwordRe}
+                placeholder="비밀번호를 다시 입력해주세요"
                 onChange={handlePasswordReChange}
               />
             </div>
@@ -200,6 +205,7 @@ const Join = () => {
                 required
                 label="답"
                 value={pwAnswer}
+                placeholder="답을 입력해주세요"
                 onChange={handlePwAnswerChange}
               />
             </div>
