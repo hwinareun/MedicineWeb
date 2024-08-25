@@ -1,4 +1,4 @@
-import programming from '../assets/images/programming.png';
+import programming from '../assets/images/Programming.png';
 
 const Post = () => {
   return (
