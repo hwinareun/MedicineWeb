@@ -29,7 +29,6 @@ export const fetchDrugs = async (params: SearchParams) => {
   });
 
   const url = `/search?${query.toString()}`;
-  console.log(`Fetching drugs with URL: ${url}`);
 
   try {
     const response = await httpClient.get(url);
@@ -47,7 +46,6 @@ export const fetchDrugDetail = async (params: DrugDetailParams) => {
   const { drugId } = params;
 
   const url = `/drugs/${drugId}`;
-  console.log(`Fetching drug detail with URL: ${url}`);
 
   try {
     const response = await httpClient.get(url);

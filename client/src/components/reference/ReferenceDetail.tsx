@@ -94,11 +94,17 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-row items-center gap-8">
-            <img
-              src={drug.itemImage}
-              className="h-40 border-2 w-72 border-medicineSecondary rounded-3xl bg-medicinePrimary"
-              alt={drug.itemName}
-            />
+            {drug.itemImage ? (
+              <img
+                src={drug.itemImage}
+                className="h-40 border-2 w-72 border-medicineSecondary rounded-3xl bg-medicinePrimary"
+                alt={drug.itemName}
+              />
+            ) : (
+              <div className="px-8 py-2 mb-2 border-2 border-medicineSecondary rounded-xl bg-medicinePrimary">
+                <img src={unprepared} alt="unprepared" className="w-48" />
+              </div>
+            )}
             <div>
               <div className="w-96">
                 <p className="font-semibold">성분•함량</p>

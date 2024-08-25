@@ -17,7 +17,7 @@ export const PwCheck: React.FC<Props> = ({ setIsChecked }) => {
   };
   const handleCheck = () => {
     checkPw({ password })
-      .then((res) => {
+      .then(() => {
         setIsChecked(true);
       })
       .catch((err) => {
