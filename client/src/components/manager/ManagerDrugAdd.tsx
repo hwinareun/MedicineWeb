@@ -47,7 +47,7 @@ const ManagerDrugAdd = () => {
   return (
     <div className="flex flex-col items-center justify-center flex-grow max-h-full p-4 shadow-md bg-medicineNeutral rounded-3xl">
       <h3 className="flex items-end justify-between w-full px-5 py-1 m-1 text-left">
-        데이터 수정
+        데이터 추가
         <div className="flex items-end">
           {isLoading && <p className="text-xs">추가 중...</p>}
           {error && <p className="text-xs text-red-500">추가 실패: {error}</p>}
