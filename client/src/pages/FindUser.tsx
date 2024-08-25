@@ -13,7 +13,7 @@ const FindUser = () => {
     e.preventDefault();
     const formElements = e.currentTarget
       .elements as typeof e.currentTarget.elements & {
-      [key: number]: HTMLInputElement; // 인덱스로 접근할 수 있도록 설정
+      [key: number]: HTMLInputElement;
     };
     const nickname = formElements[0].value;
     const question = formElements[1].value;
@@ -32,7 +32,7 @@ const FindUser = () => {
     e.preventDefault();
     const formElements = e.currentTarget
       .elements as typeof e.currentTarget.elements & {
-      [key: number]: HTMLInputElement; // 인덱스로 접근할 수 있도록 설정
+      [key: number]: HTMLInputElement;
     };
     const id = formElements[0].value;
     const question = formElements[1].value;
