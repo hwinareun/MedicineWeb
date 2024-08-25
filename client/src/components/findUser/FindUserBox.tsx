@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { JoinInput } from '../join/JoinInput';
 import { WarnText } from '../common/WarnText';
 import { JoinSelect } from '../join/JoinSelect';
@@ -8,7 +8,7 @@ import { RootState } from '../../store';
 
 interface Props {
   title: string;
-  onSubmit: (e: React.SyntheticEvent) => void;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   warnText: string;
   showResetPw?: boolean;
 }
@@ -41,7 +41,7 @@ export const FindUserBox: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col items-center py-5 px-20 rounded shadow-md bg-blue-50 w-fit h-fit">
+    <div className="flex flex-col items-center px-20 py-5 rounded shadow-md bg-blue-50 w-fit h-fit">
       <h3 className="mb-5 text-4xl font-bold">{title}</h3>
       <form
         onSubmit={(e) => {
