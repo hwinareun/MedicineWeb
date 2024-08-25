@@ -6,6 +6,7 @@ export interface IAuth {
 export type TAuthState = {
   isLogin: boolean;
   userInfo: IUser;
+  role: string;
 };
 
 export interface IUser {

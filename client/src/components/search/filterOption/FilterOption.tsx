@@ -44,7 +44,7 @@ const FilterOption: React.FC<FilterOptionProps> = ({
   return (
     <div
       onClick={handleClick}
-      className={`px-2 m-1 items-center text-center shadow-sm shadow-medicinePoint justify-center rounded-lg  hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint text-medicineSecondary' : 'bg-medicineSecondary'}`}
+      className={`px-2 m-1 flex flex-col items-center text-center shadow-sm shadow-medicinePoint justify-center rounded-lg  hover:bg-medicinePositive cursor-pointer ${isSelected ? 'bg-medicinePoint text-medicineSecondary' : 'bg-medicineSecondary'}`}
       role="button"
       aria-label={label}
     >

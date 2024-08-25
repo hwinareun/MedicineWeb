@@ -112,9 +112,10 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
       </ul>
       <Input
         value={searchDrug}
-        placeholder={selectedDrugCategory as string}
+        placeholder={`${selectedDrugCategory as string}(으)로 검색합니다.`}
         onChange={handleSearchChange}
         onKeyDown={handleSearchEnter}
+        name={'searchDrug'}
       />
       <PositiveButton onClick={handleSearch}>확인</PositiveButton>
     </div>

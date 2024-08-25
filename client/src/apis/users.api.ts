@@ -1,4 +1,4 @@
-import { IAuth } from '../types/user.type';
+import { IAuth } from '../types/auth.type';
 import { httpClient } from './http';
 
 interface findData {
