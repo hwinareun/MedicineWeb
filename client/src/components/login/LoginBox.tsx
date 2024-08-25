@@ -9,11 +9,11 @@ import { login } from '../../apis/auth.api';
 import { storeLogin } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-const WARN_TEXT_ID = {
+const WARN_TEXT_ID: { [key: number]: string } = {
   1: '아이디를 입력해주세요',
   2: '로그인에 실패했습니다',
 };
-const WARN_TEXT_PWD = {
+const WARN_TEXT_PWD: { [key: number]: string } = {
   1: '비밀번호를 입력해주세요',
   2: '로그인에 실패했습니다',
 };

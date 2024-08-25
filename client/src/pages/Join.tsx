@@ -62,14 +62,14 @@ const Join = () => {
         pwQuestion,
         pwAnswer,
       })
-        .then((res) => navigate('/login'))
+        .then(() => navigate('/login'))
         .catch((err) => console.log(err));
     }
   };
   const handleNicknameCheck = () => {
     if (nickname) {
       dupCheckNickname(nickname)
-        .then((res) => {
+        .then(() => {
           setWarnNicknameCheck('사용 가능한 닉네임입니다');
         })
         .catch((err) => {
@@ -85,7 +85,7 @@ const Join = () => {
   const handleIdCheck = () => {
     if (id) {
       dupCheckId(id)
-        .then((res) => {
+        .then(() => {
           setWarnIdCheck('사용 가능한 아이디입니다');
         })
         .catch((err) => {

@@ -78,6 +78,7 @@ const Main: React.FC = () => {
           <img src={Logo1} alt="medicineWebLogo" />
           <div className="flex gap-1">
             <Input
+              name="searchDrug"
               value={searchDrug}
               placeholder="의약품명(으)로 검색합니다."
               onChange={handleSearchChange}

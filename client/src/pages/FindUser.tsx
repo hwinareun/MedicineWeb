@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { FindUserBox } from '../components/findUser/FindUserBox';
 import { findId, reqResetPassword, resetPassword } from '../apis/users.api';
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +9,15 @@ const FindUser = () => {
   const [showResetPw, setShowResetPw] = useState(false);
   const navigate = useNavigate();
 
-  const onSubmitId = (e: React.SyntheticEvent) => {
+  const onSubmitId = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // type에 대한 에러가 발생했지만 동작에는 문제가 없다.
-    // 나중에 수정 예정
-    const nickname = e.target[0].value;
-    const question = e.target[1].value;
-    const answer = e.target[2].value;
+    const formElements = e.currentTarget
+      .elements as typeof e.currentTarget.elements & {
+      [key: number]: HTMLInputElement; // 인덱스로 접근할 수 있도록 설정
+    };
+    const nickname = formElements[0].value;
+    const question = formElements[1].value;
+    const answer = formElements[2].value;
 
     findId({ nickname, question, answer })
       .then((res) => {
@@ -26,16 +28,20 @@ const FindUser = () => {
         setWarnTextId('아이디를 찾을 수 없습니다');
       });
   };
-  const onSubmitPw = (e: React.SyntheticEvent) => {
+  const onSubmitPw = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const id = e.target[0].value;
-    const question = e.target[1].value;
-    const answer = e.target[2].value;
-    const password = e.target[3].value;
+    const formElements = e.currentTarget
+      .elements as typeof e.currentTarget.elements & {
+      [key: number]: HTMLInputElement; // 인덱스로 접근할 수 있도록 설정
+    };
+    const id = formElements[0].value;
+    const question = formElements[1].value;
+    const answer = formElements[2].value;
+    const password = formElements[3].value;
 
     if (showResetPw) {
       resetPassword({ id, password })
-        .then((res) => {
+        .then(() => {
           if (
             confirm('비밀번호 변경에 성공했습니다. 로그인하러 이동하겠습니까?')
           ) {
@@ -53,7 +59,7 @@ const FindUser = () => {
         });
     } else {
       reqResetPassword({ id, question, answer })
-        .then((res) => {
+        .then(() => {
           // 리셋 요청 성공 시 비밀번호 input 보이기
           setShowResetPw(true);
           setWarnTextPw('비밀번호를 초기화 요청에 성공했습니다');
@@ -66,7 +72,7 @@ const FindUser = () => {
   };
 
   return (
-    <div className="flex-grow flex flex-col items-center justify-evenly">
+    <div className="flex flex-col items-center flex-grow justify-evenly">
       <FindUserBox
         title="아이디 찾기"
         warnText={warnTextId}
