@@ -12,6 +12,34 @@ export default {
         medicineNegative: '#ECECEC',
         medicineFontBlue: '#60A5FA',
       },
+      keyframes: {
+        crawlOut1: {
+          '0%': { transform: 'translate(0px,0px)', opacity: '0' },
+          '100%': {
+            transform: 'translate(0px,-27px)',
+            opacity: '1',
+          },
+        },
+        crawlOut2: {
+          '0%': { transform: 'translate(0px,0px)', opacity: '0' },
+          '100%': {
+            transform: 'translate(-15px,-10px) rotate(-40deg)',
+            opacity: '1',
+          },
+        },
+        crawlOut3: {
+          '0%': { transform: 'translate(0px,0px)', opacity: '0' },
+          '100%': {
+            transform: 'translate(15px,-10px) rotate(40deg)',
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        crawlOut1: 'crawlOut1 0.3s forwards',
+        crawlOut2: 'crawlOut2 0.3s forwards',
+        crawlOut3: 'crawlOut3 0.3s forwards',
+      },
     },
   },
   plugins: [],
