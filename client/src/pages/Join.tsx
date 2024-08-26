@@ -17,6 +17,10 @@ const Join = () => {
   const [passwordRe, setPasswordRe] = useState('');
   const [pwQuestion, setPwQuestion] = useState('');
   const [pwAnswer, setPwAnswer] = useState('');
+  const [errCheck, setErrCheck] = useState({
+    nickname: false,
+    id: false,
+  });
   const [wanrPasswordCheck, setWarnPasswordCheck] = useState('');
   const [warnNicknameCheck, setWarnNicknameCheck] = useState('');
   const [warnIdCheck, setWarnIdCheck] = useState('');
@@ -48,10 +52,11 @@ const Join = () => {
   };
   const handleJoin = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (password !== passwordRe) {
-      // 버튼 클릭 시 일치 여부 확인
-      setWarnPasswordCheck('비밀번호가 일치하지 않습니다.');
-    } else {
+    if (
+      Object.values(errCheck).every((el) => el) &&
+      password !== '' &&
+      password === passwordRe
+    ) {
       setWarnPasswordCheck('');
       join({
         nickname,
@@ -64,6 +69,17 @@ const Join = () => {
       })
         .then(() => navigate('/login'))
         .catch((err) => console.log(err));
+    } else {
+      if (!errCheck.id || warnIdCheck.includes('중복')) {
+        setWarnIdCheck('중복을 확인해주세요');
+      }
+      if (!errCheck.nickname || warnNicknameCheck.includes('중복')) {
+        setWarnNicknameCheck('중복을 확인해주세요');
+      }
+      if (password !== passwordRe) {
+        // 버튼 클릭 시 일치 여부 확인
+        setWarnPasswordCheck('비밀번호가 일치하지 않습니다.');
+      }
     }
   };
   const handleNicknameCheck = () => {
@@ -71,12 +87,14 @@ const Join = () => {
       dupCheckNickname(nickname)
         .then(() => {
           setWarnNicknameCheck('사용 가능한 닉네임입니다');
+          setErrCheck({ ...errCheck, nickname: true });
         })
         .catch((err) => {
           if (err.response.status === 409) {
             setWarnNicknameCheck('중복된 닉네임입니다');
           }
           console.log(err);
+          setErrCheck({ ...errCheck, nickname: false });
         });
     } else {
       setWarnNicknameCheck('닉네임을 입력해주세요');
@@ -87,12 +105,14 @@ const Join = () => {
       dupCheckId(id)
         .then(() => {
           setWarnIdCheck('사용 가능한 아이디입니다');
+          setErrCheck({ ...errCheck, id: true });
         })
         .catch((err) => {
           if (err.response.status === 409) {
             setWarnIdCheck('중복된 아이디입니다');
           }
           console.log(err);
+          setErrCheck({ ...errCheck, id: false });
         });
     } else {
       setWarnIdCheck('아이디를 입력해주세요');
