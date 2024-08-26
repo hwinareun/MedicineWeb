@@ -8,6 +8,7 @@ import {
   TbSquareChevronsLeftFilled,
   TbSquareChevronsRightFilled,
 } from 'react-icons/tb';
+import clsx from 'clsx';
 
 const Pagination = ({ totalItems }: { totalItems: number }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -48,7 +49,9 @@ const Pagination = ({ totalItems }: { totalItems: number }) => {
         />
         <TbSquareChevronLeftFilled
           onClick={goToPreviousPage}
-          className="cursor-pointer hover:text-medicineFontBlue"
+          className={clsx(
+            currentPage !== 1 && 'cursor-pointer hover:text-medicineFontBlue'
+          )}
         />
       </div>
       <p className="text-sm font-bold text-medicineFontBlue">
@@ -57,7 +60,10 @@ const Pagination = ({ totalItems }: { totalItems: number }) => {
       <div className="flex">
         <TbSquareChevronRightFilled
           onClick={goToNextPage}
-          className="cursor-pointer hover:text-medicineFontBlue"
+          className={clsx(
+            currentPage !== totalPages &&
+              'cursor-pointer hover:text-medicineFontBlue'
+          )}
         />
         <TbSquareChevronsRightFilled
           onClick={goToLastPage}
