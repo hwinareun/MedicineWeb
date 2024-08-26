@@ -63,7 +63,7 @@ const ReferenceDetail: React.FC<ReferenceDetailProps> = ({ drug, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center text-left bg-gray-900 bg-opacity-50">
-      <div className="w-full max-w-3xl px-8 py-5 bg-white shadow-sm rounded-3xl max-h-[80vh] overflow-y-auto">
+      <div className="w-full max-w-3xl px-8 py-5 bg-white shadow-sm rounded-3xl max-h-[80vh] overflow-y-auto scrollbar-hide">
         <div className="flex justify-between py-2 m-4">
           <div className="flex items-center gap-1 text-2xl font-semibold">
             {drug.itemName}
