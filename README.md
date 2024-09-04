@@ -17,7 +17,6 @@ MedicineWeb은 기존 의약품 정보를 간단하게 시각화하여 원하는
 <img width="1110" alt="searchDrug" src="https://github.com/user-attachments/assets/4f55fc05-5bcb-4489-94ef-bfc055e60e20">
 <img width="1250" alt="searchEffects" src="https://github.com/user-attachments/assets/89c34af7-42f4-45a2-a8d1-d0461955d133">
 
-
 <br>
 
     - 식별 기능을 이용하여 다양한 옵션(식별문자, 제형, 모양, ...)에 따라 사용자는 다양한 상황에서 원하고자 하는 정보만 필터링 할 수 있습니다.
