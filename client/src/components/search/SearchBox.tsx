@@ -90,18 +90,18 @@ const SearchBox: React.FC<SearchBoxProps> = ({ setResults }) => {
     <div className="flex flex-row items-center justify-between gap-4 px-5 pt-2">
       <ul
         onClick={() => setView(!view)}
-        className="flex flex-col items-center text-sm"
+        className="flex flex-col items-center text-sm relative"
       >
         <div className="flex flex-row items-center justify-center w-20 h-10 gap-1 font-semibold border-b-2 rounded-lg cursor-pointer border-b-medicineNeutral bg-medicineSecondary hover:bg-medicinePositive">
           {selectedDrugCategory}
           {view ? <FaAngleUp /> : <FaAngleDown />}
         </div>
         {view && (
-          <div>
+          <div className="py-1 flex flex-col items-center rounded-md w-20 text-center absolute top-10 bg-medicinePoint">
             {Object.entries(searchCategoryDrug).map(([key, value]) => (
               <li
                 key={key}
-                className="px-4 border-b-2 cursor-pointer bg-medicinePrimary border-b-medicineNeutral"
+                className="w-[4.5rem] mb-[2px] cursor-pointer rounded-md bg-medicineNeutral border-b-medicineNeutral hover:bg-medicinePositive py-1"
                 onClick={() => handleDropDownClick(value)}
               >
                 {value}

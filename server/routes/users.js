@@ -17,7 +17,6 @@ const validateHandler = require("../middlewares/validateHandler");
 const {
   joinValidator,
   loginValidator,
-  userInfoValidator,
   checkPwdIValidator,
   dupCheckNicknameValidator,
   dupCheckIdValidator,

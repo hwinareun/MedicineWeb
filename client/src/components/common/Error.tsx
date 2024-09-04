@@ -1,5 +1,5 @@
 import { useNavigate, useRouteError } from 'react-router-dom';
-import programming from '../../assets/images/programming.png';
+import programming from '../../assets/images/Programming.png';
 import unprepared from '../../assets/images/Unprepared.png';
 
 interface RouteError {

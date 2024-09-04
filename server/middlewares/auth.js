@@ -18,7 +18,7 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
-const authenticateRole = (req, res, next) => {
+const authorizationRole = (req, res, next) => {
   const role = req.user.role;
 
   if(role === 'user'){
@@ -29,4 +29,4 @@ const authenticateRole = (req, res, next) => {
 }
 
 
-module.exports = {authenticateJWT, authenticateRole};
+module.exports = {authenticateJWT, authorizationRole};

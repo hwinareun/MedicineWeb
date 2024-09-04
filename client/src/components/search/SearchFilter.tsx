@@ -1,5 +1,5 @@
 import Input from '../common/Input';
-import printHelp from '../../assets/images/printHelp.png';
+import printHelp from '../../assets/images/PrintHelp.png';
 import { NegativeButton, PositiveButton } from '../common/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';

@@ -232,19 +232,27 @@ const updateDrugData = async (req, res, next) => {
     sql = 'select * from DrugEtc;';
     dbData = await query(sql);
 
-    console.log('filteredDrugImageInfo에 추가될 데이터 추출 시작');
+    console.log('filteredDrugEtc에 추가될 데이터 추출 시작');
     const filteredDrugEtc = await getDifferenceByKeyAndToArray(drugEtc, dbData);
-    console.log('filteredDrugImageInfo에 추가될 데이터 추출 완료');
+    console.log('filteredDrugEtc에 추가될 데이터 추출 완료');
 
     let drugInfoResults, drugImageInfoResults;
     if (filteredDrugInfo.length !== 0 && filteredDrugImageInfo.length !== 0) {
+      console.log('DrugInfo 중복 데이터 제거 시작');
+      const filteredDrugInfo2 = await removeDuplicateObjects(filteredDrugInfo);
+      console.log('DrugInfo 중복 데이터 제거 완료');
+
+      console.log('DrugImageInfo 중복 데이터 제거 시작');
+      const filteredDrugImageInfo2 = await removeDuplicateObjects(filteredDrugImageInfo);
+      console.log('DrugImageInfo 중복 데이터 제거 완료');
+
       console.log('DrugInfo, DrugImageInfo 공통 데이터 추출 시작');
       const [
         jsonDrugInfo,
         jsonDrugImageInfo,
         arrayDrugInfo,
         arrayDrugImageInfo,
-      ] = await getCommonByKey(filteredDrugInfo, filteredDrugImageInfo);
+      ] = await getCommonByKey(filteredDrugInfo2, filteredDrugImageInfo2);
       console.log('DrugInfo, DrugImageInfo 공통 데이터 추출 완료');
 
       if (jsonDrugInfo.length !== 0 && jsonDrugImageInfo.length !== 0) {

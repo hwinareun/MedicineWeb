@@ -65,7 +65,7 @@ export const ChangeProfileBox = () => {
       if (password) data.password = password;
       // 수정 요청
       changeProfile(data)
-        .then((res) => {
+        .then(() => {
           getProfile()
             .then((res) => {
               dispatch(storeUserInfo(res));
@@ -88,7 +88,7 @@ export const ChangeProfileBox = () => {
   const handleNicknameCheck = () => {
     if (nickname) {
       dupCheckNickname(nickname)
-        .then((res) => {
+        .then(() => {
           setWarnNicknameCheck('사용 가능한 닉네임입니다');
         })
         .catch((err) => {
