@@ -12,7 +12,7 @@ import { LoginBox } from '../components/login/LoginBox';
 import { MainNavigator } from '../components/main/MainNavigator';
 
 const Main: React.FC = () => {
-  const [results, setResults] = useState<DrugData[]>([]);
+  const [, setResults] = useState<DrugData[]>([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
