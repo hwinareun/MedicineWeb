@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from '../utils/localStorage';
 
 const BASE_URL =
-  'https://port-0-medicinewebserver-m09u7f4n5bd7cb6a.sel4.cloudtype.app';
+  'https://port-0-medicineweb-s-m09mlkva959eaa1a.sel4.cloudtype.app';
 
 export const httpClient = axios.create({
   baseURL: BASE_URL,
