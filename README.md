@@ -103,3 +103,7 @@ MedicineWeb은 기존 의약품 정보를 간단하게 시각화하여 원하는
 
 ## 기술 스택
 [![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1724582159628?alt=media&token=81479507-6eee-4a79-a24b-d64c767bd0a1)](https://github.com/msdio/stackticon)
+
+---
+
+## 발표 링크 🎥 [MedicineWeb](https://www.youtube.com/watch?v=CJkhvqc0uVM)
